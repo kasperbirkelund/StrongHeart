@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features", "Str
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Test", "StrongHeart.Features.Test\StrongHeart.Features.Test.csproj", "{38EC1932-BA2E-4D03-80AB-AC3255CE4357}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.ComponentAnalysis", "StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj", "{F33E33A2-3E06-4F0E-A065-2E30603B4A9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{38EC1932-BA2E-4D03-80AB-AC3255CE4357}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38EC1932-BA2E-4D03-80AB-AC3255CE4357}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38EC1932-BA2E-4D03-80AB-AC3255CE4357}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F33E33A2-3E06-4F0E-A065-2E30603B4A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F33E33A2-3E06-4F0E-A065-2E30603B4A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F33E33A2-3E06-4F0E-A065-2E30603B4A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F33E33A2-3E06-4F0E-A065-2E30603B4A9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
