@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Filtering
@@ -35,7 +34,7 @@ namespace StrongHeart.Features.Decorators.Filtering
             IFilterDecisionContext context = new FilterDecisionContext(request.Caller);
 
             TResponse filteredResponse = filter.GetFilteredItem(context, unfilteredResponse.Value);
-            return Result.Success(filteredResponse);
+            return Result<TResponse>.Success(filteredResponse);
         }
 
         public IEnumerable<IRole> GetRequiredRoles()

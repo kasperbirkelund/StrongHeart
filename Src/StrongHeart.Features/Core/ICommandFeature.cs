@@ -1,5 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using StrongHeart.Features.Decorators.Audit;
+﻿using StrongHeart.Features.Decorators.Audit;
 using StrongHeart.Features.Decorators.Authorization;
 
 namespace StrongHeart.Features.Core

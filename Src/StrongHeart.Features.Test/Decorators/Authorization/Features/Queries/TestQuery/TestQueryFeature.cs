@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Test.Helpers;
 
@@ -11,7 +10,7 @@ namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.Te
     {
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
-            return Task.FromResult(Result.Success(new TestQueryResponse(new PersonDto("PersonA"))));
+            return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
         }
 
         public IEnumerable<IRole> GetRequiredRoles()

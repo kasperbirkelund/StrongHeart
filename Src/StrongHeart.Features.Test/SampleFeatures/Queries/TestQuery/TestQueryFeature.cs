@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Audit;
 
@@ -16,7 +15,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
 
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
-            var result = Result.Success<TestQueryResponse>(new TestQueryResponse("MyTest"));
+            var result = Result<TestQueryResponse>.Success(new TestQueryResponse("MyTest"));
             return Task.FromResult(result);
         }
 

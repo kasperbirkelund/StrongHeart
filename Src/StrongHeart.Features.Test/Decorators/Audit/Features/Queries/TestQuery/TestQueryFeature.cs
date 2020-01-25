@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Audit;
 
@@ -15,7 +14,7 @@ namespace StrongHeart.Features.Test.Decorators.Audit.Features.Queries.TestQuery
 
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
-            return Task.FromResult(Result.Success(new TestQueryResponse("Hello")));
+            return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse("Hello")));
         }
 
         public Func<TestQueryRequest, bool> IsOnBehalfOfOtherSelector => request => false;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using FluentValidation;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
@@ -14,7 +13,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Querie
 
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
-            return Task.FromResult(Result.Success(new TestQueryResponse("Hello")));
+            return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse("Hello")));
         }
 
         public IValidator GetValidator()

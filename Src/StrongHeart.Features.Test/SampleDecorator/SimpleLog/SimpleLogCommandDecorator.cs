@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.Audit;

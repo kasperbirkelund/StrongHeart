@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Filtering;
 
@@ -20,7 +19,7 @@ namespace StrongHeart.Features.Test.Decorators.Filtering.Features.Queries.TestQu
                 new PersonDto("PersonB"),
                 new PersonDto("PersonC"),
             };
-            return Task.FromResult(Result.Success(new TestQueryResponse(persons)));
+            return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(persons)));
         }
 
         public TestQueryResponse GetFilteredItem(IFilterDecisionContext context, TestQueryResponse item)
