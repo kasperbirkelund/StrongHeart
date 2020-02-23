@@ -6,12 +6,16 @@ image: mcr.microsoft.com/dotnet/core/sdk:3.1
 pipelines:
   default:
     - step:
+        name: Build and test
         caches:
           - dotnetcore
         script: # Modify the commands below to build your repository.
           - cd Src/
+          - export OUTPUT=./out
           - export PROJECT_NAME=StrongHeart.Features
           - export TEST_NAME=StrongHeart.Features.Test
           - dotnet restore
-          - dotnet build $PROJECT_NAME
+          - dotnet build --output $OUTPUT $PROJECT_NAME
           - dotnet test $TEST_NAME
+        artifacts: 
+          - $OUTPUT/**
