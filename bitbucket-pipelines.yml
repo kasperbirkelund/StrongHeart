@@ -17,5 +17,14 @@ pipelines:
           - dotnet restore
           - dotnet build --output $OUTPUT $PROJECT_NAME
           - dotnet test $TEST_NAME
-        artifacts: 
-          - $OUTPUT/**
+        #artifacts: 
+        #  - $OUTPUT/**
+  branches:
+    master:
+      - step:
+          script:
+            - echo "This script runs only on commit to the master branch."
+    feature/*:
+      - step:
+          script:
+            - echo "This script runs only on commit to branches with names that match the feature/* pattern."
