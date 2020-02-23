@@ -9,7 +9,7 @@ pipelines:
         caches:
           - dotnetcore
         script: # Modify the commands below to build your repository.
-          - cd /src/ 
+          - cd /Src
           - export PROJECT_NAME=StrongHeart.Features
           - export TEST_NAME=StrongHeart.Features.Test
           - dotnet restore
