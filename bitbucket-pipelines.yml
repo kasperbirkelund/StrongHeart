@@ -7,9 +7,8 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - export PROJECT_NAME=StrongHeart.Features
-          - export TEST_NAME=StrongHeart.Features.Test
-          - cd /src/
-          - dotnet restore
-          - dotnet build /src/StrongHeart.Features/$PROJECT_NAME
-          - dotnet test /src/StrongHeart.Features/$TEST_NAME
+          - export PROJECT_NAME=src/StrongHeart.Features
+          - export TEST_NAME=src/StrongHeart.Features.Test
+          - dotnet restore src/
+          - dotnet build $PROJECT_NAME
+          - dotnet test $TEST_NAME
