@@ -4,6 +4,18 @@
 # You can use any Docker image from Docker Hub, or your own container registry, as your build environment.
 image: mcr.microsoft.com/dotnet/core/sdk:3.1
 pipelines:
+  custom: # Pipelines that are triggered manually
+    deployment-to-prod: # Another display name
+      - variables:          #list variable names under here
+           - name: Username
+           - name: Region
+      - step: 
+          script:
+            - echo "User name is $Username"
+            - echo "and they are in $Region"
+      - step:
+          script:
+            - echo "Manual triggers for deployments are awesome!"
   default:
     - step:
         name: Build and test
@@ -17,8 +29,8 @@ pipelines:
           - dotnet restore
           - dotnet build --output $OUTPUT $PROJECT_NAME
           - dotnet test $TEST_NAME
-        #artifacts: 
-        #  - $OUTPUT/**
+        artifacts: 
+          - $OUTPUT/*.*
   branches:
     master:
       - step:
