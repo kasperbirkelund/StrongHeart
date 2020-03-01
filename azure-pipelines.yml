@@ -36,9 +36,9 @@ steps:
  #       arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
  #       zipAfterPublish: true
 
-    - task: PublishBuildArtifacts@1
-      displayName: "Upload Artifacts"
-      inputs:
-        pathtoPublish: './ouptut' 
-        artifactName: 'StrongHeart artifact' 
+#   - task: PublishBuildArtifacts@1
+#     displayName: "Upload Artifacts"
+#     inputs:
+#       pathtoPublish: './ouptut' 
+#       artifactName: 'StrongHeart artifact' 
   
