@@ -18,7 +18,7 @@ steps:
       displayName: 'dotnet build $(buildConfiguration)'
       inputs:
         command: 'build'
-        projects: '**/*.csproj'
+        projects: 'Src/StrongHeart.Features/StrongHeart.Features.csproj'
         arguments: '--configuration $(buildConfiguration)'
     
     - task: DotNetCoreCLI@2
