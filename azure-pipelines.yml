@@ -19,7 +19,7 @@ steps:
       inputs:
         command: 'build'
         projects: 'Src/StrongHeart.Features/StrongHeart.Features.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+        arguments: '--configuration $(buildConfiguration) --output ./output'
     
     - task: DotNetCoreCLI@2
       displayName: "Test"
@@ -39,6 +39,6 @@ steps:
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
       inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        pathtoPublish: './ouptut' 
         artifactName: 'StrongHeart artifact' 
   
