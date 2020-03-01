@@ -2,6 +2,7 @@
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops
 
 trigger:
 - master
@@ -13,7 +14,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build $(buildConfiguration)'
       inputs:
@@ -28,17 +28,17 @@ steps:
         projects: '**/*test/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
-    - task: DotNetCoreCLI@2
-      displayName: "Publish"
-      inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: true
+ #   - task: DotNetCoreCLI@2
+ #     displayName: "Publish"
+ #     inputs:
+ #       command: 'publish'
+ #       publishWebProjects: true
+ #       arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+ #       zipAfterPublish: true
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'hanselminutes' 
+        artifactName: 'StrongHeart artifact' 
   
