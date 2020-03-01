@@ -25,7 +25,7 @@ steps:
       displayName: "Test"
       inputs:
         command: test
-        projects: '**/*test/*.csproj'
+        projects: 'Src/StrongHeart.Features.Test/StrongHeart.Features.Test.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
  #   - task: DotNetCoreCLI@2
