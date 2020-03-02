@@ -14,7 +14,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
         }
 
         public Func<TestCommandRequest, bool> IsOnBehalfOfOtherSelector => request => false; 
-        public AuditOptions AuditOptions => new AuditOptions(Guid.NewGuid(), "TestCommand", false);
+        public AuditOptions AuditOptions => new AuditOptions(Guid.Parse("1bbea587-1a0e-498d-9475-0e7912d5a9bc"), "TestCommand", false);
         public Func<TestCommandRequest, IEnumerable<Guid?>> CorrelationKeySelector => request => new List<Guid?>();
         public IEnumerable<IRole> GetRequiredRoles()
         {

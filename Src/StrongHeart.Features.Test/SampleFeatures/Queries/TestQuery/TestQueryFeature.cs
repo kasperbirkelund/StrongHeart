@@ -20,7 +20,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
         }
 
         public Func<TestQueryRequest, bool> IsOnBehalfOfOtherSelector => request => false;
-        public AuditOptions AuditOptions => new AuditOptions(Guid.NewGuid(), "Test", false);
+        public AuditOptions AuditOptions => new AuditOptions(Guid.Parse("b60a9996-74bf-47d0-9bed-faea131e3dc4"), "Test", false);
         public Func<TestQueryRequest, IEnumerable<Guid?>> CorrelationKeySelector => request => new List<Guid?>(); 
     }
 }

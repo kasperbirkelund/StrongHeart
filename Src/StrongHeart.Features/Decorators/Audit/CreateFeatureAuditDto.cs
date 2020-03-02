@@ -97,7 +97,7 @@ namespace StrongHeart.Features.Decorators.Audit
 
             public override void Write(Utf8JsonWriter writer, ICaller value, JsonSerializerOptions options)
             {
-                writer.WriteStringValue("omitted");
+                writer.WriteStringValue(value.Id);
             }
         }
 

@@ -40,5 +40,21 @@ namespace StrongHeart.Features.Decorators
             }
             return inner;
         }
+
+        public static IEventHandlerFeature<TEvent> GetInnerMostFeature<TEvent>(this IEventHandlerDecorator<TEvent> decorator) 
+            where TEvent : class, IEvent
+        {
+            IEventHandlerFeature<TEvent> inner = decorator.GetInnerFeature();
+            while (true)
+            {
+                var innerDecorator = inner as IEventHandlerDecorator<TEvent>;
+                if (innerDecorator == null)
+                {
+                    break;
+                }
+                inner = innerDecorator.GetInnerFeature();
+            }
+            return inner;
+        }
     }
 }

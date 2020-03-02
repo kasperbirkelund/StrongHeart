@@ -75,6 +75,10 @@ namespace StrongHeart.Features.DependencyInjection
             {
                 return GetDecorator(options.Extensions, x => x.CommandTypeDecorator);
             }
+            else if (IsEventhandler(interfaceType))
+            {
+                return GetDecorator(options.Extensions, x => x.EventHandlerTypeDecorator);
+            }
             else
             {
                 return Empty<Type>();
@@ -146,7 +150,7 @@ namespace StrongHeart.Features.DependencyInjection
 
         private static bool IsFeatureInterface(Type type)
         {
-            return IsCommand(type) || IsQuery(type);
+            return IsCommand(type) || IsQuery(type) || IsEventhandler((type));
         }
 
         private static bool IsCommand(this Type type)
@@ -168,6 +172,16 @@ namespace StrongHeart.Features.DependencyInjection
             }
             Type typeDefinition = type.GetGenericTypeDefinition();
             return typeDefinition == typeof(IQueryFeature<,>);
+        }
+
+        private static bool IsEventhandler(this Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+            Type typeDefinition = type.GetGenericTypeDefinition();
+            return typeDefinition == typeof(IEventHandlerFeature<>);
         }
     }
 }
