@@ -25,7 +25,7 @@ namespace StrongHeart.Features.Decorators.Filtering
                 return unfilteredResponse;
             }
 
-            IFilterable<TResponse>? filter = GetFilterable(unfilteredResponse.Value);
+            IFilterable<TResponse>? filter = GetFilterable();
             if (filter == null)
             {
                 return unfilteredResponse;
@@ -47,7 +47,7 @@ namespace StrongHeart.Features.Decorators.Filtering
             return _inner;
         }
 
-        private IFilterable<TResponse>? GetFilterable(TResponse unfilteredResponse)
+        private IFilterable<TResponse>? GetFilterable()
         {
             return GetInnerFeature() as IFilterable<TResponse>;
         }

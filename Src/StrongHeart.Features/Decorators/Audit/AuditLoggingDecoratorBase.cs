@@ -19,10 +19,10 @@ namespace StrongHeart.Features.Decorators.Audit
 
         protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
-            IEnumerable<CreateFeatureAuditDto> items = null;
+            IEnumerable<CreateFeatureAuditDto>? items = null;
 
             Stopwatch sw = Stopwatch.StartNew();
-            Guid?[] correlationKeys = null;
+            Guid?[]? correlationKeys = null;
             Guid featureId = GetUniqueFeatureId();
             
             try
