@@ -18,7 +18,7 @@ namespace StrongHeart.Features.Test
             PipelineExtensionsStub extensions = new PipelineExtensionsStub();
             using IServiceScope scope = extensions.CreateScope();
 
-            var meta = new EventMetadata("", "", DateTime.Now, Guid.NewGuid(), "");
+            var meta = new EventMetadata("messageType", "publisherApplicationName", DateTime.Now, Guid.NewGuid(), "publishedByUserName");
             var sut = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<TestEvent>>();
             var result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
             result.IsSuccess.Should().BeTrue();
@@ -34,7 +34,7 @@ namespace StrongHeart.Features.Test
             SimpleLogExtension extension = new SimpleLogExtension(() => logSpy);
             using IServiceScope scope = extension.CreateScope();
 
-            var meta = new EventMetadata("", "", DateTime.Now, Guid.NewGuid(), "");
+            var meta = new EventMetadata("messageType", "publisherApplicationName", DateTime.Now, Guid.NewGuid(), "publishedByUserName");
             var sut = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<TestEvent>>();
             var result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
             result.IsSuccess.Should().BeTrue();

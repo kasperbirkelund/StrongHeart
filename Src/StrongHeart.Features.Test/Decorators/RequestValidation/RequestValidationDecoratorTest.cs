@@ -42,7 +42,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             using IServiceScope scope = extension.CreateScope();
             var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-            Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), null));
+            Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(1)));
             func.Should().Throw<InvalidRequestException>();
         }
 
@@ -53,7 +53,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             using IServiceScope scope = extension.CreateScope();
             var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-            Func<Task> func = () => sut.Execute(null);
+            Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(1)));
             func.Should().Throw<InvalidRequestException>();
         }
     }

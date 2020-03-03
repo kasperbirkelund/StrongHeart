@@ -14,11 +14,15 @@ namespace StrongHeart.Features.Test.Decorators.Audit.Features.Queries.TestQuery
 
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
+            if (request.ShouldReturnResultFailure)
+            {
+                return Task.FromResult(Result<TestQueryResponse>.Failure("I was told to fail"));
+            }
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse("Hello")));
         }
 
         public Func<TestQueryRequest, bool> IsOnBehalfOfOtherSelector => request => false;
-        public AuditOptions AuditOptions => new AuditOptions(FeatureId, nameof(TestQueryFeature), logResponse: true );
+        public AuditOptions AuditOptions => new AuditOptions(FeatureId, nameof(TestQueryFeature), logResponse: true);
         public Func<TestQueryRequest, IEnumerable<Guid?>> CorrelationKeySelector => request => new List<Guid?>();
     }
 }
