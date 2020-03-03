@@ -5,7 +5,13 @@
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops
 
 trigger:
-- master
+ branches:
+    include:
+    - '*'
+ paths:
+    include:
+    - Src/*
+    - azure-pipelines.yml
 
 pool:
   vmImage: 'windows-latest'
