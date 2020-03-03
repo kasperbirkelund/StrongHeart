@@ -27,14 +27,15 @@ steps:
         command: test
         projects: 'Src/StrongHeart.Features.Test/StrongHeart.Features.Test.csproj'
         arguments: '--configuration $(buildConfiguration)'
+        publishTestResults: true
 
- #   - task: DotNetCoreCLI@2
- #     displayName: "Publish"
- #     inputs:
- #       command: 'publish'
- #       publishWebProjects: true
- #       arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
- #       zipAfterPublish: true
+    - task: DotNetCoreCLI@2
+      inputs:
+       command: 'publish'
+       publishWebProjects: false
+       projects: 'Src/StrongHeart.Features/StrongHeart.Features.csproj'
+       arguments: '-r linux-x64 --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+       zipAfterPublish: true
 
 #   - task: PublishBuildArtifacts@1
 #     displayName: "Upload Artifacts"
