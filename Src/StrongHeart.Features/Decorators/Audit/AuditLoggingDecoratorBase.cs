@@ -30,13 +30,18 @@ namespace StrongHeart.Features.Decorators.Audit
             {
                 TResponse result = await func(request);
                 sw.Stop();
-                correlationKeys = GetKeys(request);
 
-                if (result is Result)
-                {
-                    throw new NotImplementedException();
-                }
+                correlationKeys = GetKeys(request);
                 bool isOnBehalfOfOther = GetIsOnBehalfOfOther(request);
+
+                if (result is IResult r)
+                {
+                    if (r.IsFailure)
+                    {
+                        items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateResultFailure(featureId, request, r.Error, sw.Elapsed, x));
+                        return result;
+                    }
+                }
 
                 if (AuditOptions.LogResponse)
                 {

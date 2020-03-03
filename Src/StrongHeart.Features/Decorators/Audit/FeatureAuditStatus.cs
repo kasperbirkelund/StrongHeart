@@ -6,6 +6,6 @@
         ValidationException = 2,
         BusinessException = 3,
         OtherException = 4,
-        ResultFailure
+        ResultFailure = 5
     }
 }

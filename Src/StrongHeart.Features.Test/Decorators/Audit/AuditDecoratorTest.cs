@@ -46,6 +46,10 @@ namespace StrongHeart.Features.Test.Decorators.Audit
                 spy.Audits.Count.Should().Be(1);
                 var actual = spy.Audits.Single();
                 actual.Status.Should().Be(FeatureAuditStatus.ResultFailure);
+                actual.CorrelationKey.Should().Be(null);
+                actual.IsOnBehalfOfOther.Should().Be(null);
+                actual.RequestArgumentsJson.Should().NotBe(null);
+                actual.ResponseArgumentsJson.Should().NotBe(null);
             }
         }
     }
