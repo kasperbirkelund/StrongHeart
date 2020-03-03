@@ -48,6 +48,14 @@ steps:
       displayName: 'dotnet pack'
       inputs:
         command: pack
+        packagesToPack: 'Src/StrongHeart.Features/StrongHeart.Features.csproj'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: '857a7064-7611-47f0-b2ab-d4a5d901caa5'
         
 #   - task: PublishBuildArtifacts@1
 #     displayName: "Upload Artifacts"
