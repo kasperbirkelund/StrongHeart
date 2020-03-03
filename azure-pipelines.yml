@@ -28,12 +28,12 @@ steps:
         arguments: '--configuration $(buildConfiguration) --output ./output'
     
     - task: DotNetCoreCLI@2
-      displayName: "Test"
+      displayName: "dotnet test"
       inputs:
         command: test
         projects: 'Src/StrongHeart.Features.Test/StrongHeart.Features.Test.csproj'
-        arguments: '--logger:"trx;LogFileName=$(Common.TestResultsDirectory)" --collect:"Code Coverage" /p:CoverletOutputFormat=opencover --configuration $(buildConfiguration)'
-        publishTestResults: true
+        arguments: '--configuration $(buildConfiguration)'
+        #--logger:"trx;LogFileName=$(Common.TestResultsDirectory)" --collect:"Code Coverage" /p:CoverletOutputFormat=opencover         
 
     - task: DotNetCoreCLI@2
       displayName: 'dotnet publish'
@@ -44,6 +44,11 @@ steps:
        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
        zipAfterPublish: true
 
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack'
+      inputs:
+        command: pack
+        
 #   - task: PublishBuildArtifacts@1
 #     displayName: "Upload Artifacts"
 #     inputs:
