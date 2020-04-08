@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging

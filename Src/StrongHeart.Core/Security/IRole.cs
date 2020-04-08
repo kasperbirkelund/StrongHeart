@@ -1,4 +1,4 @@
-﻿namespace StrongHeart.Features.Core
+﻿namespace StrongHeart.Core.Security
 {
     public interface IRole
     {

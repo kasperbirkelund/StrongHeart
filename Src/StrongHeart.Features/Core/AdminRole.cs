@@ -1,4 +1,5 @@
 ﻿using System;
+using StrongHeart.Core.Security;
 
 namespace StrongHeart.Features.Core
 {

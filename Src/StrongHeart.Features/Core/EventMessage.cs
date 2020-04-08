@@ -1,4 +1,6 @@
-﻿namespace StrongHeart.Features.Core
+﻿using StrongHeart.Core.Security;
+
+namespace StrongHeart.Features.Core
 {
     public class EventMessage<T> : IRequest where T : class, IEvent
     {

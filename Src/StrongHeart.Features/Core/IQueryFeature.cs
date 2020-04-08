@@ -10,7 +10,15 @@ namespace StrongHeart.Features.Core
     {
     }
 
-    public class Result
+    public interface IResult
+    {
+        bool IsFailure { get; }
+
+        bool IsSuccess { get; }
+        string? Error { get; }
+    }
+
+    public class Result : IResult
     {
         public bool IsFailure { get; }
 
@@ -33,7 +41,7 @@ namespace StrongHeart.Features.Core
         }
     }
 
-    public class Result<T>
+    public class Result<T> : IResult
     {
         public bool IsFailure { get; }
 

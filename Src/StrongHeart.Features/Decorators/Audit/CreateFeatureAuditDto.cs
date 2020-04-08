@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 
@@ -53,6 +54,16 @@ namespace StrongHeart.Features.Decorators.Audit
             where TRequest : IRequest
         {
             return CreateSuccessWithResponse(featureId, request, null as string, duration, correlationKey, isOnBehalfOfOther);
+        }
+
+        public static CreateFeatureAuditDto CreateResultFailure<TRequest>(Guid featureId, TRequest request, string error, TimeSpan duration, Guid? correlationKey)
+            where TRequest : IRequest
+        {
+            string requestArguments = ToJson(request);
+            string responseArguments = ToJson(new {ResultError = error});
+            FeatureAuditStatus status = FeatureAuditStatus.ResultFailure;
+
+            return new CreateFeatureAuditDto(featureId, request.Caller, requestArguments, responseArguments, duration, status, correlationKey, null /*if request has failed we dont know for sure is the value has been properly calculated. Therefore null.*/);
         }
 
         public static CreateFeatureAuditDto CreateException<TRequest>(Guid featureId, TRequest request, Exception ex, TimeSpan duration, Guid? correlationKey)

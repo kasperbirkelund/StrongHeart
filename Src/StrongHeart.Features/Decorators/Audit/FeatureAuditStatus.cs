@@ -5,6 +5,7 @@
         Success = 1,
         ValidationException = 2,
         BusinessException = 3,
-        OtherException = 4
+        OtherException = 4,
+        ResultFailure = 5
     }
 }

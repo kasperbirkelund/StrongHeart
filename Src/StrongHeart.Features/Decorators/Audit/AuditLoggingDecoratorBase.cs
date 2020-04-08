@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Audit
 {
@@ -24,20 +25,31 @@ namespace StrongHeart.Features.Decorators.Audit
             Stopwatch sw = Stopwatch.StartNew();
             Guid?[]? correlationKeys = null;
             Guid featureId = GetUniqueFeatureId();
-            
+
             try
             {
                 TResponse result = await func(request);
                 sw.Stop();
+
                 correlationKeys = GetKeys(request);
                 bool isOnBehalfOfOther = GetIsOnBehalfOfOther(request);
+
+                if (result is IResult r)
+                {
+                    if (r.IsFailure)
+                    {
+                        items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateResultFailure(featureId, request, r.Error, sw.Elapsed, x));
+                        return result;
+                    }
+                }
+
                 if (AuditOptions.LogResponse)
                 {
                     items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateSuccessWithResponse(featureId, request, result, sw.Elapsed, x, isOnBehalfOfOther));
                 }
                 else
                 {
-                    items = items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateSuccessWithNoResponse(featureId, request, null as string, sw.Elapsed, x, isOnBehalfOfOther));
+                    items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateSuccessWithNoResponse(featureId, request, null as string, sw.Elapsed, x, isOnBehalfOfOther));
                 }
 
                 return result;

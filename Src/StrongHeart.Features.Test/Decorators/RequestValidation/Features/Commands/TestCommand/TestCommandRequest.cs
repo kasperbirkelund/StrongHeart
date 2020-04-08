@@ -1,4 +1,5 @@
-﻿using StrongHeart.Features.Core;
+﻿using StrongHeart.Core.Security;
+using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Commands.TestCommand
 {

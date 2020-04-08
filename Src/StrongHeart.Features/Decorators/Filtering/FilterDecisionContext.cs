@@ -1,4 +1,4 @@
-﻿using StrongHeart.Features.Core;
+﻿using StrongHeart.Core.Security;
 
 namespace StrongHeart.Features.Decorators.Filtering
 {

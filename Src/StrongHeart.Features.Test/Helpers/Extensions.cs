@@ -11,7 +11,10 @@ namespace StrongHeart.Features.Test.Helpers
         {
             IServiceCollection col = new ServiceCollection();
 
-            col.AddFeatures(x => { x.AddPipelineExtensions(extensions); }, typeof(FeatureQueryTest).Assembly);
+            col.AddFeatures(x =>
+            {
+                x.AddPipelineExtensions(extensions);
+            }, typeof(FeatureQueryTest).Assembly);
             var provider = col.BuildServiceProvider();
             return provider.CreateScope();
         }
@@ -20,7 +23,10 @@ namespace StrongHeart.Features.Test.Helpers
         {
             IServiceCollection col = new ServiceCollection();
 
-            col.AddFeatures(x => { x.AddPipelineExtension(extension); }, typeof(FeatureQueryTest).Assembly);
+            col.AddFeatures(x =>
+            {
+                x.AddPipelineExtension(extension);
+            }, typeof(FeatureQueryTest).Assembly);
             var provider = col.BuildServiceProvider();
             return provider.CreateScope();
         }
