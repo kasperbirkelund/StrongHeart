@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="fluentassertions" Version="5.10.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="microsoft.extensions.dependencyinjection" Version="3.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="xunit" Version="2.4.1" />

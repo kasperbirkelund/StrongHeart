@@ -1,4 +1,6 @@
-﻿namespace StrongHeart.Features.Core
+﻿using StrongHeart.Core.Security;
+
+namespace StrongHeart.Features.Core
 {
     public interface IRequest
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 

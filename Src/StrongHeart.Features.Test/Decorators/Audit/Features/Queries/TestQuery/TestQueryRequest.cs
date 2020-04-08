@@ -1,3 +1,4 @@
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Test.Decorators.Audit.Features.Queries.TestQuery

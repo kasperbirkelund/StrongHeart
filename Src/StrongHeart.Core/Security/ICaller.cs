@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StrongHeart.Features.Core
+namespace StrongHeart.Core.Security
 {
     public interface ICaller
     {
