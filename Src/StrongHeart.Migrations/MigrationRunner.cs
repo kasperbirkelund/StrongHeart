@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,16 +17,16 @@ namespace StrongHeart.Migrations
             }
         }
 
-        public static IServiceCollection AddFluentMigrator(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddFluentMigrator(this IServiceCollection services, Assembly migrationAssembly, string connectionString)
         {
-            var assembly = typeof(MigrationRunner).Assembly;
             services
                 .AddFluentMigratorCore()
-                .AddSingleton<IAssemblySourceItem>(x => new AssemblySourceItem(assembly))
+                .AddSingleton<IAssemblySourceItem>(x => new AssemblySourceItem(migrationAssembly))
+                .AddLogging(x=> x.AddFluentMigratorConsole())
                 .ConfigureRunner(x => x
                     .AddSqlServer2016()
                     .WithGlobalConnectionString(connectionString)
-                    .ScanIn(assembly).For.Migrations());
+                    .ScanIn(migrationAssembly).For.Migrations());
             return services;
         }
     }
