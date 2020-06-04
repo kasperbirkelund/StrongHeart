@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using StrongHeart.Core.Security;
-using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Test.Helpers
 {

@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.TestQuery
+﻿namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.TestQuery
 {
     public class PersonDto
     {

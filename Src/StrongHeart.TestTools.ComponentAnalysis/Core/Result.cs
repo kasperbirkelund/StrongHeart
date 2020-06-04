@@ -11,9 +11,9 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
 
         public bool IsPassed => ItemsWithError.Count == 0 && AllVerifiedItems.Count > 0;
         public string Message { get; }
-        public string Output { get; }
+        public string? Output { get; }
 
-        private Result(IList<T> allVerifiedItems, IList<T> itemsWithError, string message, string output)
+        private Result(IList<T> allVerifiedItems, IList<T> itemsWithError, string message, string? output)
         {
             AllVerifiedItems = allVerifiedItems;
             ItemsWithError = itemsWithError;

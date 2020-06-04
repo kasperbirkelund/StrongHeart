@@ -34,10 +34,15 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return type.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
         }
 
-        public static IEnumerable<Type> AllTypesFromAssemblies(IEnumerable<Assembly> mainAssemblies)
+        public static IEnumerable<Type> AllTypesFromAssemblies(IEnumerable<Assembly> assemblies)
         {
-            IEnumerable<Type> types = mainAssemblies.SelectMany(x => x.GetTypes());
+            IEnumerable<Type> types = assemblies.SelectMany(x => x.GetTypes());
             return types;
+        }
+
+        public static IEnumerable<Type> AllTypesFromAssembly(Assembly assembly)
+        {
+            return AllTypesFromAssemblies(new[] {assembly});
         }
 
         public static IEnumerable<MethodInfo> AllMethodsFromTypes(this IEnumerable<Type> types)
