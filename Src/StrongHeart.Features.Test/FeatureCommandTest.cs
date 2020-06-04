@@ -18,7 +18,7 @@ namespace StrongHeart.Features.Test
             using IServiceScope scope = extensions.CreateScope();
 
             var sut2 = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-            var result2 = await sut2.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
+            IResult result2 = await sut2.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
             result2.IsSuccess.Should().BeTrue();
 
             extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
@@ -33,7 +33,7 @@ namespace StrongHeart.Features.Test
             using IServiceScope scope = extension.CreateScope();
 
             var sut2 = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-            var result2 = await sut2.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
+            IResult result2 = await sut2.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
             result2.IsSuccess.Should().BeTrue();
 
             logSpy.Messages.Count.Should().Be(2);

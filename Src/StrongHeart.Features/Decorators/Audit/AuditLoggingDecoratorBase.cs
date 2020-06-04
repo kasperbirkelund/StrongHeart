@@ -36,7 +36,7 @@ namespace StrongHeart.Features.Decorators.Audit
 
                 if (result is IResult r)
                 {
-                    if (r.IsFailure)
+                    if (r.Status == ResultType.Failed)
                     {
                         items = correlationKeys.Select(x => CreateFeatureAuditDto.CreateResultFailure(featureId, request, r.Error, sw.Elapsed, x));
                         return result;

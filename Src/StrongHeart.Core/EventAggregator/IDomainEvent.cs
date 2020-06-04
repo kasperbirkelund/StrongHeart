@@ -1,6 +1,6 @@
-﻿namespace StrongHeart.Core.EventAggregator
-{
-    public interface IDomainEvent
-    {   
-    }
-}
+﻿//namespace StrongHeart.Core.EventAggregator
+//{
+//    public interface IDomainEvent
+//    {   
+//    }
+//}

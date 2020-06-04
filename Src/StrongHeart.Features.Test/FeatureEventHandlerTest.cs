@@ -20,7 +20,7 @@ namespace StrongHeart.Features.Test
 
             var meta = new EventMetadata("messageType", "publisherApplicationName", DateTime.Now, Guid.NewGuid(), "publishedByUserName");
             var sut = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<TestEvent>>();
-            var result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
+            IResult result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
             result.IsSuccess.Should().BeTrue();
 
             extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
@@ -36,7 +36,7 @@ namespace StrongHeart.Features.Test
 
             var meta = new EventMetadata("messageType", "publisherApplicationName", DateTime.Now, Guid.NewGuid(), "publishedByUserName");
             var sut = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<TestEvent>>();
-            var result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
+            IResult result = await sut.Handle(new EventMessage<TestEvent>(new TestAdminCaller(), new TestEvent("newValue"), meta));
             result.IsSuccess.Should().BeTrue();
 
             logSpy.Messages.Count.Should().Be(2);

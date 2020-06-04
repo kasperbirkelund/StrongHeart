@@ -2,7 +2,7 @@
 
 namespace StrongHeart.Features.Core
 {
-    public class EventMetadata 
+    public class EventMetadata
     {
         public EventMetadata(string messageType, string publisherApplicationName, DateTime enqueueTime, Guid correlationId, string publishedByUserName)
         {
@@ -13,10 +13,10 @@ namespace StrongHeart.Features.Core
             PublishedByUserName = publishedByUserName;
         }
 
-        public string MessageType { get;  }
+        public string MessageType { get; }
         public string PublisherApplicationName { get; }
         public DateTime EnqueueTime { get; }
-        public Guid CorrelationId { get;  }
+        public Guid CorrelationId { get; }
         public string PublishedByUserName { get; }
     }
 }

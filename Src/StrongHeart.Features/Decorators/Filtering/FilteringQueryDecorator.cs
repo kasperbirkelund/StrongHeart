@@ -21,7 +21,7 @@ namespace StrongHeart.Features.Decorators.Filtering
         {
             Result<TResponse> unfilteredResponse = await _inner.Execute(request);
 
-            if (unfilteredResponse.IsFailure)
+            if (unfilteredResponse.Status != ResultType.ExecutedSuccessfully)
             {
                 return unfilteredResponse;
             }
