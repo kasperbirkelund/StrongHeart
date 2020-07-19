@@ -32,16 +32,16 @@ namespace StrongHeart.Features.Test.Rules
         {
             return
                 IsAssignableToGenericType(item, typeof(ICommandFeature<,>)) ||
-                IsAssignableToGenericType(item, typeof(IQueryFeature<,>)) ||
-                IsAssignableToGenericType(item, typeof(IEventHandlerFeature<>));
+                IsAssignableToGenericType(item, typeof(IQueryFeature<,>));
+            //IsAssignableToGenericType(item, typeof(IEventHandlerFeature<>))
         }
 
         private bool IsFeatureDecorator(Type item)
         {
             return
                 IsAssignableToGenericType(item, typeof(ICommandDecorator<,>)) ||
-                IsAssignableToGenericType(item, typeof(IQueryDecorator<,>)) ||
-                IsAssignableToGenericType(item, typeof(IEventHandlerDecorator<>));
+                IsAssignableToGenericType(item, typeof(IQueryDecorator<,>));
+                //IsAssignableToGenericType(item, typeof(IEventHandlerDecorator<>));
         }
 
         private static bool IsAssignableToGenericType(Type givenType, Type genericType)
