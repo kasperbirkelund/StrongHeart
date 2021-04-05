@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
@@ -7,8 +8,13 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
 {
     public class AddGeneratedClassToFileNameReverseEngineerScaffolder : ReverseEngineerScaffolder
     {
-        public AddGeneratedClassToFileNameReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory, IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector, ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper, INamedConnectionStringResolver connectionStringResolver) : base(databaseModelFactory, scaffoldingModelFactory, modelCodeGeneratorSelector, cSharpUtilities, cSharpHelper, connectionStringResolver)
+        public AddGeneratedClassToFileNameReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory,
+            IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector,
+            ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper,
+            INamedConnectionStringResolver connectionStringResolver, IOperationReporter reporter) : base(databaseModelFactory, scaffoldingModelFactory, modelCodeGeneratorSelector, 
+            cSharpUtilities, cSharpHelper, connectionStringResolver, reporter)
         {
+            
         }
 
         public override SavedModelFiles Save(ScaffoldedModel scaffoldedModel, string outputDir, bool overwriteFiles)
