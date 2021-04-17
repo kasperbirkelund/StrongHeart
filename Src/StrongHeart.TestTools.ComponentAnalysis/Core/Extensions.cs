@@ -20,7 +20,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
                 return Result<T>.NoItemsToVerify(throwOnException);
             }
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new ();
 
             T[] itemsWithError = typesToVerify
                 .Where(x => !rule.IsValid(x, s => sb.AppendLine(s)))
