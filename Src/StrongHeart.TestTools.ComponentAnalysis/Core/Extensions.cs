@@ -33,7 +33,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return Result<T>.NoErrors(typesToVerify);
         }
 
-        public static TAttribute GetAttributeOrNull<TAttribute>(this ICustomAttributeProvider provider)
+        public static TAttribute? GetAttributeOrNull<TAttribute>(this ICustomAttributeProvider provider)
         {
             return provider
                 .GetCustomAttributes(typeof(TAttribute), false)

@@ -25,7 +25,7 @@ namespace StrongHeart.Migrations
         public static ICreateTableColumnOptionOrWithColumnSyntax WithCreatedAtUtc(this ICreateTableWithColumnSyntax tableWithColumnSyntax)
         {
             return tableWithColumnSyntax
-                .WithColumn("CreatedAtUtc").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentUTCDateTime);
+                .WithColumn("CreatedAtUtc").AsCustom("DATETIME2(0)").NotNullable();
         }
 
         public static void ApplyAllSchemaObjects(this IExecuteExpressionRoot root, Assembly assembly, Func<string, string> scriptSortAlgorithm)

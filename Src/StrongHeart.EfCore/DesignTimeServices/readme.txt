@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
+#pragma warning disable 1591
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-#pragma warning disable 1591
-namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
+namespace Xxx
 {
     /*This class MUST remain as it is used by Scaffold-DbContext power shell command*/
     public class EntityFrameworkCoreDesignTimeServices : IDesignTimeServices
@@ -12,9 +12,11 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
         //Used for scaffolding database to code
         public void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
         {
+            ApplicationSpecificOptions options = new ApplicationSpecificOptions(new string[0]);
+            serviceCollection.AddSingleton(options);
             serviceCollection.AddSingleton<ICSharpDbContextGenerator, StrongHeartDbContextGenerator>();
-            serviceCollection.AddSingleton<ICSharpEntityTypeGenerator, RemoveTemporalTableColumnsCSharpEntityTypeGenerator>();
-            serviceCollection.AddSingleton<IReverseEngineerScaffolder, AddGeneratedClassToFileNameReverseEngineerScaffolder>();
+            serviceCollection.AddSingleton<ICSharpEntityTypeGenerator, StrongHeartCSharpEntityTypeGenerator>();
+            serviceCollection.AddSingleton<IReverseEngineerScaffolder, StrongHeartReverseEngineerScaffolder>();
         }
     }
 }
