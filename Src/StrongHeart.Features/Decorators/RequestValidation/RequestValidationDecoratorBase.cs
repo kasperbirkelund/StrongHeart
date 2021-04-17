@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
-using FluentValidation.Validators;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {

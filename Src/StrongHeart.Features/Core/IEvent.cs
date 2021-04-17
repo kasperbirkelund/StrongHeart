@@ -1,6 +1,6 @@
-﻿namespace StrongHeart.Features.Core
-{
-    public interface IEvent
-    {
-    }
-}
+﻿//namespace StrongHeart.Features.Core
+//{
+//    public interface IEvent
+//    {
+//    }
+//}
