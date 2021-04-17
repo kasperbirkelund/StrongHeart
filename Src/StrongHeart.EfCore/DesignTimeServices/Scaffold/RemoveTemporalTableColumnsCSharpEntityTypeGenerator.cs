@@ -1,15 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using Microsoft.EntityFrameworkCore.SqlServer.Design.Internal;
 
 namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
 {
     public class RemoveTemporalTableColumnsCSharpEntityTypeGenerator : CSharpEntityTypeGenerator
     {
-        public RemoveTemporalTableColumnsCSharpEntityTypeGenerator(ICSharpHelper cSharpHelper) : base(cSharpHelper)
+        public RemoveTemporalTableColumnsCSharpEntityTypeGenerator(IAnnotationCodeGenerator annotationCodeGenerator,
+            ICSharpHelper cSharpHelper) : base(annotationCodeGenerator, cSharpHelper)
         {
+            
         }
-
         public override string WriteCode(IEntityType entityType, string @namespace, bool useDataAnnotations)
         {
             string code = base.WriteCode(entityType, @namespace, useDataAnnotations);

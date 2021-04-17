@@ -16,12 +16,11 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
         }
 
         public override string WriteCode(IModel model, string contextName, string connectionString, string contextNamespace,
-            string modelNamespace, bool useDataAnnotations, bool suppressConnectionStringWarning)
+            string modelNamespace, bool useDataAnnotations, bool suppressConnectionStringWarning, bool suppressOnConfiguring)
         {
-            string code = base.WriteCode(model, contextName, connectionString, contextNamespace, modelNamespace, useDataAnnotations, suppressConnectionStringWarning);
-
+            string code = base.WriteCode(model, contextName, connectionString, contextNamespace, modelNamespace, useDataAnnotations, suppressConnectionStringWarning, suppressOnConfiguring);
             //string usingPrefix = "using Star.Foundation.Framework.DataAccess;" + Environment.NewLine;
-            const string parameterlessConstructor = @"public CvContext()
+            const string parameterlessConstructor = @"public MyDbContext()
         {
         }";
 
@@ -30,7 +29,6 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold
             };
 
             code = code
-                //.Replace(" : DbContext", $" : StarDbContextBase<{contextName}> // Generated from class {GetType().FullName}")
                 .Replace(parameterlessConstructor, string.Empty);
 
             foreach (string s in tablesToReplace)

@@ -11,7 +11,7 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         protected override Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
             IValidator validator = GetValidator();
-            ValidationResult result = validator.Validate(request);
+            ValidationResult result = validator.Validate(new ValidationContext<TRequest>(request));
             if (!result.IsValid)
             {
                 throw new BusinessValidationException(result.Errors);
