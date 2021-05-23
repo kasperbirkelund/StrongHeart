@@ -18,7 +18,7 @@ namespace StrongHeart.Features.DependencyInjection
                 throw new ArgumentException("Please provide assemblies which contains features to wire up");
             }
 
-            FeatureSetupOptions options = new FeatureSetupOptions(services);
+            FeatureSetupOptions options = new(services);
             optionsAction(options);
 
             List<Type> handlerTypes = assemblies
