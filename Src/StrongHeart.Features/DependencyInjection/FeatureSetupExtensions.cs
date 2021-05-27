@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 using static System.Linq.Enumerable;
 
@@ -23,7 +22,7 @@ namespace StrongHeart.Features.DependencyInjection
 
             List<Type> handlerTypes = assemblies
                 .SelectMany(x => x.GetTypes())
-                .Where(x => x.GetInterfaces().Any(IsFeatureInterface))
+                .Where(x => x.GetInterfaces().Any(Extensions.IsFeatureInterface))
                 .ToList();
 
             foreach (Type type in handlerTypes)
@@ -36,7 +35,7 @@ namespace StrongHeart.Features.DependencyInjection
 
         private static void AddHandler(IServiceCollection services, Type type, FeatureSetupOptions options)
         {
-            Type interfaceType = type.GetInterfaces().Single(IsFeatureInterface);
+            Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeatureInterface);
 
             List<Type> pipeline = new List<Type>();
 
@@ -67,18 +66,14 @@ namespace StrongHeart.Features.DependencyInjection
             }
 
             //the first returned decorator will become the outer-most in the pipeline
-            if (IsQuery(interfaceType))
+            if (interfaceType.IsQuery())
             {
                 return GetDecorator(options.Extensions, x => x.QueryTypeDecorator);
             }
-            else if (IsCommand(interfaceType))
+            if (interfaceType.IsCommand())
             {
                 return GetDecorator(options.Extensions, x => x.CommandTypeDecorator);
             }
-            //else if (IsEventhandler(interfaceType))
-            //{
-            //    return GetDecorator(options.Extensions, x => x.EventHandlerTypeDecorator);
-            //}
             else
             {
                 return Empty<Type>();
@@ -129,7 +124,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (IsFeatureInterface(parameterType))
+            if (parameterType.IsFeatureInterface())
             {
                 return current;
             }
@@ -147,41 +142,5 @@ namespace StrongHeart.Features.DependencyInjection
         {
             yield break;
         }
-
-        private static bool IsFeatureInterface(Type type)
-        {
-            return IsCommand(type) || IsQuery(type)/* || IsEventhandler((type))*/;
-        }
-
-        private static bool IsCommand(this Type type)
-        {
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-
-            Type typeDefinition = type.GetGenericTypeDefinition();
-            return typeDefinition == typeof(ICommandFeature<,>);
-        }
-
-        private static bool IsQuery(this Type type)
-        {
-            if (!type.IsGenericType)
-            {
-                return false;
-            }
-            Type typeDefinition = type.GetGenericTypeDefinition();
-            return typeDefinition == typeof(IQueryFeature<,>);
-        }
-
-        //private static bool IsEventhandler(this Type type)
-        //{
-        //    if (!type.IsGenericType)
-        //    {
-        //        return false;
-        //    }
-        //    Type typeDefinition = type.GetGenericTypeDefinition();
-        //    return typeDefinition == typeof(IEventHandlerFeature<>);
-        //}
     }
 }

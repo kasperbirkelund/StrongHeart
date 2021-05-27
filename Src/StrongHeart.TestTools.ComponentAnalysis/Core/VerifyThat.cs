@@ -40,6 +40,11 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return types;
         }
 
+        public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly)
+        {
+            return AllTypesFromAllReferencedAssemblies(mainAssembly, _ => true);
+        }
+
         private static bool IsAnonymousType(this Type type)
         {
             return type.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
