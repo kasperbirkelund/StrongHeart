@@ -6,4 +6,5 @@ dotnet pack .\StrongHeart.Migrations
 xcopy StrongHeart.Migrations\bin\Debug\*.nupkg C:\development\NugetFeed /Y
 dotnet pack .\StrongHeart.EfCore
 xcopy StrongHeart.EfCore\bin\Debug\*.nupkg C:\development\NugetFeed /Y
-
+dotnet pack .\StrongHeart.TestTools.ComponentAnalysis
+xcopy StrongHeart.TestTools.ComponentAnalysis\bin\Debug\*.nupkg C:\development\NugetFeed /Y
