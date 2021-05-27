@@ -10,12 +10,12 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
     {
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
-            var result = Result<TestQueryResponse>.Success(new TestQueryResponse("MyTest"));
+            var result = Result<TestQueryResponse>.Success(new TestQueryResponse(new[] { "MyTest" }));
             return Task.FromResult(result);
         }
 
         public Func<TestQueryRequest, bool> IsOnBehalfOfOtherSelector => request => false;
         public AuditOptions AuditOptions => new AuditOptions(Guid.Parse("b60a9996-74bf-47d0-9bed-faea131e3dc4"), "Test", false);
-        public Func<TestQueryRequest, IEnumerable<Guid?>> CorrelationKeySelector => request => new List<Guid?>(); 
+        public Func<TestQueryRequest, IEnumerable<Guid?>> CorrelationKeySelector => _ => new List<Guid?>();
     }
 }

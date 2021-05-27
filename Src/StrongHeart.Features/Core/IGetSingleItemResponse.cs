@@ -2,6 +2,6 @@
 {
     public interface IGetSingleItemResponse<out T> : IResponseDto
     {
-        T Item { get; } //TODO: this should be nullable
+        T? Item { get; }
     }
 }

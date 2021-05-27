@@ -1,14 +1,16 @@
+using System.Collections.Generic;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
 {
-    public class TestQueryResponse : IResponseDto
+    public class TestQueryResponse : IGetListResponse<string>
     {
-        public TestQueryResponse(string name)
+        public TestQueryResponse(ICollection<string> items)
         {
-            Name = name;
+            Items = items;
         }
 
-        public string Name { get; }
+
+        public ICollection<string> Items { get; }
     }
 }

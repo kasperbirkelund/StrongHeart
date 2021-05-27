@@ -11,7 +11,7 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder
             CSharpType = sqlType.GetCSharpType(isNullable);
         }
 
-        //format @CivilRegistrationIdentifier > civilRegistrationIdentifier
+        //format @ThisIsAParameter > thisIsAParameter
         private string Format(string name)
         {
             string a = name.Replace("@", string.Empty, StringComparison.CurrentCulture);

@@ -19,7 +19,7 @@ namespace StrongHeart.Features.Test
 
             var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
             var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            result1.Value.Name.Should().Be("MyTest");
+            result1.Value.Items.Should().Contain("MyTest");
 
             extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
             extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
@@ -34,7 +34,7 @@ namespace StrongHeart.Features.Test
 
             var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
             var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            result1.Value.Name.Should().Be("MyTest");
+            result1.Value.Items.Should().Contain("MyTest");
 
             logSpy.Messages.Count.Should().Be(2);
         }

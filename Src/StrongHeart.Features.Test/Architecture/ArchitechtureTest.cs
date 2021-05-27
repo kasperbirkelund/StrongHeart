@@ -21,5 +21,21 @@ namespace StrongHeart.Features.Test.Architecture
                 .AllTypesFromAssembly(GetType().Assembly)
                 .DoesComplyToRule(new CommandFeaturesRequestAndResponseMatch());
         }
+
+        [Fact]
+        public void ResponseDtoShouldBeMoreSpecific()
+        {
+            VerifyThat
+                .AllTypesFromAssembly(GetType().Assembly)
+                .DoesComplyToRule(new ResponseDtoShouldBeMoreSpecificRule());
+        }
+
+        [Fact]
+        public void FeaturesCannotDependOnFeatures()
+        {
+            VerifyThat
+                .AllTypesFromAssembly(GetType().Assembly)
+                .DoesComplyToRule(new FeaturesCannotDependOnFeaturesRule());
+        }
     }
 }

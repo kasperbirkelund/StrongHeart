@@ -8,7 +8,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 {
     public class CommandFeaturesRequestAndResponseMatch : IRule<Type>
     {
-        public string CorrectiveAction { get; } = "Ensure that the feature name is consistent with the request and dto name";
+        public string CorrectiveAction => "Ensure that the feature name is consistent with the request and dto name";
         public bool DoFailIfNoItemsToVerify => true;
 
         public bool DoVerifyItem(Type type)
