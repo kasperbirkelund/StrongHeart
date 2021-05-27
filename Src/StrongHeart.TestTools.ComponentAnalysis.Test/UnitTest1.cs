@@ -8,23 +8,23 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
     public class UnitTest1
     {
         private static readonly IProjectReader ProjectReader = new DotNetCoreProjectReader(@"C:\development\github\CodeImproverTool\");
-        [Fact]
+        [Fact(Skip = "not implemented")]
         public void Test1()
         {
-            Component cWebApi = Components.GetWebApi();
-            Component cWebApp = Components.GetWebApp();
+            //Component cWebApi = Components.GetWebApi();
+            //Component cWebApp = Components.GetWebApp();
 
-            VerifyThat.Component(cWebApi).DoesNotReference(cWebApp).Using(ProjectReader);
+            //VerifyThat.Component(cWebApi).DoesNotReference(cWebApp).Using(ProjectReader);
         }
 
-        [Fact]
+        [Fact(Skip = "not implemented")]
         public void Test2()
         {
             var all = Components.GetAll().ToArray();
             VerifyThat.Components(all).DoesNotHaveRedundancy();
         }
 
-        [Fact]
+        [Fact(Skip = "not implemented")]
         public void Test3()
         {
             var all = Components.GetAll().ToArray();

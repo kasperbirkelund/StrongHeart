@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Audit;
+using StrongHeart.Features.Decorators.Authorization;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
 {
-    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>
+    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuditable<TestCommandRequest>, IAuthorizable
     {
         public Task<Result> Execute(TestCommandRequest request)
         {

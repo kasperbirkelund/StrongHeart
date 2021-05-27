@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using StrongHeart.Core.Security;
+﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging
@@ -27,11 +25,6 @@ namespace StrongHeart.Features.Decorators.ExceptionLogging
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()
         {
             return _inner;
-        }
-
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using StrongHeart.Core.Security;
+﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Filtering
@@ -36,11 +34,6 @@ namespace StrongHeart.Features.Decorators.Filtering
 
             TResponse filteredResponse = filter.GetFilteredItem(context, unfilteredResponse.Value);
             return Result<TResponse>.Success(filteredResponse);
-        }
-
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
         }
 
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()

@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators.Audit;
 
 namespace StrongHeart.Features.Decorators.Authorization
 {
@@ -37,10 +36,6 @@ namespace StrongHeart.Features.Decorators.Authorization
             string message = GetExceptionMessage(requiredRoles);
             throw new UnauthorizedAccessException(message);
         }
-
-        public Func<TRequest, bool> IsOnBehalfOfOtherSelector => _inner.IsOnBehalfOfOtherSelector;
-        public AuditOptions AuditOptions => _inner.AuditOptions;
-        public Func<TRequest, IEnumerable<Guid?>> CorrelationKeySelector => _inner.CorrelationKeySelector;
 
         public ICommandFeature<TRequest, TDto> GetInnerFeature()
         {

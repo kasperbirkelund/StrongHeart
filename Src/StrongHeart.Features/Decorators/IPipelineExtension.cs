@@ -8,8 +8,6 @@ namespace StrongHeart.Features.Decorators
         Func<Type, bool> ShouldApplyPipelineExtension { get; }
         Type QueryTypeDecorator { get; }
         Type CommandTypeDecorator { get; }
-        //Type EventHandlerTypeDecorator { get; }
-
         void RegisterServices(IServiceCollection services);
     }
 }

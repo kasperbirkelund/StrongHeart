@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Audit;
 
@@ -9,11 +8,6 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
 {
     public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IAuditable<TestQueryRequest>
     {
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            yield break;
-        }
-
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
             var result = Result<TestQueryResponse>.Success(new TestQueryResponse("MyTest"));

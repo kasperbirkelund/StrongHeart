@@ -23,11 +23,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             return Invoke(_inner.Execute, request);
         }
 
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
-        }
-
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()
         {
             return _inner;

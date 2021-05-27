@@ -16,14 +16,6 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Comman
             return Task.FromResult(Result.Success());
         }
 
-        public Func<TestCommandRequest, bool> IsOnBehalfOfOtherSelector => throw new NotSupportedException();
-        public AuditOptions AuditOptions => throw new NotSupportedException();
-        public Func<TestCommandRequest, IEnumerable<Guid?>> CorrelationKeySelector => throw new NotSupportedException();
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            yield break;
-        }
-
         public IValidator GetValidator()
         {
             return new TestCommandRequestValidator();

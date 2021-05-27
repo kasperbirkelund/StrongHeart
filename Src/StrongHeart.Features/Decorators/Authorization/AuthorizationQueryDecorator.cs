@@ -21,7 +21,7 @@ namespace StrongHeart.Features.Decorators.Authorization
 
         public override IEnumerable<IRole> GetRequiredRoles()
         {
-            return (this.GetInnerMostFeature()).GetRequiredRoles();
+            return (this.GetInnerMostFeature() as IAuthorizable).GetRequiredRoles();
         }
 
         public Task<Result<TResponse>> Execute(TRequest request)
