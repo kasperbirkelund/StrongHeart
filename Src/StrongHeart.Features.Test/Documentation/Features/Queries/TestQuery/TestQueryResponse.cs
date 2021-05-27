@@ -9,6 +9,6 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
             Item = item;
         }
 
-        public PersonDto Item { get; }
+        public PersonDto? Item { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features
 {
@@ -16,6 +17,32 @@ namespace StrongHeart.Features
             }
 
             return @interface.IsAssignableFrom(type);
+        }
+
+        public static bool IsFeature(this Type type)
+        {
+            return IsCommand(type) || IsQuery(type);
+        }
+
+        public static bool IsCommand(this Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            Type typeDefinition = type.GetGenericTypeDefinition();
+            return typeDefinition == typeof(ICommandFeature<,>);
+        }
+
+        public static bool IsQuery(this Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+            Type typeDefinition = type.GetGenericTypeDefinition();
+            return typeDefinition == typeof(IQueryFeature<,>);
         }
     }
 }

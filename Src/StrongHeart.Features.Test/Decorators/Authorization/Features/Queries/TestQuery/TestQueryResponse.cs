@@ -9,6 +9,6 @@ namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.Te
             Item = item;
         }
 
-        public PersonDto Item { get; }
+        public PersonDto? Item { get; }
     }
 }

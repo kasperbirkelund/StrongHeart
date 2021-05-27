@@ -4,7 +4,6 @@ using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog
 {
-    //[DebuggerStepThrough]
     public abstract class SimpleLogDecoratorBase : DecoratorBase
     {
         private readonly ISimpleLog _simpleLog;

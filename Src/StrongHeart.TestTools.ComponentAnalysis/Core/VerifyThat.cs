@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using StrongHeart.TestTools.ComponentAnalysis.Core.ReferenceChecker;
 
 namespace StrongHeart.TestTools.ComponentAnalysis.Core
 {
     public static class VerifyThat
     {
+        public static Component Component(Component component)
+        {
+            return component;
+        }
+
+        public static IEnumerable<Component> Components(IEnumerable<Component> components)
+        {
+            return components;
+        }
+
         public static IEnumerable<Assembly> AllReferencedAssemblies(Assembly mainAssembly, Func<AssemblyName, bool> predicate)
         {
             IEnumerable<Assembly> assemblies = mainAssembly
@@ -27,6 +38,11 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
                 .Where(x => !x.FullName.Contains("Test"));
 
             return types;
+        }
+
+        public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly)
+        {
+            return AllTypesFromAllReferencedAssemblies(mainAssembly, _ => true);
         }
 
         private static bool IsAnonymousType(this Type type)

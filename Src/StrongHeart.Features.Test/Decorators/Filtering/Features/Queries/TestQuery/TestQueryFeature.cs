@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Filtering;
 
@@ -10,8 +8,6 @@ namespace StrongHeart.Features.Test.Decorators.Filtering.Features.Queries.TestQu
 {
     public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IFilterable<TestQueryResponse>
     {
-        public IEnumerable<IRole> GetRequiredRoles() => throw new NotSupportedException();
-
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
             List<PersonDto> persons = new List<PersonDto>()

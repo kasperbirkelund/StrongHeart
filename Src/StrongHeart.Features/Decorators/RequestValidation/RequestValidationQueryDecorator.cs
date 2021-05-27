@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentValidation;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {
-    //[DebuggerStepThrough]
     public sealed class RequestValidationQueryDecorator<TRequest, TResponse> : RequestValidationDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : class, IResponseDto
@@ -21,11 +18,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         public Task<Result<TResponse>> Execute(TRequest request)
         {
             return Invoke(_inner.Execute, request);
-        }
-
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
         }
 
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()

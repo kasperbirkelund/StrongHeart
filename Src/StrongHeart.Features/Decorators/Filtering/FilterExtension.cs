@@ -8,8 +8,7 @@ namespace StrongHeart.Features.Decorators.Filtering
     {
         public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => serviceType.DoesImplementInterface(typeof(IQueryFeature<,>));
         public Type QueryTypeDecorator => typeof(FilteringQueryDecorator<,>);
-        public Type CommandTypeDecorator => throw new NotSupportedException();
-        public Type EventHandlerTypeDecorator => throw new NotSupportedException();
+        public Type CommandTypeDecorator => throw new NotSupportedException("Result filtering on commands is not supported.");
         public void RegisterServices(IServiceCollection services)
         {
         }

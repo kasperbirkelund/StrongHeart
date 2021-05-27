@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging
 {
-    //[DebuggerStepThrough]
     public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
     {
         private readonly IExceptionLogger _logger;

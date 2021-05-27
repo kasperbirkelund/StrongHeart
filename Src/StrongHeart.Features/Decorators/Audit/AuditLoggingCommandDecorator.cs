@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Audit
 {
-    //[DebuggerStepThrough]
     public sealed class AuditLoggingCommandDecorator<TRequest, TDto> : AuditLoggingDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
         where TRequest : class, IRequest<TDto>
         where TDto : IRequestDto
@@ -28,18 +26,17 @@ namespace StrongHeart.Features.Decorators.Audit
             return _inner;
         }
 
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
-        }
-
         protected override Guid GetUniqueFeatureId()
         {
             return AuditOptions.UniqueFeatureId;
         }
 
-
-        public override AuditOptions AuditOptions => _inner.AuditOptions;
+        private IAuditable<TRequest> GetAuditableFeature()
+        {
+            return (this.GetInnerMostFeature() as IAuditable<TRequest>)!;
+        }
+        
+        public override AuditOptions AuditOptions => GetAuditableFeature().AuditOptions;
         public override IEnumerable<Guid?> GetCorrelationKey<T>(T request)
         {
             return CorrelationKeySelector(request as TRequest);
@@ -50,7 +47,7 @@ namespace StrongHeart.Features.Decorators.Audit
             return IsOnBehalfOfOtherSelector(request as TRequest);
         }
 
-        public Func<TRequest, IEnumerable<Guid?>> CorrelationKeySelector => _inner.CorrelationKeySelector;
-        public Func<TRequest, bool> IsOnBehalfOfOtherSelector => _inner.IsOnBehalfOfOtherSelector;
+        public Func<TRequest, IEnumerable<Guid?>> CorrelationKeySelector => GetAuditableFeature().CorrelationKeySelector;
+        public Func<TRequest, bool> IsOnBehalfOfOtherSelector => GetAuditableFeature().IsOnBehalfOfOtherSelector;
     }
 }

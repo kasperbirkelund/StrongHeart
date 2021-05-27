@@ -4,9 +4,9 @@ namespace StrongHeart.Features.Core
 {
     public class Result<T> : IResult
     {
-        //public bool IsFailure { get; }
+        public bool IsFailure => Status == ResultType.Failed;
 
-        //public bool IsSuccess => !IsFailure;
+        public bool IsSuccess => !IsFailure;
         public ResultType Status { get; }
         public string? Error { get; }
         private readonly T _value;
@@ -37,9 +37,8 @@ namespace StrongHeart.Features.Core
 
     public class Result : IResult
     {
-        //public bool IsFailure { get; }
-
-        //public bool IsSuccess => !IsFailure;
+        public bool IsFailure => Status == ResultType.Failed;
+        public bool IsSuccess => !IsFailure;
         public ResultType Status { get; }
         public string? Error { get; }
 

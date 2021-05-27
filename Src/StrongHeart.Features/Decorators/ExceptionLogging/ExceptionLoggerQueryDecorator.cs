@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using StrongHeart.Core.Security;
+﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging
 {
-    //[DebuggerStepThrough]
     public sealed class ExceptionLoggerQueryDecorator<TRequest, TResponse> : ExceptionLoggerDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : class, IResponseDto
@@ -27,11 +24,6 @@ namespace StrongHeart.Features.Decorators.ExceptionLogging
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()
         {
             return _inner;
-        }
-
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            return _inner.GetRequiredRoles();
         }
     }
 }

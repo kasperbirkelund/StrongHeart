@@ -15,7 +15,6 @@ namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog
         public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => true; //always apply this extension
         public Type QueryTypeDecorator => typeof(SimpleLogQueryDecorator<,>);
         public Type CommandTypeDecorator => typeof(SimpleLogCommandDecorator<,>);
-        //public Type EventHandlerTypeDecorator => typeof(SimpleLogEventHandlerDecorator<>);
         public void RegisterServices(IServiceCollection services)
         {
             services.AddTransient<ISimpleLog>(provider => _simpleLog());

@@ -8,9 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="fluentassertions" Version="5.10.3" />
-    <PackageReference Include="FluentValidation" Version="10.0.4" />
+    <PackageReference Include="FluentValidation" Version="10.1.0" />
     <PackageReference Include="microsoft.extensions.dependencyinjection" Version="5.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +21,10 @@
   <ItemGroup>
     <ProjectReference Include="..\StrongHeart.Features\StrongHeart.Features.csproj" />
     <ProjectReference Include="..\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Rules\" />
   </ItemGroup>
 
 </Project>

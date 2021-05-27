@@ -2,13 +2,13 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Queries.TestQuery
 {
-    public class TestQueryResponse : IResponseDto
+    public class TestQueryResponse : IGetSingleItemResponse<string>
     {
-        public TestQueryResponse(string name)
+        public TestQueryResponse(string item)
         {
-            Name = name;
+            Item = item;
         }
 
-        public string Name { get; }
+        public string? Item { get; }
     }
 }

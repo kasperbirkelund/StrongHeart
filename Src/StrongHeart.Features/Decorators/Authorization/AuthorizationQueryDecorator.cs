@@ -7,7 +7,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Authorization
 {
-    //[DebuggerStepThrough]
     public sealed class AuthorizationQueryDecorator<TRequest, TResponse> : AuthorizationDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : class, IResponseDto
@@ -21,7 +20,7 @@ namespace StrongHeart.Features.Decorators.Authorization
 
         public override IEnumerable<IRole> GetRequiredRoles()
         {
-            return (this.GetInnerMostFeature()).GetRequiredRoles();
+            return (this.GetInnerMostFeature() as IAuthorizable).GetRequiredRoles();
         }
 
         public Task<Result<TResponse>> Execute(TRequest request)

@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Decorators.Authorization;
 using StrongHeart.Features.Test.Helpers;
 
 namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.TestQuery
 {
-    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>
+    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IAuthorizable
     {
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
@@ -16,7 +17,6 @@ namespace StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.Te
         public IEnumerable<IRole> GetRequiredRoles()
         {
             yield return TestRole.Instance;
-
         }
     }
 }

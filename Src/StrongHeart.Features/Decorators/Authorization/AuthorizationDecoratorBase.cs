@@ -7,7 +7,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Authorization
 {
-    //[DebuggerStepThrough]
     public abstract class AuthorizationDecoratorBase : DecoratorBase
     {
         protected override Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func,

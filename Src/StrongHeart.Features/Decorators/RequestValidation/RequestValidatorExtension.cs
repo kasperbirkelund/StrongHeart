@@ -8,7 +8,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => serviceType.DoesImplementInterface(typeof(IRequestValidatable));
         public Type QueryTypeDecorator => typeof(RequestValidationQueryDecorator<,>);
         public Type CommandTypeDecorator => typeof(RequestValidationCommandDecorator<,>);
-        public Type EventHandlerTypeDecorator => throw new NotSupportedException();
         public void RegisterServices(IServiceCollection services)
         {
         }

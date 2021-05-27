@@ -21,7 +21,7 @@ namespace StrongHeart.Features.Test.Decorators.ExceptionLogger
             using IServiceScope scope = extension.CreateScope();
             var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
             Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            func.Should().Throw<NotSupportedException>();
+            func.Should().Throw<DivideByZeroException>();
             
             spy.Exceptions.Count.Should().Be(1);
         }
