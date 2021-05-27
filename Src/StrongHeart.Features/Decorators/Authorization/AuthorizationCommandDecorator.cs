@@ -7,7 +7,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Authorization
 {
-    //[DebuggerStepThrough]
     public sealed class AuthorizationCommandDecorator<TRequest, TDto> : AuthorizationDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
         where TRequest : IRequest<TDto>
         where TDto : IRequestDto

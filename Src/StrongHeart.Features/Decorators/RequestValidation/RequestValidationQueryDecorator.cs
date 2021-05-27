@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentValidation;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {
-    //[DebuggerStepThrough]
     public sealed class RequestValidationQueryDecorator<TRequest, TResponse> : RequestValidationDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : class, IResponseDto

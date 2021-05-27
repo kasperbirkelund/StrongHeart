@@ -4,7 +4,6 @@ using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog
 {
-    //[DebuggerStepThrough]
     public sealed class SimpleLogCommandDecorator<TRequest, TDto> : SimpleLogDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
         where TRequest : IRequest<TDto>
         where TDto : IRequestDto

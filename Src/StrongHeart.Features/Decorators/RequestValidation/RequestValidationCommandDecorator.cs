@@ -4,7 +4,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {
-    //[DebuggerStepThrough]
     public sealed class RequestValidationCommandDecorator<TRequest, TDto> : RequestValidationDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
         where TRequest : IRequest<TDto>
         where TDto : IRequestDto

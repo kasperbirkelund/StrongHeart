@@ -3,7 +3,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging
 {
-    //[DebuggerStepThrough]
     public sealed class ExceptionLoggerQueryDecorator<TRequest, TResponse> : ExceptionLoggerDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
         where TRequest : IRequest
         where TResponse : class, IResponseDto

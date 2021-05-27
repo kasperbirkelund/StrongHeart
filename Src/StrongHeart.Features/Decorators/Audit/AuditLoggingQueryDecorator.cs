@@ -5,7 +5,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Audit
 {
-    //[DebuggerStepThrough]
     public sealed class AuditLoggingQueryDecorator<TRequest, TResponse> : AuditLoggingDecoratorBase, 
         IQueryFeature<TRequest, TResponse>, 
         IQueryDecorator<TRequest, TResponse>

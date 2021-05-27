@@ -5,7 +5,6 @@ using FluentValidation.Results;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {
-    //[DebuggerStepThrough]
     public abstract class RequestValidationDecoratorBase : DecoratorBase
     {
         protected override Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)

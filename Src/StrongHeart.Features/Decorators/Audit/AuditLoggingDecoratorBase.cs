@@ -8,7 +8,6 @@ using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Audit
 {
-    //[DebuggerStepThrough]
     public abstract class AuditLoggingDecoratorBase : DecoratorBase
     {
         private readonly IFeatureAuditRepository _repository;
