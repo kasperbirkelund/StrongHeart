@@ -22,7 +22,7 @@ namespace StrongHeart.Features.DependencyInjection
 
             List<Type> handlerTypes = assemblies
                 .SelectMany(x => x.GetTypes())
-                .Where(x => x.GetInterfaces().Any(Extensions.IsFeatureInterface))
+                .Where(x => x.GetInterfaces().Any(Extensions.IsFeature))
                 .ToList();
 
             foreach (Type type in handlerTypes)
@@ -35,7 +35,7 @@ namespace StrongHeart.Features.DependencyInjection
 
         private static void AddHandler(IServiceCollection services, Type type, FeatureSetupOptions options)
         {
-            Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeatureInterface);
+            Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeature);
 
             List<Type> pipeline = new List<Type>();
 
@@ -124,7 +124,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (parameterType.IsFeatureInterface())
+            if (parameterType.IsFeature())
             {
                 return current;
             }

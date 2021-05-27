@@ -23,4 +23,8 @@
     <ProjectReference Include="..\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rules\" />
+  </ItemGroup>
+
 </Project>

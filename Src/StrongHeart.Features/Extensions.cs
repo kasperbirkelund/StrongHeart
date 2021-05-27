@@ -19,12 +19,12 @@ namespace StrongHeart.Features
             return @interface.IsAssignableFrom(type);
         }
 
-        internal static bool IsFeatureInterface(this Type type)
+        public static bool IsFeature(this Type type)
         {
             return IsCommand(type) || IsQuery(type);
         }
 
-        internal static bool IsCommand(this Type type)
+        public static bool IsCommand(this Type type)
         {
             if (!type.IsGenericType)
             {
@@ -35,7 +35,7 @@ namespace StrongHeart.Features
             return typeDefinition == typeof(ICommandFeature<,>);
         }
 
-        internal static bool IsQuery(this Type type)
+        public static bool IsQuery(this Type type)
         {
             if (!type.IsGenericType)
             {

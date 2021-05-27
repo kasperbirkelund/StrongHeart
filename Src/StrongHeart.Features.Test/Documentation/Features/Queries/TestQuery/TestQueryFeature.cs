@@ -21,11 +21,6 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
         }
 
-        public IEnumerable<IRole> GetRequiredRoles()
-        {
-            yield return TestRole.Instance;
-        }
-
         public IEnumerable<ISection> GetDocumentationSections(IUser user)
         {
             yield return new TextSection("Regler");
