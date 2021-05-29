@@ -4,7 +4,6 @@ fjern nullable types ved compiler directive
 IContext
 Lav sample project separat fra test projektet
 DateTime.Now
-skal alle commands være auditable?
 performance analyse
 Result som egen klasse - dependency til csharpextensions væk
 IContext - correlationId
