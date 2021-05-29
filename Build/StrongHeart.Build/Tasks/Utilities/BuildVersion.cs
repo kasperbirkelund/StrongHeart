@@ -1,4 +1,5 @@
 using Cake.Common.Tools.GitVersion;
+using Cake.Core;
 
 namespace StrongHeart.Build.Tasks.Utilities
 {
@@ -8,32 +9,35 @@ namespace StrongHeart.Build.Tasks.Utilities
         /// 0.9.0-frosting.2251
         /// </summary>
         public string FullSemVersion { get; }
+
+        public string Sha { get; }
+
         /// <summary>
         /// 0.9.0.2251
         /// </summary>
         public string AssemblySemVer { get; } 
 
-        private BuildVersion(string assemblySemVer, string fullSemVersion)
+        private BuildVersion(string assemblySemVer, string fullSemVersion, string sha)
         {
             AssemblySemVer = assemblySemVer;
             FullSemVersion = fullSemVersion;
+            Sha = sha;
         }
 
-        public static BuildVersion Calculate(StrongHeartBuildContext context)
+        public static BuildVersion Calculate(ICakeContext context)
         {
-            //if (!context.IsLocalBuild)
-            {
-                //context.GitVersion(new GitVersionSettings
-                //{
-                //    OutputType = GitVersionOutput.BuildServer
-                //});
-            }
-
             GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
             {
-                OutputType = GitVersionOutput.Json
+                //OutputType = GitVersionOutput.Json
             });
-            return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer);
+            return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer, assertedVersions.Sha);
+        }
+
+        public override string ToString()
+        {
+return @$"Sha: {Sha}
+FullSemVersion: {FullSemVersion}
+AssemblySemVer: {AssemblySemVer}";
         }
     }
 }

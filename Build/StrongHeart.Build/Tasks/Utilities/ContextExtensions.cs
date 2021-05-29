@@ -1,10 +1,9 @@
 using System;
-using Cake.Common;
+using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Common.Tools.DotNetCore.MSBuild;
 using Cake.Common.Tools.DotNetCore.Test;
-using Cake.Core.Diagnostics;
 
 namespace StrongHeart.Build.Tasks.Utilities
 {
@@ -41,24 +40,14 @@ namespace StrongHeart.Build.Tasks.Utilities
 
         private static DotNetCoreMSBuildSettings GetDotNetCoreMsBuildSettings(StrongHeartBuildContext context)
         {
-            context.Log.Verbosity = Cake.Core.Diagnostics.Verbosity.Diagnostic;
-
             BuildVersion version = BuildVersion.Calculate(context);
+            context.Information(version.ToString());
             DotNetCoreMSBuildSettings settings = new DotNetCoreMSBuildSettings()
                     .WithProperty("WarningLevel", "0")
                     .WithProperty("Version", version.AssemblySemVer)
                     .WithProperty("AssemblyVersion", version.AssemblySemVer)
                     .WithProperty("FileVersion", version.AssemblySemVer)
-                ;
-            string sha = context.EnvironmentVariable("Sha");
-            if (string.IsNullOrWhiteSpace(sha))
-            {
-                context.Log.Warning("Environment variable 'Sha' is not found. Skipping...");
-            }
-            else
-            {
-                settings.WithProperty("SourceRevisionId", sha);
-            }
+                    .WithProperty("SourceRevisionId", version.Sha);
 
             return settings;
         }

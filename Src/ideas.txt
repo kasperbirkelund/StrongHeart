@@ -1,10 +1,6 @@
 claims
 lav QueryTypeDecorator strongly typed
 fjern nullable types ved compiler directive
-IContext
+Fjern compiler warnings
 Lav sample project separat fra test projektet
-DateTime.Now
-performance analyse
-Result som egen klasse - dependency til csharpextensions væk
 IContext
-CorrelationId provider
