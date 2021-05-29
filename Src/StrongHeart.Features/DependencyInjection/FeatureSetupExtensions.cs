@@ -20,26 +20,26 @@ namespace StrongHeart.Features.DependencyInjection
             FeatureSetupOptions options = new(services);
             optionsAction(options);
 
-            List<Type> handlerTypes = assemblies
+            List<Type> featureTypes = assemblies
                 .SelectMany(x => x.GetTypes())
                 .Where(x => x.GetInterfaces().Any(Extensions.IsFeature))
                 .ToList();
 
-            foreach (Type type in handlerTypes)
+            foreach (Type featureType in featureTypes)
             {
-                AddHandler(services, type, options);
+                AddFeatureRegistration(services, featureType, options);
             }
 
             return services;
         }
 
-        private static void AddHandler(IServiceCollection services, Type type, FeatureSetupOptions options)
+        private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options)
         {
             Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeature);
 
-            List<Type> pipeline = new List<Type>();
+            List<Type> pipeline = new();
 
-            var types = new[] { type }
+            IEnumerable<Type> types = new[] { type }
                 .SelectMany(GetDecorators)
                 .Concat(GetMandatoryDecorators(interfaceType, type, options))
                 .Concat(new[] { type })
@@ -66,11 +66,11 @@ namespace StrongHeart.Features.DependencyInjection
             }
 
             //the first returned decorator will become the outer-most in the pipeline
-            if (interfaceType.IsQuery())
+            if (interfaceType.IsQueryFeature())
             {
                 return GetDecorator(options.Extensions, x => x.QueryTypeDecorator);
             }
-            if (interfaceType.IsCommand())
+            if (interfaceType.IsCommandFeature())
             {
                 return GetDecorator(options.Extensions, x => x.CommandTypeDecorator);
             }

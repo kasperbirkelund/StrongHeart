@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.Features
 {
@@ -21,10 +22,10 @@ namespace StrongHeart.Features
 
         public static bool IsFeature(this Type type)
         {
-            return IsCommand(type) || IsQuery(type);
+            return type.IsCommandFeature() || type.IsQueryFeature();
         }
 
-        public static bool IsCommand(this Type type)
+        public static bool IsCommandFeature(this Type type)
         {
             if (!type.IsGenericType)
             {
@@ -35,7 +36,7 @@ namespace StrongHeart.Features
             return typeDefinition == typeof(ICommandFeature<,>);
         }
 
-        public static bool IsQuery(this Type type)
+        public static bool IsQueryFeature(this Type type)
         {
             if (!type.IsGenericType)
             {
