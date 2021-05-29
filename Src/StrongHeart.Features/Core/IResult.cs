@@ -5,6 +5,6 @@
         ResultType Status { get; }
         string? Error { get; }
 
-        bool IsSuccess => Status == ResultType.ExecutedSuccessfully;
+        bool IsSuccess { get; }
     }
 }
