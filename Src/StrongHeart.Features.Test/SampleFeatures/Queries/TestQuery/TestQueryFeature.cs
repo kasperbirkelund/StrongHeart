@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators.Audit;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
 {
-    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IAuditable<TestQueryRequest>
+    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>
     {
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
             var result = Result<TestQueryResponse>.Success(new TestQueryResponse(new[] { "MyTest" }));
             return Task.FromResult(result);
         }
-
-        public Func<TestQueryRequest, bool> IsOnBehalfOfOtherSelector => request => false;
-        public AuditOptions AuditOptions => new AuditOptions(Guid.Parse("b60a9996-74bf-47d0-9bed-faea131e3dc4"), "Test", false);
-        public Func<TestQueryRequest, IEnumerable<Guid?>> CorrelationKeySelector => _ => new List<Guid?>();
     }
 }

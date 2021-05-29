@@ -21,7 +21,7 @@ namespace StrongHeart.Features.Test
             var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
             result1.Value.Items.Should().Contain("MyTest");
 
-            extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
+            //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
             extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
         }
 
