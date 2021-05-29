@@ -6,4 +6,5 @@ Lav sample project separat fra test projektet
 DateTime.Now
 performance analyse
 Result som egen klasse - dependency til csharpextensions væk
-IContext - correlationId
+IContext
+CorrelationId provider
