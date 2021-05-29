@@ -11,8 +11,8 @@ namespace StrongHeart.Build
                 .UseContext<StrongHeartBuildContext>()
                 .UseLifetime<Lifetime>()
                 .UseWorkingDirectory(@"..\..")
-                //.SetToolPath(@".\.cakeTools")
-                //.InstallTool(new Uri("nuget:?package=GitVersion.CommandLine&version=5.6.9"))
+                .SetToolPath(@".\.cakeTools")
+                .InstallTool(new Uri("nuget:?package=GitVersion.CommandLine&version=5.6.9"))
                 .Run(args);
         }
     }

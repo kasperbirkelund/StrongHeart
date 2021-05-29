@@ -41,12 +41,14 @@ namespace StrongHeart.Build.Tasks.Utilities
 
         private static DotNetCoreMSBuildSettings GetDotNetCoreMsBuildSettings(StrongHeartBuildContext context)
         {
-            //BuildVersion version = BuildVersion.Calculate(context);
+            context.Log.Verbosity = Cake.Core.Diagnostics.Verbosity.Diagnostic;
+
+            BuildVersion version = BuildVersion.Calculate(context);
             DotNetCoreMSBuildSettings settings = new DotNetCoreMSBuildSettings()
                     .WithProperty("WarningLevel", "0")
-                    //.WithProperty("Version", version.AssemblySemVer)
-                    //.WithProperty("AssemblyVersion", version.AssemblySemVer)
-                    //.WithProperty("FileVersion", version.AssemblySemVer)
+                    .WithProperty("Version", version.AssemblySemVer)
+                    .WithProperty("AssemblyVersion", version.AssemblySemVer)
+                    .WithProperty("FileVersion", version.AssemblySemVer)
                 ;
             string sha = context.EnvironmentVariable("Sha");
             if (string.IsNullOrWhiteSpace(sha))
