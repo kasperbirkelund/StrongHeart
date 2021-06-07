@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Documentation;
-using StrongHeart.Features.Test.Helpers;
 
 namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
 {
@@ -21,13 +20,10 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
         }
 
-        public IEnumerable<ISection> GetDocumentationSections(IUser user)
+        public IEnumerable<ISection> GetDocumentationSections(ICaller user)
         {
             yield return new TextSection("Regler");
-
-            var t = (Sum: 4.5, Count: 3);
             yield return Rules.MapToTableSection(x => new RuleCodes(x.Key, x.Value.GetType().Name));
-            //yield return Rules.MapToTableSection(x => (DataType d, string s));
         }
 
         public class RuleCodes

@@ -1,63 +1,97 @@
 ﻿using System.ComponentModel;
-using System.Reflection;
+using System.IO;
 using System.Text;
+using System.Xml;
+using System.Reflection;
 
 namespace StrongHeart.Features.Documentation
 {
     public class HtmlVisitor : ISectionVisitor
     {
-        public StringBuilder Sb { get; } = new StringBuilder();
+        private readonly StringBuilder _sb = new();
+
+        public string AsString(bool includeHtmlTags)
+        {
+            if (includeHtmlTags)
+            {
+                string html = "<html>" + _sb + "</html>";
+                string prettyHtml = PrettyXml(html);
+                return prettyHtml;
+            }
+            return _sb.ToString();
+        }
 
         public void VisitText(TextSection section)
         {
-            Sb.Append($"<p>{section.Text}</p>");
+            _sb.AppendLine($"<p>{section.Text}</p>");
         }
 
         public void VisitTable<T>(TableSection<T> section)
         {
-            Sb.Append("<table>");
+            _sb.AppendLine("<table>");
 
             PropertyInfo[] properties = typeof(T).GetProperties();
 
             AddTableHeader(properties);
             AddTableBody(section, properties);
 
-            Sb.Append("</table>");
+            _sb.AppendLine("</table>");
         }
 
         private void AddTableBody<T>(TableSection<T> section, PropertyInfo[] properties)
         {
-            Sb.Append("<tbody>");
+            _sb.AppendLine("<tbody>");
             foreach (TableRow<T> row in section.Items)
             {
-                Sb.Append("<tr>");
+                _sb.AppendLine("<tr>");
                 foreach (PropertyInfo t in properties)
                 {
                     string? text = t.GetValue(row.Item)?.ToString();
-                    Sb.Append($"<td>{text}</td>");
+                    _sb.AppendLine($"<td>{text}</td>");
                 }
 
-                Sb.Append("</tr>");
+                _sb.AppendLine("</tr>");
             }
 
-            Sb.Append("</tbody>");
+            _sb.AppendLine("</tbody>");
         }
 
         private void AddTableHeader(PropertyInfo[] properties)
         {
-            Sb.Append("<thead><tr>");
+            _sb.AppendLine("<thead><tr>");
             foreach (PropertyInfo t in properties)
             {
-                Sb.Append($"<th scope=\"col\">{GetPropertyName(t)}</th>");
+                _sb.AppendLine($"<th scope=\"col\">{GetPropertyName(t)}</th>");
             }
 
-            Sb.Append("</tr></thead>");
+            _sb.AppendLine("</tr></thead>");
         }
 
         private static string GetPropertyName(MemberInfo property)
         {
             DescriptionAttribute? attribute = property.GetCustomAttribute<DescriptionAttribute>();
             return attribute == null ? property.Name : attribute.Description;
+        }
+
+        private static string PrettyXml(string xml)
+        {
+            using (MemoryStream mStream = new())
+            {
+                using (XmlTextWriter writer = new(mStream, Encoding.Unicode))
+                {
+                    XmlDocument document = new();
+                    document.LoadXml(xml);
+                    writer.Formatting = Formatting.Indented;
+                    document.WriteContentTo(writer);
+                    writer.Flush();
+                    mStream.Flush();
+                    mStream.Position = 0;
+                    using (StreamReader sReader = new(mStream))
+                    {
+                        return sReader.ReadToEnd();
+                    }
+                }
+            }
         }
     }
 }

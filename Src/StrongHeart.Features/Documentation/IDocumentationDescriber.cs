@@ -5,6 +5,6 @@ namespace StrongHeart.Features.Documentation
 {
     public interface IDocumentationDescriber
     {
-        IEnumerable<ISection> GetDocumentationSections(IUser user);
+        IEnumerable<ISection> GetDocumentationSections(ICaller caller);
     }
 }
