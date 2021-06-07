@@ -16,6 +16,5 @@ namespace StrongHeart.Features.Test.Helpers
         }
         public Guid Id { get; } = new Guid("f6b7c41c-2587-46c1-8746-cd9148587216");
         public IReadOnlyList<IRole> Roles => new List<IRole>(_roles).AsReadOnly();
-        //public IUser? CallOnBehalfOf { get; } = null;
     }
 }
