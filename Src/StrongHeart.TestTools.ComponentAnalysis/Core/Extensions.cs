@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace StrongHeart.TestTools.ComponentAnalysis.Core
 {
     public static class Extensions
     {
-        public static Result<T> DoesComplyToRule<T>(this IEnumerable<T> items, IRule<T> rule, bool throwOnException = true)
+        public static VerificationResult<T> DoesComplyToRule<T>(this IEnumerable<T> items, IRule<T> rule, bool throwOnException = true)
         {
             IList<T> allItems = items.ToArray();
 
@@ -17,7 +16,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
 
             if (typesToVerify.Length == 0 && rule.DoFailIfNoItemsToVerify)
             {
-                return Result<T>.NoItemsToVerify(throwOnException);
+                return VerificationResult<T>.NoItemsToVerify(throwOnException);
             }
 
             StringBuilder sb = new ();
@@ -28,22 +27,22 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
 
             if (itemsWithError.Any())
             {
-                return Result<T>.ErrorsFound(typesToVerify, itemsWithError, rule.CorrectiveAction, throwOnException, sb.ToString());
+                return VerificationResult<T>.ErrorsFound(typesToVerify, itemsWithError, rule.CorrectiveAction, throwOnException, sb.ToString());
             }
-            return Result<T>.NoErrors(typesToVerify);
+            return VerificationResult<T>.NoErrors(typesToVerify);
         }
 
-        public static TAttribute? GetAttributeOrNull<TAttribute>(this ICustomAttributeProvider provider)
-        {
-            return provider
-                .GetCustomAttributes(typeof(TAttribute), false)
-                .Cast<TAttribute>()
-                .SingleOrDefault();
-        }
+        //public static TAttribute? GetAttributeOrNull<TAttribute>(this ICustomAttributeProvider provider)
+        //{
+        //    return provider
+        //        .GetCustomAttributes(typeof(TAttribute), false)
+        //        .Cast<TAttribute>()
+        //        .SingleOrDefault();
+        //}
 
-        public static bool HasAttribute<TAttribute>(this ICustomAttributeProvider provider)
-        {
-            return provider.GetAttributeOrNull<TAttribute>() != null;
-        }
+        //public static bool HasAttribute<TAttribute>(this ICustomAttributeProvider provider)
+        //{
+        //    return provider.GetAttributeOrNull<TAttribute>() != null;
+        //}
     }
 }
