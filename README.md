@@ -12,3 +12,5 @@ It is build on principles like
 - imutablilty
 - CQS
 - SOLID
+
+Features guides the strukturen but is unaware of the implementation details

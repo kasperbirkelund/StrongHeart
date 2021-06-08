@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using System.Xml;
 using System.Reflection;
@@ -61,16 +60,10 @@ namespace StrongHeart.Features.Documentation
             _sb.AppendLine("<thead><tr>");
             foreach (PropertyInfo t in properties)
             {
-                _sb.AppendLine($"<th scope=\"col\">{GetPropertyName(t)}</th>");
+                _sb.AppendLine($"<th scope=\"col\">{t.GetPropertyName()}</th>");
             }
 
             _sb.AppendLine("</tr></thead>");
-        }
-
-        private static string GetPropertyName(MemberInfo property)
-        {
-            DescriptionAttribute? attribute = property.GetCustomAttribute<DescriptionAttribute>();
-            return attribute == null ? property.Name : attribute.Description;
         }
 
         private static string PrettyXml(string xml)

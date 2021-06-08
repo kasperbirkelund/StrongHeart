@@ -22,22 +22,25 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
 
         public IEnumerable<ISection> GetDocumentationSections(ICaller user)
         {
-            yield return new TextSection("Regler");
-            yield return Rules.MapToTableSection(x => new RuleCodes(x.Key, x.Value.GetType().Name));
+            yield return new TextSection("Rules");
+            yield return Rules.MapToTableSection(x => new RuleCodes(x.Key, x.Value.GetType().Name, "Any description"));
         }
 
-        public class RuleCodes
+        private class RuleCodes
         {
-            public RuleCodes(DataType dataType, string rule)
+            public RuleCodes(DataType dataType, string ruleName, string description)
             {
                 Code = dataType.ToString();
-                Rule = rule;
+                Rule = ruleName;
+                Description = description;
             }
 
             [Description("Kode")]
             public string Code { get; }
             [Description("Rule name")]
             public string Rule { get; }
+            [Description("Description")]
+            public string Description { get; }
         }
     }
 }
