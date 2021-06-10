@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace StrongHeart.Core.Security
 {
     public interface ICaller
     {
         Guid Id { get; }
-        IReadOnlyList<IRole> Roles { get; }
-        //IUser? CallOnBehalfOf { get; }
+        IReadOnlyList<Claim> Claims { get; }
     }
 }

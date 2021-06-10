@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using StrongHeart.Core.Security;
+using System.Security.Claims;
 
 namespace StrongHeart.Features.Decorators.Authorization
 {
     public interface IAuthorizable
     {
-        IEnumerable<IRole> GetRequiredRoles();
+        IEnumerable<Claim> GetRequiredClaims();
     }
 }

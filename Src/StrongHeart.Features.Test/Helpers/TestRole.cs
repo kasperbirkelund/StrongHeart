@@ -1,19 +1,15 @@
-using System;
 using System.Diagnostics;
-using StrongHeart.Core.Security;
+using System.Security.Claims;
 
 namespace StrongHeart.Features.Test.Helpers
 {
     [DebuggerStepThrough]
-    public class TestRole : IRole
+    public class TestClaim
     {
-        public static readonly TestRole Instance = new TestRole();
+        public static readonly Claim Instance = new Claim(ClaimTypes.Role, "testClaim");
 
-        private TestRole()
+        private TestClaim()
         {
         }
-
-        public string Id => new Guid("5343dde1-48b5-4a69-926c-fac4b5e539a9").ToString();
-        public string Name => "Test";
     }
 }

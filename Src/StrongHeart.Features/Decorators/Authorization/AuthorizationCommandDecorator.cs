@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
@@ -18,21 +19,21 @@ namespace StrongHeart.Features.Decorators.Authorization
             _inner = inner;
         }
 
-        public override IEnumerable<IRole> GetRequiredRoles()
+        public override IEnumerable<Claim> GetRequiredClaims()
         {
-            return ((IAuthorizable)this.GetInnerMostFeature()).GetRequiredRoles();
+            return ((IAuthorizable)this.GetInnerMostFeature()).GetRequiredClaims();
         }
 
         public Task<Result> Execute(TRequest request)
         {
-            var requiredRoles = GetRequiredRoles().ToImmutableList();
+            var requiredClaims = GetRequiredClaims().ToImmutableList();
 
-            if (IsAllowed(request.Caller.Roles, requiredRoles))
+            if (IsAllowed(request.Caller.Claims, requiredClaims))
             {
                 return Invoke(_inner.Execute, request);
             }
 
-            string message = GetExceptionMessage(requiredRoles);
+            string message = GetExceptionMessage(requiredClaims);
             throw new UnauthorizedAccessException(message);
         }
 

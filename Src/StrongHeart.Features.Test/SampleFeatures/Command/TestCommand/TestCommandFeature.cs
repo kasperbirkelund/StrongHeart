@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Authorization;
 
@@ -12,7 +12,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
         {
             return Task.FromResult(Result.Success());
         }
-        public IEnumerable<IRole> GetRequiredRoles()
+        public IEnumerable<Claim> GetRequiredClaims()
         {
             yield break;
         }

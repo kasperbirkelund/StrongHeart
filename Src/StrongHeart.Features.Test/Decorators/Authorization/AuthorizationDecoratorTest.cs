@@ -13,7 +13,7 @@ namespace StrongHeart.Features.Test.Decorators.Authorization
     public class AuthorizationDecoratorTest
     {
         [Fact]
-        public void GivenAnFeatureWithRoleRestriction_WhenInvokedWithInsufficientRoles_ExceptionThrown()
+        public void GivenAnFeatureWithRoleRestriction_WhenInvokedWithInsufficientClaims_ExceptionThrown()
         {
             AuthorizationExtension extension = new();
             using (IServiceScope scope = extension.CreateScope())
@@ -25,13 +25,13 @@ namespace StrongHeart.Features.Test.Decorators.Authorization
         }
 
         [Fact]
-        public async Task GivenAnFeatureWithRoleRestriction_WhenInvokedWithSufficientRoles_NoExceptions()
+        public async Task GivenAnFeatureWithRoleRestriction_WhenInvokedWithSufficientClaims_NoExceptions()
         {
             AuthorizationExtension extension = new();
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                var response = await sut.Execute(new TestQueryRequest(new TestCustomCaller(TestRole.Instance)));
+                var response = await sut.Execute(new TestQueryRequest(new TestCustomCaller(TestClaim.Instance)));
                 response.IsSuccess.Should().BeTrue();
             }
         }
