@@ -4,9 +4,10 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Comman
 {
     public class TestCommandRequestValidator : AbstractValidator<TestCommandRequest>
     {
-        public TestCommandRequestValidator()
+        public TestCommandRequestValidator(IValidationDependency validationDependency)
         {
             RuleFor(x => x.Model.Age).GreaterThan(0);
+            RuleFor(x => x.Model.BirthDay).CustomAsync(validationDependency.IsValidDate);
         }
     }
 }

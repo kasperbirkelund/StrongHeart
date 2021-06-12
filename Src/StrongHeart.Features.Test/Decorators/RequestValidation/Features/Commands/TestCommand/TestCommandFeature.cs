@@ -7,14 +7,17 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Comman
 {
     public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IRequestValidatable
     {
+        private readonly TestCommandRequestValidator _validator;
+
+        public TestCommandFeature(TestCommandRequestValidator validator)
+        {
+            _validator = validator;
+        }
         public Task<Result> Execute(TestCommandRequest request)
         {
             return Task.FromResult(Result.Success());
         }
 
-        public IValidator GetValidator()
-        {
-            return new TestCommandRequestValidator();
-        }
+        public IValidator GetValidator() => _validator;
     }
 }
