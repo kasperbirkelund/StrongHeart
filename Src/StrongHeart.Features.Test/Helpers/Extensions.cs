@@ -10,14 +10,14 @@ namespace StrongHeart.Features.Test.Helpers
     {
         public static IServiceScope CreateScope(this IList<IPipelineExtension> extensions, Action<IServiceCollection>? servicesAction = null)
         {
-            IServiceCollection col = new ServiceCollection();
+            IServiceCollection services = new ServiceCollection();
 
-            col.AddFeatures(x =>
+            services.AddFeatures(x =>
             {
                 x.AddPipelineExtensions(extensions);
             }, typeof(FeatureQueryTest).Assembly);
-            servicesAction?.Invoke(col);
-            var provider = col.BuildServiceProvider();
+            servicesAction?.Invoke(services);
+            var provider = services.BuildServiceProvider();
             return provider.CreateScope();
         }
 

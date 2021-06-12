@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core", "StrongH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis.Test", "StrongHeart.TestTools.ComponentAnalysis.Test\StrongHeart.TestTools.ComponentAnalysis.Test.csproj", "{0E060B18-8634-467D-994E-E330F74BD0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Core.Test", "StrongHeart.Core.Test\StrongHeart.Core.Test.csproj", "{2C98DD6A-AF28-4D64-913C-FFDD8C44A5AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core.Test", "StrongHeart.Core.Test\StrongHeart.Core.Test.csproj", "{2C98DD6A-AF28-4D64-913C-FFDD8C44A5AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

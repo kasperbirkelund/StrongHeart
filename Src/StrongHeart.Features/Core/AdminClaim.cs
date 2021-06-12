@@ -2,12 +2,8 @@
 
 namespace StrongHeart.Features.Core
 {
-    public class AdminClaim
+    public static class AdminClaim
     {
-        public static readonly Claim Instance = new Claim(ClaimTypes.Role, "admin");
-
-        private AdminClaim()
-        {
-        }
+        public static readonly Claim Instance = new Claim(ClaimTypes.Role, "strongheart-admin");
     }
 }

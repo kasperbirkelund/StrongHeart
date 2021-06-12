@@ -11,7 +11,7 @@ namespace StrongHeart.Features.Decorators.ExceptionLogging
         {
             _exceptionLogger = exceptionLogger;
         }
-        public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => true; //always apply this extension
+        public Func<Type, bool> ShouldApplyPipelineExtension => _ => true; //always apply this extension
         public Type QueryTypeDecorator => typeof(ExceptionLoggerQueryDecorator<,>);
         public Type CommandTypeDecorator => typeof(ExceptionLoggerCommandDecorator<,>);
         public void RegisterServices(IServiceCollection services)
