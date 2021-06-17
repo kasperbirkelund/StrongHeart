@@ -64,5 +64,10 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
         {
             return types.SelectMany(x => x.GetMethods());
         }
+
+        //public static IEnumerable<T> GetFromCustomQuery<T>(Func<T> reader)
+        //{
+
+        //}
     }
 }
