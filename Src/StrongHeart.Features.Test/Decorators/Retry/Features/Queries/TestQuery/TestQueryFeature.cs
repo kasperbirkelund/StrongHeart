@@ -28,7 +28,7 @@ namespace StrongHeart.Features.Test.Decorators.Retry.Features.Queries.TestQuery
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
         }
 
-        public bool ShouldTryAgain(Exception exception, int currentAttempt)
+        public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)
         {
             return exception is ArgumentNullException;
         }

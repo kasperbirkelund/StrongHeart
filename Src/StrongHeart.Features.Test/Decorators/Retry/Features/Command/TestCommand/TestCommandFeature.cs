@@ -28,7 +28,7 @@ namespace StrongHeart.Features.Test.Decorators.Retry.Features.Command.TestComman
             return Task.FromResult(Result.Success());
         }
 
-        public bool ShouldTryAgain(Exception exception, int currentAttempt)
+        public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)
         {
             return exception is ArgumentNullException;
         }

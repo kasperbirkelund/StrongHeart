@@ -18,7 +18,7 @@ namespace StrongHeart.Features.Decorators.Retry
                 }
                 catch (Exception e)
                 {
-                    bool shouldTryAgain = config.ShouldTryAgain(e, attempt);
+                    bool shouldTryAgain = config.WhenExceptionIsThrownShouldIRetry(e, attempt);
                     if (shouldTryAgain)
                     {
                         continue;
