@@ -14,29 +14,31 @@ namespace StrongHeart.Features.Test
         [Fact]
         public async Task TestFullFeatureWithFullPipeline()
         {
-            PipelineExtensionsStub extensions = new PipelineExtensionsStub();
-            using IServiceScope scope = extensions.CreateScope();
+            PipelineExtensionsStub extensions = new();
+            using (IServiceScope scope = extensions.CreateScope())
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+                var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+                result1.Value.Items.Should().Contain("MyTest");
 
-            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-            var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            result1.Value.Items.Should().Contain("MyTest");
-
-            //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
-            extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
+                //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
+                extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
+            }   
         }
 
         [Fact]
         public async Task TestCustomDecorator()
         {
-            SimpleLogSpy logSpy = new SimpleLogSpy();
-            SimpleLogExtension extension = new SimpleLogExtension(() => logSpy);
-            using IServiceScope scope = extension.CreateScope();
+            SimpleLogSpy logSpy = new();
+            SimpleLogExtension extension = new(() => logSpy);
+            using (IServiceScope scope = extension.CreateScope())
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+                var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+                result1.Value.Items.Should().Contain("MyTest");
 
-            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-            var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            result1.Value.Items.Should().Contain("MyTest");
-
-            logSpy.Messages.Count.Should().Be(2);
+                logSpy.Messages.Count.Should().Be(2);
+            }   
         }
     }
 }

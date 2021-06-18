@@ -7,16 +7,16 @@ namespace StrongHeart.Features.Decorators.RequestValidation
 {
     public abstract class RequestValidationDecoratorBase : DecoratorBase
     {
-        protected override Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
+        protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
             IValidator validator = GetValidator();
-            ValidationResult result = validator.Validate(new ValidationContext<TRequest>(request));
+            ValidationResult result = await validator.ValidateAsync(new ValidationContext<TRequest>(request));
             if (!result.IsValid)
             {
                 throw new BusinessValidationException(result.Errors);
             }
 
-            return func(request);
+            return await func(request);
         }
 
         protected abstract IValidator GetValidator();
