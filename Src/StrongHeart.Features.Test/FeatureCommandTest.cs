@@ -1,7 +1,14 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Decorators;
+using StrongHeart.Features.Decorators.Authorization;
+using StrongHeart.Features.Decorators.ExceptionLogging;
+using StrongHeart.Features.Decorators.RequestValidation;
+using StrongHeart.Features.Decorators.Retry;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Test.Helpers;
 using StrongHeart.Features.Test.SampleDecorator.SimpleLog;
@@ -43,7 +50,7 @@ namespace StrongHeart.Features.Test
         }
 
         [Fact]
-        public async Task TestDefaultDecoratorChain()
+        public void TestDefaultDecoratorChain()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddFeatures(x =>
@@ -54,11 +61,14 @@ namespace StrongHeart.Features.Test
             using (var scope = provider.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-
-
-
-                IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
-                result.IsSuccess.Should().BeTrue();
+                List<ICommandDecorator<TestCommandRequest, TestCommandDto>> decorators = sut.GetDecoratorChain().ToList();
+                //this test does not ensure the order of the decorators
+                decorators.Should()
+                    .ContainSingle(x => x is ExceptionLoggerCommandDecorator<TestCommandRequest, TestCommandDto>)
+                    .And.ContainSingle(x => x is AuthorizationCommandDecorator<TestCommandRequest, TestCommandDto>)
+                    .And.ContainSingle(x => x is RequestValidationCommandDecorator<TestCommandRequest, TestCommandDto>)
+                    .And.ContainSingle(x => x is RetryCommandDecorator<TestCommandRequest, TestCommandDto>);
+                decorators.Count.Should().Be(4);
             }
         }
     }

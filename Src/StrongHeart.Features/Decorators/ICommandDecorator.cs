@@ -2,10 +2,10 @@
 
 namespace StrongHeart.Features.Decorators
 {
-    public interface ICommandDecorator<in TRequest, TDto>
-        where TRequest : IRequest<TDto>
-        where TDto : IRequestDto
+    public interface ICommandDecorator<in TRequest, in TRequestDto>
+        where TRequest : IRequest<TRequestDto>
+        where TRequestDto : IRequestDto
     {
-        ICommandFeature<TRequest, TDto> GetInnerFeature();
+        ICommandFeature<TRequest, TRequestDto> GetInnerFeature();
     }
 }
