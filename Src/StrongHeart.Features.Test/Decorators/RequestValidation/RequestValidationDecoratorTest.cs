@@ -22,7 +22,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
 
-                Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller(), thisMustNotBeNull: null));
+                Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
                 func.Should().Throw<BusinessValidationException>();
             }
         }
@@ -35,7 +35,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(-1, birthDay: DateTime.Now)));
+                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(-1, BirthDay: DateTime.Now)));
                 func.Should().Throw<BusinessValidationException>();
             }
         }
@@ -48,7 +48,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, birthDay: 2.May(1990))));
+                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, BirthDay: 2.May(1990))));
                 func.Should().Throw<BusinessValidationException>();
             }
         }

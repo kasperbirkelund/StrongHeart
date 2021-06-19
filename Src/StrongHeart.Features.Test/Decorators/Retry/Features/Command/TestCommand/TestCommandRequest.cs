@@ -5,15 +5,5 @@ using StrongHeart.Features.Core;
 namespace StrongHeart.Features.Test.Decorators.Retry.Features.Command.TestCommand
 {
     [DebuggerStepThrough]
-    public class TestCommandRequest : IRequest<TestCommandDto>
-    {
-        public TestCommandRequest(ICaller caller, TestCommandDto model)
-        {
-            Caller = caller;
-            Model = model;
-        }
-
-        public ICaller Caller { get; }
-        public TestCommandDto Model { get; }
-    }
+    public record TestCommandRequest(ICaller Caller, TestCommandDto Model) : IRequest<TestCommandDto>;
 }
