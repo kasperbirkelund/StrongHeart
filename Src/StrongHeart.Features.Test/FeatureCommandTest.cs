@@ -61,14 +61,12 @@ namespace StrongHeart.Features.Test
             using (var scope = provider.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-                List<ICommandDecorator<TestCommandRequest, TestCommandDto>> decorators = sut.GetDecoratorChain().ToList();
-                //this test does not ensure the order of the decorators
-                decorators.Should()
-                    .ContainSingle(x => x is ExceptionLoggerCommandDecorator<TestCommandRequest, TestCommandDto>)
-                    .And.ContainSingle(x => x is AuthorizationCommandDecorator<TestCommandRequest, TestCommandDto>)
-                    .And.ContainSingle(x => x is RequestValidationCommandDecorator<TestCommandRequest, TestCommandDto>)
-                    .And.ContainSingle(x => x is RetryCommandDecorator<TestCommandRequest, TestCommandDto>);
-                decorators.Count.Should().Be(4);
+                ICommandDecorator<TestCommandRequest, TestCommandDto>[] decorators = sut.GetDecoratorChain().ToArray();
+                decorators[0].Should().BeOfType<ExceptionLoggerCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators[1].Should().BeOfType<AuthorizationCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators[2].Should().BeOfType<RequestValidationCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators[3].Should().BeOfType < RetryCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators.Length.Should().Be(4);
             }
         }
     }
