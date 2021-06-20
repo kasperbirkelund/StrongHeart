@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -65,9 +66,24 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return types.SelectMany(x => x.GetMethods());
         }
 
-        //public static IEnumerable<T> GetFromCustomQuery<T>(Func<T> reader)
-        //{
+        public static IEnumerable<T> GetFromCustomSqlQuery<T>(Func<DbConnection> connectionFactory, string sql, Func<DbDataReader, T> readFunc)
+        {
+            using (var connection = connectionFactory())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    using DbDataReader reader = command.ExecuteReader();
+                    List<T> list = new();
+                    while (reader.Read())
+                    {
+                        list.Add(readFunc(reader));
+                    }
 
-        //}
+                    return list;
+                }
+            }
+        }
     }
 }
