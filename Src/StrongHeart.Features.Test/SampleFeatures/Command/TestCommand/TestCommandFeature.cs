@@ -16,7 +16,8 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
     {
         public Task<Result> Execute(TestCommandRequest request)
         {
-            return Task.FromResult(Result.Success());
+            Result result = request.Model.ShouldSucceed ? Result.Success() : Result.Failure("Forced to fail");
+            return Task.FromResult(result);
         }
 
         public IEnumerable<Claim> GetRequiredClaims()

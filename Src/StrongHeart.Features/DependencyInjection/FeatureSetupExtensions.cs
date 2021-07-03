@@ -56,7 +56,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             IEnumerable<T> GetDecorator<T>(IEnumerable<IPipelineExtension> extensions, Func<IPipelineExtension, T> selector)
             {
-                foreach (IPipelineExtension extension in options.Extensions)
+                foreach (IPipelineExtension extension in extensions)
                 {
                     if (extension.ShouldApplyPipelineExtension(serviceType))
                     {

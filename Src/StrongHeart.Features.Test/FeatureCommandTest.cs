@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -19,38 +18,42 @@ namespace StrongHeart.Features.Test
 {
     public class FeatureCommandTest
     {
-        [Fact]
-        public async Task TestFullFeatureWithFullPipeline()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task TestFullFeatureWithFullPipeline(bool shouldSucceed)
         {
             PipelineExtensionsStub extensions = new();
             using (IServiceScope scope = extensions.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-                IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
-                result.IsSuccess.Should().BeTrue();
+                IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(shouldSucceed)));
+                result.IsSuccess.Should().Be(shouldSucceed);
 
                 //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
                 extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
             }
         }
 
-        [Fact]
-        public async Task TestCustomDecorator()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task TestCustomDecorator(bool shouldSucceed)
         {
             SimpleLogSpy logSpy = new();
             SimpleLogExtension extension = new(() => logSpy);
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-                IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto()));
-                result.IsSuccess.Should().BeTrue();
+                IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(shouldSucceed)));
+                result.IsSuccess.Should().Be(shouldSucceed);
 
                 logSpy.Messages.Count.Should().Be(2);
             }
         }
 
         [Fact]
-        public void TestDefaultDecoratorChain()
+        public void EnsureDefaultDecoratorChainOrder()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddFeatures(x =>

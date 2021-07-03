@@ -70,5 +70,32 @@ namespace StrongHeart.Features.Decorators
                 actualFeature = innerDecorator.GetInnerFeature();
             }
         }
+
+        public static IEnumerable<IQueryDecorator<TRequest, TResponse>> GetDecoratorChain<TRequest, TResponse>(this IQueryFeature<TRequest, TResponse> feature) 
+            where TResponse : class, IResponseDto 
+            where TRequest : IRequest
+        {
+            IQueryFeature<TRequest, TResponse> actualFeature = feature;
+            while (true)
+            {
+                var innerDecorator = actualFeature as IQueryDecorator<TRequest, TResponse>;
+                if (innerDecorator == null)
+                {
+                    break;
+                }
+                yield return innerDecorator;
+
+                FieldInfo? innerFeature = actualFeature!
+                    .GetType()
+                    .GetFields(BindingFlags.Instance | BindingFlags.GetField | BindingFlags.Public | BindingFlags.NonPublic)
+                    .SingleOrDefault(x => x.FieldType.GetGenericTypeDefinition() == typeof(IQueryFeature<,>).GetGenericTypeDefinition());
+
+                if (innerFeature == null)
+                {
+                    yield break;
+                }
+                actualFeature = innerDecorator.GetInnerFeature();
+            }
+        }
     }
 }
