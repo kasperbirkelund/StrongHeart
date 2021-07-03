@@ -49,45 +49,37 @@ namespace StrongHeart.Features.Decorators
         public static IEnumerable<ICommandDecorator<TRequest, TRequestDto>> GetDecoratorChain<TRequest, TRequestDto>(this ICommandFeature<TRequest, TRequestDto> feature)
             where TRequest : IRequest<TRequestDto> where TRequestDto : IRequestDto
         {
-            ICommandFeature<TRequest, TRequestDto> actualFeature = feature;
-            while (true)
-            {
-                var innerDecorator = actualFeature as ICommandDecorator<TRequest, TRequestDto>;
-                if (innerDecorator == null)
-                {
-                    break;
-                }
-                yield return innerDecorator;
-
-                FieldInfo? innerFeature = GetInnerFeature(actualFeature!.GetType(), typeof(ICommandFeature<,>));
-                if (innerFeature == null)
-                {
-                    yield break;
-                }
-                actualFeature = innerDecorator.GetInnerFeature();
-            }
+            return GetDecoratorChainPrivate<ICommandFeature<TRequest, TRequestDto>, ICommandDecorator<TRequest, TRequestDto>>(feature, typeof(ICommandFeature<,>), decorator => decorator.GetInnerFeature());
         }
 
-        public static IEnumerable<IQueryDecorator<TRequest, TResponse>> GetDecoratorChain<TRequest, TResponse>(this IQueryFeature<TRequest, TResponse> feature) 
-            where TResponse : class, IResponseDto 
+        public static IEnumerable<IQueryDecorator<TRequest, TResponse>> GetDecoratorChain<TRequest, TResponse>(this IQueryFeature<TRequest, TResponse> feature)
+            where TResponse : class, IResponseDto
             where TRequest : IRequest
         {
-            IQueryFeature<TRequest, TResponse> actualFeature = feature;
+            return GetDecoratorChainPrivate<IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>>(feature, typeof(IQueryFeature<,>), decorator => decorator.GetInnerFeature());
+        }
+
+        private static IEnumerable<TDecorator> GetDecoratorChainPrivate<TFeature, TDecorator>(TFeature feature, Type featureType, Func<TDecorator, TFeature> getFeatureFromDecoratorFunc)
+            where TDecorator : class
+        {
+            TFeature actualFeature = feature;
             while (true)
             {
-                var innerDecorator = actualFeature as IQueryDecorator<TRequest, TResponse>;
+                var innerDecorator = actualFeature as TDecorator;
                 if (innerDecorator == null)
                 {
                     break;
                 }
+
                 yield return innerDecorator;
 
-                FieldInfo? innerFeature = GetInnerFeature(actualFeature!.GetType(), typeof(IQueryFeature<,>));
+                FieldInfo? innerFeature = GetInnerFeature(actualFeature!.GetType(), featureType);
                 if (innerFeature == null)
                 {
                     yield break;
                 }
-                actualFeature = innerDecorator.GetInnerFeature();
+
+                actualFeature = getFeatureFromDecoratorFunc(innerDecorator);
             }
         }
 
