@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -58,11 +59,7 @@ namespace StrongHeart.Features.Decorators
                 }
                 yield return innerDecorator;
 
-                FieldInfo? innerFeature = actualFeature!
-                    .GetType()
-                    .GetFields(BindingFlags.Instance | BindingFlags.GetField | BindingFlags.Public | BindingFlags.NonPublic)
-                    .SingleOrDefault(x => x.FieldType.GetGenericTypeDefinition() == typeof(ICommandFeature<,>).GetGenericTypeDefinition());
-
+                FieldInfo? innerFeature = GetInnerFeature(actualFeature!.GetType(), typeof(ICommandFeature<,>));
                 if (innerFeature == null)
                 {
                     yield break;
@@ -85,17 +82,19 @@ namespace StrongHeart.Features.Decorators
                 }
                 yield return innerDecorator;
 
-                FieldInfo? innerFeature = actualFeature!
-                    .GetType()
-                    .GetFields(BindingFlags.Instance | BindingFlags.GetField | BindingFlags.Public | BindingFlags.NonPublic)
-                    .SingleOrDefault(x => x.FieldType.GetGenericTypeDefinition() == typeof(IQueryFeature<,>).GetGenericTypeDefinition());
-
+                FieldInfo? innerFeature = GetInnerFeature(actualFeature!.GetType(), typeof(IQueryFeature<,>));
                 if (innerFeature == null)
                 {
                     yield break;
                 }
                 actualFeature = innerDecorator.GetInnerFeature();
             }
+        }
+
+        private static FieldInfo? GetInnerFeature(IReflect? type, Type featureType)
+        {
+            return type?.GetFields(BindingFlags.Instance | BindingFlags.GetField | BindingFlags.Public | BindingFlags.NonPublic)
+                .SingleOrDefault(x => x.FieldType.GetGenericTypeDefinition() == featureType.GetGenericTypeDefinition());
         }
     }
 }
