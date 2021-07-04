@@ -32,9 +32,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             return _inner;
         }
         
-        protected override IRequestValidatable<TRequest1> GetValidator<TRequest1>()
-        {
-            return this.GetInnerMostFeature() as IRequestValidatable<TRequest1>;
-        }
+        protected override IRequestValidatable<TRequest> GetValidator<TRequest>() => this.GetInnerMostFeature() as IRequestValidatable<TRequest>;
     }
 }
