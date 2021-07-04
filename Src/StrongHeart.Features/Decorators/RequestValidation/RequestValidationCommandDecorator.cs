@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using FluentValidation;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
@@ -32,7 +31,10 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         {
             return _inner;
         }
-
-        protected override IValidator GetValidator() => (this.GetInnerMostFeature() as IRequestValidatable).GetValidator();
+        
+        protected override IRequestValidatable<TRequest1> GetValidator<TRequest1>()
+        {
+            return this.GetInnerMostFeature() as IRequestValidatable<TRequest1>;
+        }
     }
 }

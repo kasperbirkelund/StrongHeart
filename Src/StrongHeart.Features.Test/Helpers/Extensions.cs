@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
-using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.DependencyInjection;
 

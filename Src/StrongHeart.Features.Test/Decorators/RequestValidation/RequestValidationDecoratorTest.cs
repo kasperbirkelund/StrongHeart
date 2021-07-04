@@ -22,8 +22,11 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
 
+
                 Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
-                func.Should().Throw<BusinessValidationException>();
+                func.Should()
+                    .Throw<BusinessValidationException>()
+                    .And.ResultErrors.Count.Should().Be(1);
             }
         }
         
@@ -36,7 +39,9 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
                 Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(-1, BirthDay: DateTime.Now)));
-                func.Should().Throw<BusinessValidationException>();
+                func.Should()
+                    .Throw<BusinessValidationException>()
+                    .And.ResultErrors.Count.Should().Be(2);
             }
         }
 
@@ -49,7 +54,9 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
                 Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, BirthDay: 2.May(1990))));
-                func.Should().Throw<BusinessValidationException>();
+                func.Should()
+                    .Throw<BusinessValidationException>()
+                    .And.ResultErrors.Count.Should().Be(1);
             }
         }
 
@@ -61,7 +68,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), null));
+                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), null!));
                 func.Should().Throw<InvalidRequestException>();
             }
         }

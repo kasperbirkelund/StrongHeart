@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using FluentValidation;
-using FluentValidation.Results;
+using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
 {
@@ -9,16 +9,17 @@ namespace StrongHeart.Features.Decorators.RequestValidation
     {
         protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
-            IValidator validator = GetValidator();
-            ValidationResult result = await validator.ValidateAsync(new ValidationContext<TRequest>(request));
+            IRequestValidatable<TRequest> validator = GetValidator<TRequest>();
+            ICollection<ValidationMessage> errors = validator.ValidationFunc()(request);
+            ValidationConclusion result = new(errors);
             if (!result.IsValid)
             {
-                throw new BusinessValidationException(result.Errors);
+                throw new BusinessValidationException(result.Messages);
             }
 
             return await func(request);
         }
 
-        protected abstract IValidator GetValidator();
+        protected abstract IRequestValidatable<TRequest> GetValidator<TRequest>() where TRequest : IRequest;
     }
 }
