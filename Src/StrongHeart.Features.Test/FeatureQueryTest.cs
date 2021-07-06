@@ -7,6 +7,7 @@ using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.ExceptionLogging;
 using StrongHeart.Features.Decorators.Filtering;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Decorators.TimeAlert;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Test.Helpers;
 using StrongHeart.Features.Test.SampleDecorator.SimpleLog;
@@ -53,7 +54,7 @@ namespace StrongHeart.Features.Test
             IServiceCollection services = new ServiceCollection();
             services.AddFeatures(x =>
             {
-                x.AddDefaultPipeline(() => new ExceptionLoggerSpy());
+                x.AddDefaultPipeline(() => new ExceptionLoggerSpy(), () => new TimeAlertExceededLoggerSpy());
             }, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
@@ -61,9 +62,10 @@ namespace StrongHeart.Features.Test
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
                 IQueryDecorator<TestQueryRequest, TestQueryResponse>[] decorators = sut.GetDecoratorChain().ToArray();
                 decorators[0].Should().BeOfType<ExceptionLoggerQueryDecorator<TestQueryRequest, TestQueryResponse>>();
-                decorators[1].Should().BeOfType<FilteringQueryDecorator<TestQueryRequest, TestQueryResponse>>();
-                decorators[2].Should().BeOfType<RetryQueryDecorator<TestQueryRequest, TestQueryResponse>>();
-                decorators.Length.Should().Be(3);
+                decorators[1].Should().BeOfType<TimeAlertQueryDecorator<TestQueryRequest, TestQueryResponse>>();
+                decorators[2].Should().BeOfType<FilteringQueryDecorator<TestQueryRequest, TestQueryResponse>>();
+                decorators[3].Should().BeOfType<RetryQueryDecorator<TestQueryRequest, TestQueryResponse>>();
+                decorators.Length.Should().Be(4);
             }
         }
     }

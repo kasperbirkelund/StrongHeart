@@ -7,10 +7,11 @@ using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Authorization;
 using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
 {
-    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidatable<TestCommandRequest>, IRetryable
+    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidatable<TestCommandRequest>, IRetryable, ITimeAlert
     {
         public Task<Result> Execute(TestCommandRequest request)
         {
@@ -32,5 +33,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
         {
             return false;
         }
+
+        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromSeconds(1);
     }
 }

@@ -15,11 +15,13 @@ namespace StrongHeart.Features.Test.Decorators.Filtering
         public async Task GivenAFeatureWithInvalidRequest_WhenInvoked_RequestIsBlocked()
         {
             FilterExtension extension = new FilterExtension();
-            using IServiceScope scope = extension.CreateScope();
-            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+            using (IServiceScope scope = extension.CreateScope())
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
 
-            var response =  await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            response.Value.Items.Count.Should().Be(2);
+                var response = await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+                response.Value.Items.Count.Should().Be(2);
+            }
         }
     }
 }

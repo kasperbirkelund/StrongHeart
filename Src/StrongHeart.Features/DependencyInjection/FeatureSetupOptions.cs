@@ -7,6 +7,7 @@ using StrongHeart.Features.Decorators.ExceptionLogging;
 using StrongHeart.Features.Decorators.Filtering;
 using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.DependencyInjection
 {
@@ -36,22 +37,23 @@ namespace StrongHeart.Features.DependencyInjection
             return this;
         }
 
-        public FeatureSetupOptions AddDefaultPipeline(Func<IExceptionLogger> loggerFunc)
+        public FeatureSetupOptions AddDefaultPipeline(Func<IExceptionLogger> loggerFunc, Func<ITimeAlertExceededLogger> timeAlertExceededLogger)
         {
-            AddPipelineExtensions(new DefaultPipelineExtensions(loggerFunc));
+            AddPipelineExtensions(new DefaultPipelineExtensions(loggerFunc, timeAlertExceededLogger));
             return this;
         }
 
         private class DefaultPipelineExtensions : List<IPipelineExtension>
         {
-            public DefaultPipelineExtensions(Func<IExceptionLogger> loggerFunc)
+            public DefaultPipelineExtensions(Func<IExceptionLogger> loggerFunc, Func<ITimeAlertExceededLogger> timeAlertExceededLogger)
             {
                 //First = outermost
                 Add(new ExceptionLoggerExtension(loggerFunc)); //1: we want to have exception handling outermost to ensure that everything gets logged
                 Add(new AuthorizationExtension()); //2: The user must be authorized before we expose any further 
-                Add(new RequestValidatorExtension()); //3: Now it is time for input validation
-                Add(new FilterExtension()); //4: Filtering only applies to queries
-                Add(new RetryExtension()); //5: it makes sense to have retry closest to the real feature
+                Add(new TimeAlertExtension(timeAlertExceededLogger)); //3: Ensure that time is monitored
+                Add(new RequestValidatorExtension()); //4: Now it is time for input validation
+                Add(new FilterExtension()); //5: Filtering only applies to queries
+                Add(new RetryExtension()); //6: it makes sense to have retry closest to the real feature
             }
         }
     }

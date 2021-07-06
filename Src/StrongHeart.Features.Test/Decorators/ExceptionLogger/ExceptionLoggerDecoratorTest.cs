@@ -15,15 +15,17 @@ namespace StrongHeart.Features.Test.Decorators.ExceptionLogger
         [Fact]
         public void GivenAnExceptionThrowingFeature_WhenInvoked_ExceptionIsLogged()
         {
-            ExceptionLoggerSpy spy = new ExceptionLoggerSpy();
+            ExceptionLoggerSpy spy = new();
 
-            ExceptionLoggerExtension extension = new ExceptionLoggerExtension(() => spy);
-            using IServiceScope scope = extension.CreateScope();
-            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-            Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-            func.Should().Throw<DivideByZeroException>();
-            
-            spy.Exceptions.Count.Should().Be(1);
+            ExceptionLoggerExtension extension = new(() => spy);
+            using (IServiceScope scope = extension.CreateScope())
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+                Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+                func.Should().Throw<DivideByZeroException>();
+
+                spy.Exceptions.Count.Should().Be(1);
+            }
         }
     }
 }

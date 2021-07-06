@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Filtering;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
 {
-    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IRetryable, IFilterable<TestQueryResponse>
+    public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IRetryable, IFilterable<TestQueryResponse>, ITimeAlert
     {
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
@@ -26,5 +27,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
         {
             return response;
         }
+
+        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromSeconds(1);
     }
 }

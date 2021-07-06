@@ -76,11 +76,12 @@ public async IActionResult GetSomeThing([FromServices] IQueryFeature<MyQueryFeat
 ## Add out-of-the-box cross cutting concerns to features (pipeline)
 |                                        Pipeline extension                                       |                   Setup                   | Interface to implement on your feature |
 |-----------------------------------------------------------------------------------------------|-----------------------------------------|----------------------------------------|
-| Authorization: Ensures that the caller has sufficient permissions to execute a feature | yield return new AuthorizationExtension() | IAuthorizable                          |
-| ExceptionLogging: will log all exceptions which a feature may throw                                         | yield return new ExceptionLoggerExtension()             | n/a
-| Filtering: will filter data in the response dependent on who calls                                        | yield return ? |IFilterable'TResponse'
-| RequestValidation: Will validate every request in a streamlines way                                              |                                          | IRequestValidatable
-
+| Authorization: Ensures that the caller has sufficient permissions to execute a feature | yield return new AuthorizationExtension(...) | IAuthorizable                          |
+| ExceptionLogging: will log all exceptions which a feature may throw                                         | yield return new ExceptionLoggerExtension(...)             | n/a
+| Filtering: will filter data in the response dependent on who calls                                        | yield return new FilterExtension(...) |IFilterable'TResponse'
+| RequestValidation: Will validate every request in a streamlines way                                              | yield return new RequestValidatorExtension(...)                                         | IRequestValidatable
+| TimeAlert: Will log to a custom logger of feature execution exceeds specified thredshold                                              | yield return new TimeAlertExtension(...)                                         | ITimeAlert
+| Retry: will rerun the feature is speficied criteria is met                                        | yield return new RetryExtension(...) |IRetryable
 
 ## Create your own pipeline extension
 There are many candidates for custom pipeline extension. Just to name a few:

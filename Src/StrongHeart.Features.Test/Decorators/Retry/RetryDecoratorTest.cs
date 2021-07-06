@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Retry;
@@ -12,13 +13,13 @@ namespace StrongHeart.Features.Test.Decorators.Retry
     public class RetryDecoratorTest
     {
         [Fact]
-        public void RetryCommandEnsuresProperRetry()
+        public async Task RetryCommandEnsuresProperRetry()
         {
             RetryExtension extension = new();
             using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-                sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(2)));
+                await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(2)));
 
                 var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
                 messenger.Counter.Should().Be(2);
@@ -26,13 +27,13 @@ namespace StrongHeart.Features.Test.Decorators.Retry
         }
 
         [Fact]
-        public void RetryQueryEnsuresProperRetry()
+        public async Task RetryQueryEnsuresProperRetry()
         {
             RetryExtension extension = new();
             using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+                await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
 
                 var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
                 messenger.Counter.Should().Be(2);

@@ -8,6 +8,7 @@ using StrongHeart.Features.Decorators.Authorization;
 using StrongHeart.Features.Decorators.ExceptionLogging;
 using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Decorators.TimeAlert;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Test.Helpers;
 using StrongHeart.Features.Test.SampleDecorator.SimpleLog;
@@ -58,7 +59,7 @@ namespace StrongHeart.Features.Test
             IServiceCollection services = new ServiceCollection();
             services.AddFeatures(x =>
             {
-                x.AddDefaultPipeline(() => new ExceptionLoggerSpy());
+                x.AddDefaultPipeline(() => new ExceptionLoggerSpy(), () => new TimeAlertExceededLoggerSpy());
             }, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
@@ -67,9 +68,10 @@ namespace StrongHeart.Features.Test
                 ICommandDecorator<TestCommandRequest, TestCommandDto>[] decorators = sut.GetDecoratorChain().ToArray();
                 decorators[0].Should().BeOfType<ExceptionLoggerCommandDecorator<TestCommandRequest, TestCommandDto>>();
                 decorators[1].Should().BeOfType<AuthorizationCommandDecorator<TestCommandRequest, TestCommandDto>>();
-                decorators[2].Should().BeOfType<RequestValidationCommandDecorator<TestCommandRequest, TestCommandDto>>();
-                decorators[3].Should().BeOfType < RetryCommandDecorator<TestCommandRequest, TestCommandDto>>();
-                decorators.Length.Should().Be(4);
+                decorators[2].Should().BeOfType<TimeAlertCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators[3].Should().BeOfType<RequestValidationCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators[4].Should().BeOfType<RetryCommandDecorator<TestCommandRequest, TestCommandDto>>();
+                decorators.Length.Should().Be(5);
             }
         }
     }
