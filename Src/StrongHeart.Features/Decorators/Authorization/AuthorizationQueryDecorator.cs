@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
@@ -25,15 +23,7 @@ namespace StrongHeart.Features.Decorators.Authorization
 
         public Task<Result<TResponse>> Execute(TRequest request)
         {
-            var requiredRoles = GetRequiredClaims().ToImmutableList();
-
-            if (IsAllowed(request.Caller.Claims, requiredRoles))
-            {
-                return Invoke(_inner.Execute, request);
-            }
-
-            string message = GetExceptionMessage(requiredRoles);
-            throw new UnauthorizedAccessException(message);
+            return Invoke(_inner.Execute, request);
         }
 
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()

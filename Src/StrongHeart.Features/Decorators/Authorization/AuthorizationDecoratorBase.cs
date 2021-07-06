@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,7 +12,15 @@ namespace StrongHeart.Features.Decorators.Authorization
     {
         protected override Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
-            return func(request);
+            var requiredClaims = GetRequiredClaims().ToImmutableList();
+
+            if (IsAllowed(request.Caller.Claims, requiredClaims))
+            {
+                return func(request);
+            }
+
+            string message = GetExceptionMessage(requiredClaims);
+            throw new UnauthorizedAccessException(message);
         }
 
         protected string GetExceptionMessage(ICollection<Claim> requiredClaims)

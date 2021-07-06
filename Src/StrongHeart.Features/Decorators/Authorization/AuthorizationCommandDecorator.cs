@@ -25,15 +25,7 @@ namespace StrongHeart.Features.Decorators.Authorization
 
         public Task<Result> Execute(TRequest request)
         {
-            var requiredClaims = GetRequiredClaims().ToImmutableList();
-
-            if (IsAllowed(request.Caller.Claims, requiredClaims))
-            {
-                return Invoke(_inner.Execute, request);
-            }
-
-            string message = GetExceptionMessage(requiredClaims);
-            throw new UnauthorizedAccessException(message);
+            return Invoke(_inner.Execute, request);
         }
 
         public ICommandFeature<TRequest, TDto> GetInnerFeature()
