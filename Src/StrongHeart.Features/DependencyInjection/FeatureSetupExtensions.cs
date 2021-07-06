@@ -10,7 +10,7 @@ namespace StrongHeart.Features.DependencyInjection
 {
     public static class FeatureSetupExtensions
     {
-        public static IServiceCollection AddFeatures(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, params Assembly[] assemblies)
+        public static IServiceCollection AddStrongHeart(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, params Assembly[] assemblies)
         {
             if (!assemblies.Any())
             {

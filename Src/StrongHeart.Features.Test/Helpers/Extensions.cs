@@ -12,7 +12,7 @@ namespace StrongHeart.Features.Test.Helpers
         {
             IServiceCollection services = new ServiceCollection();
 
-            services.AddFeatures(x =>
+            services.AddStrongHeart(x =>
             {
                 x.AddPipelineExtensions(extensions);
             }, typeof(FeatureQueryTest).Assembly);

@@ -57,7 +57,7 @@ namespace StrongHeart.Features.Test
         public void EnsureDefaultDecoratorChainOrder()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddFeatures(x =>
+            services.AddStrongHeart(x =>
             {
                 x.AddDefaultPipeline(() => new ExceptionLoggerSpy(), () => new TimeAlertExceededLoggerSpy());
             }, typeof(FeatureQueryTest).Assembly);
