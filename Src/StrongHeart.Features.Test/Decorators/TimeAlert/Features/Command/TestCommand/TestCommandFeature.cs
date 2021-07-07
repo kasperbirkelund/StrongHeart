@@ -14,6 +14,6 @@ namespace StrongHeart.Features.Test.Decorators.TimeAlert.Features.Command.TestCo
             return Result.Success();
         }
 
-        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromSeconds(2);
+        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromMilliseconds(200);
     }
 }

@@ -5,7 +5,7 @@ using StrongHeart.Features.Core;
 namespace StrongHeart.Features.Decorators
 {
     /// <summary>
-    /// Base class for decorator which must share functionality across commands and queries
+    /// Base class for decorator which must share functionality across feature types (commands and queries)
     /// </summary>
     public abstract class DecoratorBase
     {

@@ -13,6 +13,6 @@ namespace StrongHeart.Features.Test.Decorators.TimeAlert.Features.Queries.TestQu
             return Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA")));
         }
 
-        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromSeconds(2);
+        public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromMilliseconds(200);
     }
 }
