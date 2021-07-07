@@ -54,29 +54,29 @@ namespace StrongHeart.Features.DependencyInjection
 
         private static IEnumerable<Type> GetMandatoryDecorators(Type interfaceType, Type serviceType, FeatureSetupOptions options)
         {
-            IEnumerable<T> GetDecorator<T>(IEnumerable<IPipelineExtension> extensions, Func<IPipelineExtension, T> selector)
-            {
-                foreach (IPipelineExtension extension in extensions)
-                {
-                    if (extension.ShouldApplyPipelineExtension(serviceType))
-                    {
-                        yield return selector(extension);
-                    }
-                }
-            }
-
             //the first returned decorator will become the outer-most in the pipeline
             if (interfaceType.IsQueryFeature())
             {
-                return GetDecorator(options.Extensions, x => x.QueryTypeDecorator);
+                return GetDecoratorChain(options.Extensions, x => x.QueryTypeDecorator, serviceType);
             }
             if (interfaceType.IsCommandFeature())
             {
-                return GetDecorator(options.Extensions, x => x.CommandTypeDecorator);
+                return GetDecoratorChain(options.Extensions, x => x.CommandTypeDecorator, serviceType);
             }
             else
             {
                 return Empty<Type>();
+            }
+        }
+
+        private static IEnumerable<Type> GetDecoratorChain(IEnumerable<IPipelineExtension> extensions, Func<IPipelineExtension, Type> selector, Type serviceType)
+        {
+            foreach (IPipelineExtension extension in extensions)
+            {
+                if (extension.ShouldApplyPipelineExtension(serviceType))
+                {
+                    yield return selector(extension);
+                }
             }
         }
 
@@ -107,7 +107,6 @@ namespace StrongHeart.Features.DependencyInjection
 
             return Func;
         }
-
         private static object[] GetParameters(IList<ParameterInfo> parameterInfos, object? current, IServiceProvider provider)
         {
             var result = new object[parameterInfos.Count];

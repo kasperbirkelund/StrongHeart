@@ -11,6 +11,7 @@ namespace StrongHeart.Features.Decorators.Authorization
 
         public void RegisterServices(IServiceCollection services)
         {
+            //NO OP
         }
     }
 }

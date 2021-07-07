@@ -10,6 +10,7 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         public Type CommandTypeDecorator => typeof(RequestValidationCommandDecorator<,>);
         public void RegisterServices(IServiceCollection services)
         {
+            //NO OP
         }
     }
 }

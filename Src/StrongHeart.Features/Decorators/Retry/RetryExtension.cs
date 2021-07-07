@@ -11,6 +11,7 @@ namespace StrongHeart.Features.Decorators.Retry
 
         public void RegisterServices(IServiceCollection services)
         {
+            //NO OP
         }
     }
 }

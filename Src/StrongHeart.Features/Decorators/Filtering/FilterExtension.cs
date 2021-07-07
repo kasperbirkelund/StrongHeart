@@ -11,6 +11,7 @@ namespace StrongHeart.Features.Decorators.Filtering
         public Type CommandTypeDecorator => throw new NotSupportedException("Result filtering on commands is not supported.");
         public void RegisterServices(IServiceCollection services)
         {
+            //NO OP
         }
     }
 }
