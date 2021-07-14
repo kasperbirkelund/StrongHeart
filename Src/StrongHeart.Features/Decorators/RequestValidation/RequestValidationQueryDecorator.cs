@@ -15,9 +15,14 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             _inner = inner;
         }
 
-        public Task<Result<TResponse>> Execute(TRequest request)
+        public async Task<Result<TResponse>> Execute(TRequest request)
         {
-            return Invoke(_inner.Execute, request);
+            Result<TResponse> result = await Invoke(_inner.Execute, request);
+            if (Conclusion.IsValid)
+            {
+                return result;
+            }
+            return Result<TResponse>.ClientError(Conclusion.ToString());
         }
 
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()

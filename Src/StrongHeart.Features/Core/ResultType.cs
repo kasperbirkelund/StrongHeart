@@ -4,6 +4,7 @@
     {
         ExecutedSuccessfully,
         QueuedForLaterExecution,
-        Failed
+        ClientError,
+        ServerError
     }
 }

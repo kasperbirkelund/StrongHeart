@@ -13,5 +13,10 @@
         {
             return new(message);
         }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

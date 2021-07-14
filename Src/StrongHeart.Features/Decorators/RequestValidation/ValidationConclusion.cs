@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
@@ -11,6 +12,13 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         public ValidationConclusion(ICollection<ValidationMessage> messages)
         {
             Messages = messages;
+        }
+
+        public override string ToString()
+        {
+            string text = string.Join(Environment.NewLine, Messages.Select(x => $"- {x}"));
+            return @"Validation messages: 
+" + text;
         }
     }
 }

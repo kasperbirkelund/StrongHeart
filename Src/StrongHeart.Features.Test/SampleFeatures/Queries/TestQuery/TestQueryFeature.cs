@@ -13,7 +13,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Queries.TestQuery
         {
             Result<TestQueryResponse> result = request.ShouldSucceed ?
                 Result<TestQueryResponse>.Success(new TestQueryResponse(new[] { "MyTest" })) :
-                Result<TestQueryResponse>.Failure("Forced to fail");
+                Result<TestQueryResponse>.ServerError("Forced to fail");
 
             return Task.FromResult(result);
         }

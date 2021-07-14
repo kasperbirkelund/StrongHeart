@@ -15,74 +15,77 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
     public class RequestValidationDecoratorTest
     {
         [Fact]
-        public void GivenAQueryFeatureWithInvalidRequest_WhenInvoked_RequestIsBlocked()
+        public async Task GivenAQueryFeatureWithInvalidRequest_WhenInvoked_RequestIsBlocked()
         {
             RequestValidatorExtension extension = new();
             using (IServiceScope scope = extension.CreateScope(AddServices))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-
-
-                Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
-                func.Should()
-                    .Throw<BusinessValidationException>()
-                    .And.ResultErrors.Count.Should().Be(1);
+                var result = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
+                result.IsFailure.Should().BeTrue();
+                result.Status.Should().Be(ResultType.ClientError);
+                result.Error.Should().Be(@"Validation messages: 
+- ThisMustNotBeNull must not be null or empty");
             }
         }
-        
+
         [Fact]
-        public void GivenACommandFeatureWithInvalidRequest_WhenInvoked_RequestIsBlocked()
+        public async Task GivenACommandFeatureWithInvalidRequest_WhenInvoked_RequestIsBlocked()
+        {
+            RequestValidatorExtension extension = new();
+            using (IServiceScope scope = extension.CreateScope(AddServices))
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
+                var result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(-1, BirthDay: DateTime.Now)));
+                result.IsFailure.Should().BeTrue();
+                result.Status.Should().Be(ResultType.ClientError);
+                result.Error.Should().Be(@"Validation messages: 
+- 'Model Age' skal være større end '0'.
+- Only year after 2000 is allowed");
+            }
+        }
+
+        [Fact]
+        public async Task GivenACommandFeatureWithInvalidRequestWithValidationDependency_WhenInvoked_RequestIsBlocked()
+        {
+            RequestValidatorExtension extension = new();
+            using (IServiceScope scope = extension.CreateScope(AddServices))
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
+                var result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, BirthDay: 2.May(1990))));
+                result.IsFailure.Should().BeTrue();
+                result.Status.Should().Be(ResultType.ClientError);
+                result.Error.Should().Be(@"Validation messages: 
+- Only year after 2000 is allowed");
+            }
+        }
+
+        [Fact]
+        public async Task GivenACommandFeatureWithNullModel_WhenInvoked_RequestIsBlocked()
+        {
+            RequestValidatorExtension extension = new();
+            using (IServiceScope scope = extension.CreateScope(AddServices))
+            {
+                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
+                var result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), null!));
+                result.IsFailure.Should().BeTrue();
+                result.Status.Should().Be(ResultType.ClientError);
+                result.Error.Should().Be(@"Model is null");
+            }
+        }
+
+        [Fact]
+        public async Task GivenACommandFeatureWithNullRequest_WhenInvoked_RequestIsBlocked()
         {
             RequestValidatorExtension extension = new();
             using (IServiceScope scope = extension.CreateScope(AddServices))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
 
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(-1, BirthDay: DateTime.Now)));
-                func.Should()
-                    .Throw<BusinessValidationException>()
-                    .And.ResultErrors.Count.Should().Be(2);
-            }
-        }
-
-        [Fact]
-        public void GivenACommandFeatureWithInvalidRequestWithValidationDependency_WhenInvoked_RequestIsBlocked()
-        {
-            RequestValidatorExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope(AddServices))
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, BirthDay: 2.May(1990))));
-                func.Should()
-                    .Throw<BusinessValidationException>()
-                    .And.ResultErrors.Count.Should().Be(1);
-            }
-        }
-
-        [Fact]
-        public void GivenACommandFeatureWithNullModel_WhenInvoked_RequestIsBlocked()
-        {
-            RequestValidatorExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope(AddServices))
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-
-                Func<Task> func = () => sut.Execute(new TestCommandRequest(new TestAdminCaller(), null!));
-                func.Should().Throw<InvalidRequestException>();
-            }
-        }
-
-        [Fact]
-        public void GivenACommandFeatureWithNullRequest_WhenInvoked_RequestIsBlocked()
-        {
-            RequestValidatorExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope(AddServices))
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-
-                Func<Task> func = () => sut.Execute(null);
-                func.Should().Throw<InvalidRequestException>();
+                var result = await sut.Execute(null);
+                result.IsFailure.Should().BeTrue();
+                result.Status.Should().Be(ResultType.ClientError);
+                result.Error.Should().Be(@"Request is null");
             }
         }
 

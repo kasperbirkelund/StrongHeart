@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation
@@ -14,17 +15,22 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             _inner = inner;
         }
 
-        public Task<Result> Execute(TRequest request)
+        public async Task<Result> Execute(TRequest request)
         {
             if (request == null)
             {
-                throw new InvalidRequestException("Request is null");
+                return Result.ClientError("Request is null");
             }
             if (request.Model == null)
             {
-                throw new InvalidRequestException("Model is null");
+                return Result.ClientError("Model is null");
             }
-            return Invoke(_inner.Execute, request);
+            Result result = await Invoke(_inner.Execute, request);
+            if (Conclusion.IsValid)
+            {
+                return result;
+            }
+            return Result.ClientError(Conclusion.ToString());
         }
 
         public ICommandFeature<TRequest, TDto> GetInnerFeature()
@@ -32,6 +38,8 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             return _inner;
         }
         
-        protected override IRequestValidatable<TRequest> GetValidator<TRequest>() => this.GetInnerMostFeature() as IRequestValidatable<TRequest>;
+#pragma warning disable 693
+        protected override IRequestValidatable<TRequest> GetValidator<TRequest>() => (this.GetInnerMostFeature() as IRequestValidatable<TRequest>)!;
+#pragma warning restore 693
     }
 }

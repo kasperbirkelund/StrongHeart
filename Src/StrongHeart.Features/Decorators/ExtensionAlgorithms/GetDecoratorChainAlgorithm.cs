@@ -34,7 +34,14 @@ namespace StrongHeart.Features.Decorators.ExtensionAlgorithms
         private static FieldInfo? GetInnerFeature(IReflect? type, Type featureType)
         {
             return type?.GetFields(BindingFlags.Instance | BindingFlags.GetField | BindingFlags.Public | BindingFlags.NonPublic)
-                .SingleOrDefault(x => x.FieldType.GetGenericTypeDefinition() == featureType.GetGenericTypeDefinition());
+                .SingleOrDefault(delegate (FieldInfo info)
+                {
+                    if (info.FieldType.IsGenericType)
+                    {
+                        return info.FieldType.GetGenericTypeDefinition() == featureType.GetGenericTypeDefinition();
+                    }
+                    return false;
+                });
         }
     }
 }
