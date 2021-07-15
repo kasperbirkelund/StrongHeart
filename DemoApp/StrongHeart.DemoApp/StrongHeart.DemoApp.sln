@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.WebApi", "StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", "{2526D800-5632-4F11-A5E2-D1201DED2D1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business", "StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj", "{FDD65A68-A5A0-444E-9DB9-5ABA66F0F6E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features", "..\..\Src\StrongHeart.Features\StrongHeart.Features.csproj", "{71BBCF1F-5AE1-472B-8434-81B730E67598}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core", "..\..\Src\StrongHeart.Core\StrongHeart.Core.csproj", "{E9D4DB98-AE16-4F7B-90D1-A916F70AF335}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business.Tests", "StrongHeart.DemoApp.Business.Tests\StrongHeart.DemoApp.Business.Tests.csproj", "{EA6A99EC-CC55-4861-B9D2-A51C7F1317CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis", "..\..\Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj", "{3E27944D-8A9D-4CDE-ABE2-F7D502E95C5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2526D800-5632-4F11-A5E2-D1201DED2D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2526D800-5632-4F11-A5E2-D1201DED2D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2526D800-5632-4F11-A5E2-D1201DED2D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2526D800-5632-4F11-A5E2-D1201DED2D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDD65A68-A5A0-444E-9DB9-5ABA66F0F6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDD65A68-A5A0-444E-9DB9-5ABA66F0F6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDD65A68-A5A0-444E-9DB9-5ABA66F0F6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDD65A68-A5A0-444E-9DB9-5ABA66F0F6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71BBCF1F-5AE1-472B-8434-81B730E67598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71BBCF1F-5AE1-472B-8434-81B730E67598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71BBCF1F-5AE1-472B-8434-81B730E67598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71BBCF1F-5AE1-472B-8434-81B730E67598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D4DB98-AE16-4F7B-90D1-A916F70AF335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D4DB98-AE16-4F7B-90D1-A916F70AF335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D4DB98-AE16-4F7B-90D1-A916F70AF335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D4DB98-AE16-4F7B-90D1-A916F70AF335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6A99EC-CC55-4861-B9D2-A51C7F1317CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6A99EC-CC55-4861-B9D2-A51C7F1317CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6A99EC-CC55-4861-B9D2-A51C7F1317CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6A99EC-CC55-4861-B9D2-A51C7F1317CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E27944D-8A9D-4CDE-ABE2-F7D502E95C5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E27944D-8A9D-4CDE-ABE2-F7D502E95C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E27944D-8A9D-4CDE-ABE2-F7D502E95C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E27944D-8A9D-4CDE-ABE2-F7D502E95C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1BCA554-B13E-45EC-BF52-8B23373420FA}
+	EndGlobalSection
+EndGlobal

@@ -14,6 +14,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
         public bool DoVerifyItem(Type type)
         {
             return
+                !type.IsAbstract && //this might be a CommandFeatureBase-class
                 type.DoesImplementInterface(typeof(ICommandFeature<,>)) &&
                 !type.DoesImplementInterface(typeof(ICommandDecorator<,>));
         }

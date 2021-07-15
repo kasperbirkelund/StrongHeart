@@ -6,7 +6,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 {
     public class ResponseDtoShouldBeMoreSpecificRule : IRule<Type>
     {
-        public string CorrectiveAction => "";
+        public string CorrectiveAction => $"Ensure that the response class implements either {typeof(IGetSingleItemResponse<>).Name} or {typeof(IGetListResponse<>).Name}";
 
         public bool DoVerifyItem(Type item)
         {

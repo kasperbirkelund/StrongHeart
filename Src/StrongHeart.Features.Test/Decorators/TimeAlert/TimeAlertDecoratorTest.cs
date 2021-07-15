@@ -17,13 +17,13 @@ namespace StrongHeart.Features.Test.Decorators.TimeAlert
         [InlineData(1, 1)]
         public async Task TimeAlertCommandEnsuresProperLogs(int executionTime, int messagesInLog)
         {
-            TimeAlertExceededLoggerSpy spy = new();
-            TimeAlertExtension extension = new(() => spy);
+            TimeAlertExtension<TimeAlertExceededLoggerSpy> extension = new();
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
                 await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(executionTime)));
 
+                TimeAlertExceededLoggerSpy spy = (TimeAlertExceededLoggerSpy)scope.ServiceProvider.GetRequiredService<ITimeAlertExceededLogger>();
                 spy.Data.Count.Should().Be(messagesInLog);
             }
         }
@@ -33,13 +33,13 @@ namespace StrongHeart.Features.Test.Decorators.TimeAlert
         [InlineData(1, 1)]
         public async Task TimeAlertQueryEnsuresProperLogs(int executionTime, int messagesInLog)
         {
-            TimeAlertExceededLoggerSpy spy = new();
-            TimeAlertExtension extension = new(() => spy);
+            TimeAlertExtension<TimeAlertExceededLoggerSpy> extension = new();
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
                 await sut.Execute(new TestQueryRequest(new TestAdminCaller(), executionTime));
 
+                TimeAlertExceededLoggerSpy spy = (TimeAlertExceededLoggerSpy)scope.ServiceProvider.GetRequiredService<ITimeAlertExceededLogger>();
                 spy.Data.Count.Should().Be(messagesInLog);
             }
         }

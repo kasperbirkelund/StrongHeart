@@ -29,7 +29,8 @@ namespace StrongHeart.Features.Test
                 result1.Value.Items.Should().Contain("MyTest");
 
                 //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
-                extensions.ExceptionLoggerSpy.Exceptions.Count.Should().Be(0);
+                ExceptionLoggerSpy spy = (ExceptionLoggerSpy)scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
+                spy.Exceptions.Count.Should().Be(0);
             }
         }
 
@@ -54,7 +55,7 @@ namespace StrongHeart.Features.Test
             IServiceCollection services = new ServiceCollection();
             services.AddStrongHeart(x =>
             {
-                x.AddDefaultPipeline(() => new ExceptionLoggerSpy(), () => new TimeAlertExceededLoggerSpy());
+                x.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
             }, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())

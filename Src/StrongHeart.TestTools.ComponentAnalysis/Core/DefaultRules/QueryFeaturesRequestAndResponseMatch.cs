@@ -14,6 +14,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
         public bool DoVerifyItem(Type type)
         {
             return
+                !type.IsAbstract && //this might be a QueryFeatureBase-class
                 type.DoesImplementInterface(typeof(IQueryFeature<,>)) &&
                 !type.DoesImplementInterface(typeof(IQueryDecorator<,>));
         }

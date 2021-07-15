@@ -11,12 +11,12 @@ namespace StrongHeart.Features.Test.Helpers
     public class PipelineExtensionsStub : List<IPipelineExtension>
     {
         //public FeatureAuditRepositorySpy AuditRepoSpy { get; } = new FeatureAuditRepositorySpy();
-        public ExceptionLoggerSpy ExceptionLoggerSpy { get; } = new();
+        //public ExceptionLoggerSpy ExceptionLoggerSpy { get; } = new();
 
         public PipelineExtensionsStub()
         {
             //Add(new AuditExtension(() => AuditRepoSpy));
-            Add(new ExceptionLoggerExtension(() => ExceptionLoggerSpy));
+            Add(new ExceptionLoggerExtension<ExceptionLoggerSpy>());
             Add(new AuthorizationExtension());
             Add(new RequestValidatorExtension());
             Add(new FilterExtension());

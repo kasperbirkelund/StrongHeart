@@ -34,23 +34,28 @@ namespace StrongHeart.Features.DependencyInjection
             {
                 AddPipelineExtension(item);
             }
+
             return this;
         }
 
-        public FeatureSetupOptions AddDefaultPipeline(Func<IExceptionLogger> loggerFunc, Func<ITimeAlertExceededLogger> timeAlertExceededLogger)
+        public FeatureSetupOptions AddDefaultPipeline<TExceptionLogger, TTimeAlertExceededLogger>()
+            where TExceptionLogger : class, IExceptionLogger
+            where TTimeAlertExceededLogger : class, ITimeAlertExceededLogger
         {
-            AddPipelineExtensions(new DefaultPipelineExtensions(loggerFunc, timeAlertExceededLogger));
+            AddPipelineExtensions(new DefaultPipelineExtensions<TExceptionLogger, TTimeAlertExceededLogger>());
             return this;
         }
 
-        private class DefaultPipelineExtensions : List<IPipelineExtension>
+        private class DefaultPipelineExtensions<TExceptionLogger, TTimeAlertExceededLogger> : List<IPipelineExtension>
+            where TExceptionLogger : class, IExceptionLogger
+            where TTimeAlertExceededLogger : class, ITimeAlertExceededLogger
         {
-            public DefaultPipelineExtensions(Func<IExceptionLogger> loggerFunc, Func<ITimeAlertExceededLogger> timeAlertExceededLogger)
+            public DefaultPipelineExtensions()
             {
                 //First = outermost
-                Add(new ExceptionLoggerExtension(loggerFunc)); //1: we want to have exception handling outermost to ensure that everything gets logged
+                Add(new ExceptionLoggerExtension<TExceptionLogger>()); //1: we want to have exception handling outermost to ensure that everything gets logged
                 Add(new AuthorizationExtension()); //2: The user must be authorized before we expose any further 
-                Add(new TimeAlertExtension(timeAlertExceededLogger)); //3: Ensure that time is monitored
+                Add(new TimeAlertExtension<TTimeAlertExceededLogger>()); //3: Ensure that time is monitored
                 Add(new RequestValidatorExtension()); //4: Now it is time for input validation
                 Add(new FilterExtension()); //5: Filtering only applies to queries
                 Add(new RetryExtension()); //6: it makes sense to have retry closest to the real feature

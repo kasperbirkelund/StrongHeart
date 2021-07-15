@@ -31,6 +31,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
         private bool IsFeature(Type item)
         {
             return
+                !item.IsAbstract && 
                 IsAssignableToGenericType(item, typeof(ICommandFeature<,>)) ||
                 IsAssignableToGenericType(item, typeof(IQueryFeature<,>));
         }

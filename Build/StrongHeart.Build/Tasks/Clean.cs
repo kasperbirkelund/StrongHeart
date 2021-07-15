@@ -15,7 +15,9 @@ namespace StrongHeart.Build.Tasks
             DirectoryPathCollection directories =
                 context.GetDirectories("./TestResult") +
                 context.GetDirectories("./src/**/bin") +
-                context.GetDirectories("./src/**/obj");
+                context.GetDirectories("./src/**/obj") +
+                context.GetDirectories("./DemoApp/**/bin") +
+                context.GetDirectories("./DemoApp/**/obj");
 
             foreach (DirectoryPath directory in directories)
             {
@@ -57,8 +59,7 @@ namespace StrongHeart.Build.Tasks
             Works(context, file, host, user2, pass2);
         }
 
-        private static void Works(StrongHeartBuildContext context, string file, string host, string user2,
-            string pass2)
+        private static void Works(StrongHeartBuildContext context, string file, string host, string user2, string pass2)
         {
             context.CurlUploadFile(file, new Uri(host),
                 new CurlSettings
