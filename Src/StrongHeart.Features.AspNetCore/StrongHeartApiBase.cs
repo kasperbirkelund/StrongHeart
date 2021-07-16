@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.DemoApp.WebApi.Controllers
+namespace StrongHeart.Features.AspNetCore
 {
     public abstract class StrongHeartApiBase : ControllerBase
     {

@@ -9,7 +9,7 @@ namespace StrongHeart.Build.Tasks
     {
         public override void Run(StrongHeartBuildContext context)
         {
-            context.DotNetCoreBuild(@".\DemoApp\StrongHeart.DemoApp\StrongHeart.DemoApp.sln", context.GetDotNetCoreBuildSettings());
+            context.DotNetCoreBuild(@".\DemoApp\StrongHeart.DemoApp.sln", context.GetDotNetCoreBuildSettings());
         }
     }
 }

@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Src\StrongHeart.Features\StrongHeart.Features.csproj" />
+    <ProjectReference Include="..\..\Src\StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\Src\StrongHeart.Features\StrongHeart.Features.csproj" />
     <ProjectReference Include="..\StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj" />
   </ItemGroup>
 

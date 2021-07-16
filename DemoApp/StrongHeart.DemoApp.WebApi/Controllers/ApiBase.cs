@@ -1,5 +1,6 @@
 ﻿using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.WebApi.Services;
+using StrongHeart.Features.AspNetCore;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
