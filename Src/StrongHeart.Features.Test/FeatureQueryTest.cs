@@ -37,15 +37,15 @@ namespace StrongHeart.Features.Test
         [Fact]
         public async Task TestCustomDecorator()
         {
-            SimpleLogSpy logSpy = new();
-            SimpleLogExtension extension = new(() => logSpy);
+            SimpleLogExtension<SimpleLogSpy> extension = new();
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), true));
-                result1.Value.Items.Should().Contain("MyTest");
+                var result = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), true));
+                result.Value.Items.Should().Contain("MyTest");
 
-                logSpy.Messages.Count.Should().Be(2);
+                SimpleLogSpy spy = (scope.ServiceProvider.GetRequiredService<ISimpleLog>() as SimpleLogSpy)!;
+                spy.Messages.Count.Should().Be(2);
             }
         }
 

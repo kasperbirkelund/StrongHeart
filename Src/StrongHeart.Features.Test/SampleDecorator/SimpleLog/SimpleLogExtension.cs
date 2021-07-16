@@ -4,20 +4,15 @@ using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog
 {
-    public class SimpleLogExtension : IPipelineExtension
+    public class SimpleLogExtension<TSimpleLog> : IPipelineExtension
+        where TSimpleLog : class, ISimpleLog
     {
-        private readonly Func<ISimpleLog> _simpleLog;
-
-        public SimpleLogExtension(Func<ISimpleLog> simpleLog)
-        {
-            _simpleLog = simpleLog;
-        }
-        public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => true; //always apply this extension
+        public Func<Type, bool> ShouldApplyPipelineExtension => _ => true; //always apply this extension
         public Type QueryTypeDecorator => typeof(SimpleLogQueryDecorator<,>);
         public Type CommandTypeDecorator => typeof(SimpleLogCommandDecorator<,>);
         public void RegisterServices(IServiceCollection services)
         {
-            services.AddTransient<ISimpleLog>(provider => _simpleLog());
+            services.AddScoped<ISimpleLog, TSimpleLog>();
         }
     }
 }

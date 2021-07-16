@@ -42,15 +42,15 @@ namespace StrongHeart.Features.Test
         [InlineData(false)]
         public async Task TestCustomDecorator(bool shouldSucceed)
         {
-            SimpleLogSpy logSpy = new();
-            SimpleLogExtension extension = new(() => logSpy);
+            SimpleLogExtension<SimpleLogSpy> extension = new();
             using (IServiceScope scope = extension.CreateScope())
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
                 IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(shouldSucceed)));
                 result.IsSuccess.Should().Be(shouldSucceed);
 
-                logSpy.Messages.Count.Should().Be(2);
+                SimpleLogSpy spy = (scope.ServiceProvider.GetRequiredService<ISimpleLog>() as SimpleLogSpy)!;
+                spy.Messages.Count.Should().Be(2);
             }
         }
 
