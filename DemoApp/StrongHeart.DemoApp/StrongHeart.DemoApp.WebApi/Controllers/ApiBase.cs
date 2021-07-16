@@ -1,50 +1,43 @@
-﻿using System;
-using System.Net;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using StrongHeart.Core.Security;
-using StrongHeart.Features.Core;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
-    public abstract class ApiBase : ControllerBase
+    public abstract class ApiBase : StrongHeartApiBase
     {
-        protected IActionResult FromResultCommand(Result result, 
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        private readonly IClaimsProvider _claimsProvider;
+
+        protected ApiBase(IClaimsProvider claimsProvider)
         {
-            return FromResultCommand(result, x => x.Ok(), serverErrorStatusCode, clientErrorStatusCode);
+            _claimsProvider = claimsProvider;
         }
 
-        protected IActionResult FromResultCommand(Result result, Func<ControllerBase, IActionResult> executedSuccessfullySelector, 
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        protected override ICaller GetCaller()
         {
-            return result.Status switch
-            {
-                ResultType.ExecutedSuccessfully => executedSuccessfullySelector(this),
-                ResultType.QueuedForLaterExecution => Accepted(),
-                ResultType.ClientError => StatusCode((int)clientErrorStatusCode, result.Error),
-                ResultType.ServerError => StatusCode((int)serverErrorStatusCode, "Internal server error"),
-                _ => Ok()
-            };
+            //Read certificate, token, http context, whatever and extract claims
+            return new WebApiCaller(_claimsProvider.ExtractClaims());
+        }
+    }
+
+    public interface IClaimsProvider
+    {
+        ICollection<Claim> ExtractClaims();
+    }
+
+    public class MyCustomClaimsProvider : IClaimsProvider
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public MyCustomClaimsProvider(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        protected ActionResult<TValue> FromResultQuery<T, TValue>(Result<T> result, Func<T, TValue> selector, 
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        public ICollection<Claim> ExtractClaims()
         {
-            return result.Status switch
-            {
-                ResultType.ExecutedSuccessfully => Ok(selector(result.Value)),
-                ResultType.QueuedForLaterExecution => Accepted(),
-                ResultType.ClientError => StatusCode((int)clientErrorStatusCode, result.Error),
-                ResultType.ServerError => StatusCode((int)serverErrorStatusCode, "Internal server error"),
-                _ => Ok()
-            };
-        }
-        protected ICaller GetCaller()
-        {
-            return new WebApiCaller();
+            return new Claim[0];
         }
     }
 }

@@ -1,19 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using StrongHeart.DemoApp.Business.Features;
-using StrongHeart.Features.Decorators.ExceptionLogging;
-using StrongHeart.Features.Decorators.TimeAlert;
+using StrongHeart.DemoApp.WebApi.Controllers;
 using StrongHeart.Features.DependencyInjection;
 
 namespace StrongHeart.DemoApp.WebApi
@@ -30,12 +22,15 @@ namespace StrongHeart.DemoApp.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IClaimsProvider, MyCustomClaimsProvider>();
+            services.AddHttpContextAccessor();
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
-            },
-            typeof(CommandFeatureBase<,>).Assembly);
+            }, typeof(CommandFeatureBase<,>).Assembly);
             services.AddControllers();
+            
+            //Swagger is good for testing the api. Not important for StrongHeart
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StrongHeart.DemoApp.WebApi", Version = "v1" });
@@ -51,13 +46,9 @@ namespace StrongHeart.DemoApp.WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StrongHeart.DemoApp.WebApi v1"));
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

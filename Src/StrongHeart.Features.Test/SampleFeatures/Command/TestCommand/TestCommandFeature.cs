@@ -24,7 +24,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
             yield break;
         }
 
-        public Func<TestCommandRequest, ICollection<ValidationMessage>> ValidationFunc()
+        public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
         {
             return request => FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
         }

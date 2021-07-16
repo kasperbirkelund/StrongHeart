@@ -7,6 +7,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
     public interface IRequestValidatable<in TRequest>
         where TRequest: IRequest
     {
-        Func<TRequest, ICollection<ValidationMessage>> ValidationFunc();
+        Func<TRequest, IEnumerable<ValidationMessage>> ValidationFunc();
     }
 }

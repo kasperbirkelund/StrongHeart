@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.Filtering
@@ -23,26 +24,26 @@ namespace StrongHeart.Features.Decorators.Filtering
                 return unfilteredResponse;
             }
 
-            IFilterable<TResponse>? filter = GetFilterable();
-            if (filter == null)
-            {
-                return unfilteredResponse;
-            }
-
             IFilterDecisionContext context = new FilterDecisionContext(request.Caller);
-
+            IFilterable<TResponse> filter = GetFilter();
             TResponse filteredResponse = filter.GetFilteredItem(context, unfilteredResponse.Value);
             return Result<TResponse>.Success(filteredResponse);
+        }
+
+        private IFilterable<TResponse> GetFilter()
+        {
+            IFilterable<TResponse>? filter = this.GetInnerMostFeature() as IFilterable<TResponse>;
+            if (filter == null)
+            {
+                throw new ArgumentException("IFilterable<> has not been implemented on the feature");
+            }
+
+            return filter;
         }
 
         public IQueryFeature<TRequest, TResponse> GetInnerFeature()
         {
             return _inner;
-        }
-
-        private IFilterable<TResponse>? GetFilterable()
-        {
-            return GetInnerFeature() as IFilterable<TResponse>;
         }
     }
 }

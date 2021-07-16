@@ -13,17 +13,14 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Querie
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse("Hello")));
         }
 
-        public Func<TestQueryRequest, ICollection<ValidationMessage>> ValidationFunc()
+        public Func<TestQueryRequest, IEnumerable<ValidationMessage>> ValidationFunc() => ValidateRequest;
+
+        private IEnumerable<ValidationMessage> ValidateRequest(TestQueryRequest request)
         {
-            return request =>
+            if (string.IsNullOrEmpty(request.ThisMustNotBeNull))
             {
-                List<ValidationMessage> messages = new(1);
-                if (string.IsNullOrEmpty(request.ThisMustNotBeNull))
-                {
-                    messages.Add(nameof(request.ThisMustNotBeNull) + " must not be null or empty");
-                }
-                return messages;
-            };
+                yield return nameof(request.ThisMustNotBeNull) + " must not be null or empty";
+            }
         }
     }
 }

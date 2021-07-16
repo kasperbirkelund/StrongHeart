@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -12,23 +13,28 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
     [Route("[controller]")]
     public class CarsController : ApiBase
     {
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ICollection<Car>>> Get([FromServices] IQueryFeature<GetCarsRequest, GetCarsResponse> feature)
+        public CarsController(IClaimsProvider claimsProvider) : base(claimsProvider)
         {
-            GetCarsRequest request = new(GetCaller());
+        }
+
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<ICollection<Car>>> Get([FromServices] IQueryFeature<GetCarsRequest, GetCarsResponse> feature, [FromQuery] int? year = null)
+        {
+            GetCarsRequest request = new(year, GetCaller());
             Result<GetCarsResponse> result = await feature.Execute(request);
             return FromResultQuery(result, x => x.Items);
         }
 
-        [HttpPost]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromServices] ICommandFeature<CreateCarsRequest, CreateCarsRequestDto> feature)
+        public async Task<IActionResult> Post([FromServices] ICommandFeature<CreateCarsRequest, CreateCarsRequestDto> feature, [FromBody] CreateCarsRequestDto? dto)
         {
-            CreateCarsRequest request = new(new CreateCarsRequestDto(), GetCaller());
+            Guid id = Guid.NewGuid();
+            CreateCarsRequest request = new(id, dto, GetCaller());
             Result result = await feature.Execute(request);
-            return FromResultCommand(result, x => x.Ok());
+            return FromResultCommand(result);
         }
     }
 }
