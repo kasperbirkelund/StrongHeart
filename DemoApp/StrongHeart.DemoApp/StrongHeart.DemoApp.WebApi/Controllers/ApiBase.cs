@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using StrongHeart.Core.Security;
+﻿using StrongHeart.Core.Security;
+using StrongHeart.DemoApp.WebApi.Services;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
@@ -14,30 +12,10 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
             _claimsProvider = claimsProvider;
         }
 
-        protected override ICaller GetCaller()
+        protected ICaller GetCaller()
         {
             //Read certificate, token, http context, whatever and extract claims
             return new WebApiCaller(_claimsProvider.ExtractClaims());
-        }
-    }
-
-    public interface IClaimsProvider
-    {
-        ICollection<Claim> ExtractClaims();
-    }
-
-    public class MyCustomClaimsProvider : IClaimsProvider
-    {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public MyCustomClaimsProvider(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        public ICollection<Claim> ExtractClaims()
-        {
-            return new Claim[0];
         }
     }
 }

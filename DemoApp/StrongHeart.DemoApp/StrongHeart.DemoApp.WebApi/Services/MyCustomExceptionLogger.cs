@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using StrongHeart.Features.Decorators.ExceptionLogging;
 
-namespace StrongHeart.DemoApp.WebApi
+namespace StrongHeart.DemoApp.WebApi.Services
 {
     public class MyCustomExceptionLogger : IExceptionLogger
     {

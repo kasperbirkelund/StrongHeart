@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using StrongHeart.DemoApp.Business.Features.Commands.CreateCars;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
+using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using StrongHeart.Features.Decorators.TimeAlert;
 
-namespace StrongHeart.DemoApp.WebApi
+namespace StrongHeart.DemoApp.WebApi.Services
 {
     public class MyCustomTimeAlertExceededLogger : ITimeAlertExceededLogger
     {

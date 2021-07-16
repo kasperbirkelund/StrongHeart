@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.WebApi.Controllers;
+using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.DependencyInjection;
 
 namespace StrongHeart.DemoApp.WebApi

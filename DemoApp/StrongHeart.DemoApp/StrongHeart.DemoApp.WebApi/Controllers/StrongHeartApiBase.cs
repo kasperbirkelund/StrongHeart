@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
@@ -42,7 +41,5 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
                 _ => Ok()
             };
         }
-
-        protected abstract ICaller GetCaller();
     }
 }
