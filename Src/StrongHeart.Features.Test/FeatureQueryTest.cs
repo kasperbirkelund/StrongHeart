@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -68,6 +69,19 @@ namespace StrongHeart.Features.Test
                 decorators[3].Should().BeOfType<RetryQueryDecorator<TestQueryRequest, TestQueryResponse>>();
                 decorators.Length.Should().Be(4);
             }
+        }
+
+        [Fact]
+        public void EnsureDefaultDecoratorChainIncludesAllKnownPipelineExtensions()
+        {
+            Type[] extensions = typeof(IPipelineExtension).Assembly.ExportedTypes
+                .Where(x => x.DoesImplementInterface(typeof(IPipelineExtension)))
+                .Where(x => x.IsClass)
+                .ToArray();
+
+            FeatureSetupOptions o = new(new ServiceCollection());
+            o.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
+            o.Extensions.Count.Should().Be(extensions.Length);
         }
     }
 }
