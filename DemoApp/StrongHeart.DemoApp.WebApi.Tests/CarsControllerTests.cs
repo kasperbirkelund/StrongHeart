@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
-using StrongHeart.DemoApp.Business.Features.Commands.CreateCars;
+using StrongHeart.DemoApp.Business.Features.Commands.CreateCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
 using Xunit;
 
@@ -30,7 +30,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         [Fact]
         public async Task CreateCar_NoValidationError()
         {
-            CreateCarsRequestDto dto = new("Skoda");
+            CreateCarDto dto = new("Skoda");
             HttpClient client = _factory.CreateClient();
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
             HttpStatusCode actual = response.EnsureSuccessStatusCode().StatusCode;
@@ -40,7 +40,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         [Fact]
         public async Task CreateCar_WithValidationError()
         {
-            CreateCarsRequestDto dto = new("Not Skoda"); //"Skoda" is the only valid model name in this demo
+            CreateCarDto dto = new("Not Skoda"); //"Skoda" is the only valid model name in this demo
             HttpClient client = _factory.CreateClient();
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);

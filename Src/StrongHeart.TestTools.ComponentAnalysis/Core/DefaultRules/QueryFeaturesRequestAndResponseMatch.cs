@@ -8,7 +8,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 {
     public class QueryFeaturesRequestAndResponseMatch : IRule<Type>
     {
-        public string CorrectiveAction => "Ensure that the feature name is consistent with the request and response name";
+        public string CorrectiveAction => "Ensure that the query feature name is consistent with the request and response name. Correct naming is GetEmployeeFeature, GetEmployeeRequest, GetEmployeeResponse.";
         public bool DoFailIfNoItemsToVerify => true;
 
         public bool DoVerifyItem(Type type)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using StrongHeart.Features;
@@ -17,13 +18,18 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 
         public bool IsValid(Type item, Action<string> output)
         {
-            ParameterInfo[] failedItems = item.GetConstructors().Single().GetParameters().Where(x => x.ParameterType.IsFeature()).ToArray();
+            List<ParameterInfo> failedItems = new();
+            foreach (var ctr in item.GetConstructors())
+            {
+                failedItems.AddRange(ctr.GetParameters().Where(x => x.ParameterType.IsFeature()));
+            }
 
-            if (!failedItems.Any()) 
-                return true;
-
-            output(string.Join(" ,", failedItems.Select(x => x.Name)));
-            return false;
+            if (failedItems.Any())
+            {
+                output(string.Join(" ,", failedItems.Select(x => x.Name)));
+                return false;
+            }
+            return true;
         }
 
         public bool DoFailIfNoItemsToVerify => true;
@@ -57,7 +63,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 
             }
 
-            Type baseType = givenType.BaseType;
+            Type? baseType = givenType.BaseType;
             if (baseType == null)
             {
                 return false;

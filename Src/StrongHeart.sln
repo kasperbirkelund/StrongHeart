@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Compo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core.Test", "StrongHeart.Core.Test\StrongHeart.Core.Test.csproj", "{2C98DD6A-AF28-4D64-913C-FFDD8C44A5AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Features.AspNetCore", "StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{B2807B50-64A5-462E-8AB9-F4F263869198}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.AspNetCore", "StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{B2807B50-64A5-462E-8AB9-F4F263869198}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.Xunit", "StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{E7517B29-93BA-4923-82F0-721BD2405212}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{B2807B50-64A5-462E-8AB9-F4F263869198}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2807B50-64A5-462E-8AB9-F4F263869198}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2807B50-64A5-462E-8AB9-F4F263869198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7517B29-93BA-4923-82F0-721BD2405212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7517B29-93BA-4923-82F0-721BD2405212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7517B29-93BA-4923-82F0-721BD2405212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7517B29-93BA-4923-82F0-721BD2405212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
