@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -20,11 +21,21 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         }
 
         [Fact]
+        public async Task GetCar()
+        {
+            HttpClient client = _factory.CreateClient();
+            Car result = await client.GetFromJsonAsync<Car>("/Cars/242");
+            Assert.NotNull(result);
+            Assert.Equal("Renault", result.Model);
+        }
+
+        [Fact]
         public async Task GetCars()
         {
             HttpClient client = _factory.CreateClient();
-            List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars?year=2018");
-            Assert.Single(result);
+            List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars/Fiat");
+            Assert.NotNull(result);
+            Assert.Equal("Fiat", result.Single().Model);
         }
 
         [Fact]

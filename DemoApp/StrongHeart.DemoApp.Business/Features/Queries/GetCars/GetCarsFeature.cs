@@ -18,7 +18,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
                 new Car("Toyota", 2016),
                 new Car("Fiat", 2018)
             };
-            items = items.Where(x => !request.Year.HasValue || x.Year == request.Year.Value).ToList();
+            items = items.Where(x => request.Model == null || x.Model == request.Model).ToList();
             return Task.FromResult(Result<GetCarsResponse>.Success(new GetCarsResponse(items)));
         }
 
@@ -41,7 +41,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
         }
     }
 
-    public record GetCarsRequest(int? Year, ICaller Caller) : IRequest;
+    public record GetCarsRequest(string? Model, ICaller Caller) : IRequest;
     public record GetCarsResponse(ICollection<Car> Items) : IGetListResponse<Car>;
     public record Car(string Model, int Year);
 }

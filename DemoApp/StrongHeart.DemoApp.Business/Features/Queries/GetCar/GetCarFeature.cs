@@ -13,7 +13,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar
         }
     }
 
-    public record GetCarRequest(int? Year, ICaller Caller) : IRequest;
+    public record GetCarRequest(ICaller Caller) : IRequest;
     public record GetCarResponse(Car Item) : IGetSingleItemResponse<Car>;
     public record Car(string Model, int Year, string Detail1, string Detail2);
 }
