@@ -8,6 +8,11 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
 {
     public static class Extensions
     {
+        public static void Print<T>(this VerificationResult<T> result, Action<string> printer)
+        {
+            printer(result.ToString());
+        }
+
         public static VerificationResult<T> DoesComplyToRule<T>(this IEnumerable<T> items, IRule<T> rule, bool throwOnException = true)
         {
             IList<T> allItems = items.ToArray();

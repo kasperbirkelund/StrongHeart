@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.TestTools.Xunit;
-using Xunit;
+using Xunit.Abstractions;
 
 namespace StrongHeart.DemoApp.Business.Tests
 {
@@ -10,7 +10,11 @@ namespace StrongHeart.DemoApp.Business.Tests
     {
         //all tests (Facts) are inherited from the base class so any future
         //additional tests in the StrongHeart base class will automatically be executed  
-        
+
+        public FeatureConventionsTest(ITestOutputHelper helper) : base(helper)
+        {
+        }
+
         protected override IEnumerable<Assembly> GetFeatureAssemblies()
         {
             yield return typeof(CommandFeatureBase<,>).Assembly;
