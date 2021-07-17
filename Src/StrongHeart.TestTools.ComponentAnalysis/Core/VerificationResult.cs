@@ -45,14 +45,15 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             }
             return result;
         }
-
+        
         public override string ToString()
         {
+            string output = string.IsNullOrWhiteSpace(Output) ? string.Empty : $"Details: {Output}";
             return
                 $@"Types verified: {AllVerifiedItems.Count}
 Types with error {ItemsWithError.Count}:
 {string.Join(Environment.NewLine, ItemsWithError.Select(x => "-" + x))}
-Details: {Output}";
+{output}";
         }
     }
 }

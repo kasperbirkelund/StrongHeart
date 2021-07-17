@@ -8,6 +8,9 @@ namespace StrongHeart.TestTools.Xunit
 {
     public abstract class FeatureConventionsTestBase
     {
+        /// <summary>
+        /// Lets the framework know where the Feature-containing assemblies are.
+        /// </summary>
         protected abstract IEnumerable<Assembly> GetFeatureAssemblies();
 
         [Fact]
@@ -40,6 +43,22 @@ namespace StrongHeart.TestTools.Xunit
             VerifyThat
                 .AllTypesFromAssemblies(GetFeatureAssemblies())
                 .DoesComplyToRule(new ResponseDtoShouldBeMoreSpecificRule());
+        }
+
+        [Fact]
+        public virtual void ListResponseResponseShouldBeImmutable()
+        {
+            VerifyThat
+                .AllTypesFromAssemblies(GetFeatureAssemblies())
+                .DoesComplyToRule(new ListResponseResponseShouldBeImmutable());
+        }
+
+        [Fact]
+        public virtual void SingleItemResponseShouldBeImmutable()
+        {
+            VerifyThat
+                .AllTypesFromAssemblies(GetFeatureAssemblies())
+                .DoesComplyToRule(new SingleItemResponseShouldBeImmutable());
         }
     }
 }

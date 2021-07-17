@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace StrongHeart.TestTools.ComponentAnalysis.Core
@@ -32,17 +34,25 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return VerificationResult<T>.NoErrors(typesToVerify);
         }
 
-        //public static TAttribute? GetAttributeOrNull<TAttribute>(this ICustomAttributeProvider provider)
-        //{
-        //    return provider
-        //        .GetCustomAttributes(typeof(TAttribute), false)
-        //        .Cast<TAttribute>()
-        //        .SingleOrDefault();
-        //}
+        internal static bool IsImmutable(this PropertyInfo property)
+        {
+            return property.IsInitOnly() || !property.CanWrite;
+        }
 
-        //public static bool HasAttribute<TAttribute>(this ICustomAttributeProvider provider)
-        //{
-        //    return provider.GetAttributeOrNull<TAttribute>() != null;
-        //}
+        private static bool IsInitOnly(this PropertyInfo property)
+        {
+            if (!property.CanWrite)
+            {
+                return false;
+            }
+
+            MethodInfo? setMethod = property.SetMethod;
+            Type[]? setMethodReturnParameterModifiers = setMethod?.ReturnParameter.GetRequiredCustomModifiers();
+            if (setMethodReturnParameterModifiers == null)
+            {
+                return false;
+            }
+            return setMethodReturnParameterModifiers.Contains(typeof(System.Runtime.CompilerServices.IsExternalInit));
+        }
     }
 }

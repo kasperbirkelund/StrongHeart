@@ -20,7 +20,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 
         public bool IsValid(Type type, Action<string> output)
         {
-            Type featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommandFeature<,>));
+            Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommandFeature<,>));
             if (featureInterface == null)
             {
                 return false;
@@ -33,5 +33,4 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
             return featureDtoRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
         }
     }
-
 }

@@ -24,7 +24,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
 
         public GetCarsResponse GetFilteredItem(IFilterDecisionContext context, GetCarsResponse response)
         {
-            if (context.Caller.Claims.Any(x => x.Value == "dark knight"))
+            if (context.Caller.Claims.Any(x => x.Value == "dark-knight"))
             {
                 return response with
                 {
