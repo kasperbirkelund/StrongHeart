@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using StrongHeart.DemoApp.Business.Features.Commands.CreateCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.Core;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Car = StrongHeart.DemoApp.Business.Features.Queries.GetCars.Car;
 using CarDetailed = StrongHeart.DemoApp.Business.Features.Queries.GetCar.Car;
 
@@ -22,7 +22,6 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<CarDetailed>> GetCar([FromServices] IQueryFeature<GetCarRequest, GetCarResponse> feature, int id)
         {
             GetCarRequest request = new(GetCaller());
@@ -31,7 +30,6 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpGet("{model}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ICollection<Car>>> GetCars([FromServices] IQueryFeature<GetCarsRequest, GetCarsResponse> feature, string model)
         {
             GetCarsRequest request = new(model, GetCaller());
@@ -39,7 +37,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
             return FromResultQuery(result, x => x.Items);
         }
 
-        [HttpPost()]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromServices] ICommandFeature<CreateCarRequest, CreateCarDto> feature, [FromBody] CreateCarDto? dto)

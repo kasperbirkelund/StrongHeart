@@ -44,7 +44,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             CreateCarDto dto = new("Skoda");
             HttpClient client = _factory.CreateClient();
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
-            HttpStatusCode actual = response.EnsureSuccessStatusCode().StatusCode;
+            HttpStatusCode actual = response.StatusCode;
             Assert.Equal(HttpStatusCode.Accepted, actual);
         }
 
