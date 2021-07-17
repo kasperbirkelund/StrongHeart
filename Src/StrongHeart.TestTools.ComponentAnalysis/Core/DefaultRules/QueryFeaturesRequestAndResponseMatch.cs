@@ -9,8 +9,6 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
     public class QueryFeaturesRequestAndResponseMatch : IRule<Type>
     {
         public string CorrectiveAction => "Ensure that the query feature name is consistent with the request and response name. Correct naming is GetEmployeeFeature, GetEmployeeRequest, GetEmployeeResponse.";
-        public bool DoFailIfNoItemsToVerify => true;
-
         public bool DoVerifyItem(Type type)
         {
             return
@@ -21,7 +19,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 
         public bool IsValid(Type type, Action<string> output)
         {
-            Type featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQueryFeature<,>));
+            Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQueryFeature<,>));
             if (featureInterface == null)
             {
                 return false;

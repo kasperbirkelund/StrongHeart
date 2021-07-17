@@ -14,7 +14,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
                 .Where(rule.DoVerifyItem)
                 .ToArray();
 
-            if (typesToVerify.Length == 0 && rule.DoFailIfNoItemsToVerify)
+            if (typesToVerify.Length == 0 /*&& rule.DoFailIfNoItemsToVerify*/)
             {
                 return VerificationResult<T>.NoItemsToVerify(throwOnException);
             }

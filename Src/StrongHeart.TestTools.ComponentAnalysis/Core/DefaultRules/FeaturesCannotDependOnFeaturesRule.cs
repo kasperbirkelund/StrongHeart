@@ -32,8 +32,6 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
             return true;
         }
 
-        public bool DoFailIfNoItemsToVerify => true;
-
         private bool IsFeature(Type item)
         {
             return

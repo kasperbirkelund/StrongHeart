@@ -9,7 +9,6 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
     public class CommandFeaturesRequestAndResponseMatch : IRule<Type>
     {
         public string CorrectiveAction => "Ensure that the command feature name is consistent with the request and dto name. Correct naming is CreateEmployeeFeature, CreateEmployeeRequest and CreateEmployeeDto.";
-        public bool DoFailIfNoItemsToVerify => true;
 
         public bool DoVerifyItem(Type type)
         {

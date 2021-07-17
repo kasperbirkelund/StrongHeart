@@ -19,7 +19,5 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
                 item.DoesImplementInterface(typeof(IGetSingleItemResponse<>)) || 
                 item.DoesImplementInterface(typeof(IGetListResponse<>));
         }
-
-        public bool DoFailIfNoItemsToVerify => true;
     }
 }
