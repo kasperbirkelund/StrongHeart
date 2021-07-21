@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.Features
 {
@@ -24,9 +25,22 @@ namespace StrongHeart.Features
             return type.IsCommandFeature() || type.IsQueryFeature();
         }
 
+        /// <summary>
+        /// Returns false is the type is a decorator or an abstract class
+        /// </summary>
+        public static bool IsDecorator(this Type type)
+        {
+            return
+                type.DoesImplementInterface(typeof(ICommandDecorator<,>)) ||
+                type.DoesImplementInterface(typeof(IQueryDecorator<,>));
+        }
+
+        /// <summary>
+        /// Returns false is the type is a decorator or an abstract class
+        /// </summary>
         public static bool IsCommandFeature(this Type type)
         {
-            if (!type.IsGenericType)
+            if (!type.IsGenericType || type.IsAbstract || type.IsDecorator())
             {
                 return false;
             }
@@ -35,9 +49,12 @@ namespace StrongHeart.Features
             return typeDefinition == typeof(ICommandFeature<,>);
         }
 
+        /// <summary>
+        /// Returns false is the type is a decorator or an abstract class
+        /// </summary>
         public static bool IsQueryFeature(this Type type)
         {
-            if (!type.IsGenericType)
+            if (!type.IsGenericType || type.IsAbstract || type.IsDecorator())
             {
                 return false;
             }

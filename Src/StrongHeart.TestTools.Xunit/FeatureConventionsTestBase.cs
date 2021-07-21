@@ -40,6 +40,15 @@ namespace StrongHeart.TestTools.Xunit
         }
 
         [Fact]
+        public virtual void FeaturesMustOnlyHaveOneConstructor()
+        {
+            VerifyThat
+                .AllTypesFromAssemblies(GetFeatureAssemblies())
+                .DoesComplyToRule(new FeaturesMustOnlyHaveOneConstructor())
+                .Print(s => _helper.WriteLine(s));
+        }
+
+        [Fact]
         public virtual void QueryFeaturesRequestAndResponseMatch()
         {
             VerifyThat

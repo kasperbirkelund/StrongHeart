@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using StrongHeart.Features;
-using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators;
 
 namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 {
@@ -13,7 +11,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
         public string CorrectiveAction => "Features should not depend on other features. Refactor to share the logic.";
         public bool DoVerifyItem(Type item)
         {
-            return IsFeature(item) && !IsFeatureDecorator(item);
+            return item.IsFeature();
         }
 
         public bool IsValid(Type item, Action<string> output)
@@ -30,44 +28,6 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
                 return false;
             }
             return true;
-        }
-
-        private bool IsFeature(Type item)
-        {
-            return
-                !item.IsAbstract && 
-                IsAssignableToGenericType(item, typeof(ICommandFeature<,>)) ||
-                IsAssignableToGenericType(item, typeof(IQueryFeature<,>));
-        }
-
-        private bool IsFeatureDecorator(Type item)
-        {
-            return
-                IsAssignableToGenericType(item, typeof(ICommandDecorator<,>)) ||
-                IsAssignableToGenericType(item, typeof(IQueryDecorator<,>));
-        }
-        private static bool IsAssignableToGenericType(Type givenType, Type genericType)
-        {
-            var interfaceTypes = givenType.GetInterfaces();
-
-            if (interfaceTypes.Any(it => it.IsGenericType && it.GetGenericTypeDefinition() == genericType))
-            {
-                return true;
-            }
-
-            if (givenType.IsGenericType && givenType.GetGenericTypeDefinition() == genericType)
-            {
-                return true;
-
-            }
-
-            Type? baseType = givenType.BaseType;
-            if (baseType == null)
-            {
-                return false;
-            }
-
-            return IsAssignableToGenericType(baseType, genericType);
         }
     }
 }
