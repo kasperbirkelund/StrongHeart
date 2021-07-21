@@ -8,8 +8,6 @@ using StrongHeart.Features.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Car = StrongHeart.DemoApp.Business.Features.Queries.GetCars.Car;
-using CarDetailed = StrongHeart.DemoApp.Business.Features.Queries.GetCar.Car;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
@@ -22,7 +20,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CarDetailed>> GetCar([FromServices] IQueryFeature<GetCarRequest, GetCarResponse> feature, int id)
+        public async Task<ActionResult<CarDetails>> GetCar([FromServices] IQueryFeature<GetCarRequest, GetCarResponse> feature, int id)
         {
             GetCarRequest request = new(GetCaller());
             Result<GetCarResponse> result = await feature.Execute(request);

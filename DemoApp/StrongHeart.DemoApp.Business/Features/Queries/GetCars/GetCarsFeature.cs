@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Filtering;
 using StrongHeart.Features.Decorators.Retry;
 
 namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
 {
-    public class GetCarsFeature : QueryFeatureBase<GetCarsRequest, GetCarsResponse>, IFilterable<GetCarsResponse>, IRetryable
+    public partial class GetCarsFeature : IFilterable<GetCarsResponse>, IRetryable
     {
         public override Task<Result<GetCarsResponse>> Execute(GetCarsRequest request)
         {
@@ -40,8 +39,4 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
             return false;
         }
     }
-
-    public record GetCarsRequest(string? Model, ICaller Caller) : IRequest;
-    public record GetCarsResponse(ICollection<Car> Items) : IGetListResponse<Car>;
-    public record Car(string Model, int Year);
 }

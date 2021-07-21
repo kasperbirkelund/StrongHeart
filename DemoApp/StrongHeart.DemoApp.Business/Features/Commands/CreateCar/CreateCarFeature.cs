@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 
 namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
 {
-    public class CreateCarFeature : CommandFeatureBase<CreateCarRequest, CreateCarDto>//, IRequestValidatable<CreateCarRequest>
+    public partial class CreateCarFeature 
     {
         public override Task<Result> Execute(CreateCarRequest request)
         {
@@ -25,8 +23,4 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
             }
         }
     }
-
-    public record CreateCarRequest(Guid Id, CreateCarDto Model, ICaller Caller) : IRequest<CreateCarDto>;
-
-    public record CreateCarDto(string Model) : IRequestDto;
 }

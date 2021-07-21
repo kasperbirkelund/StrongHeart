@@ -1,0 +1,10 @@
+﻿- name: GetTester
+  request:
+    properties:
+    - string A
+    - string B
+- name: GetTester2
+  request:
+    properties:
+    - string A
+    - string B

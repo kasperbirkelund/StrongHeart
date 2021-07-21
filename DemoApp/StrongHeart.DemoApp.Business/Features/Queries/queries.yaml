@@ -1,0 +1,20 @@
+﻿- name: GetTester
+  request:
+    properties:
+    - string A
+    - string B
+  response:
+    responseTypeName: Car
+    properties:
+    - string Model
+    - int Age
+- name: GetTester2
+  request:
+    properties:
+    - string A
+    - string B
+  response:
+    responseTypeName: Car
+    properties:
+    - string Model
+    - int Age
