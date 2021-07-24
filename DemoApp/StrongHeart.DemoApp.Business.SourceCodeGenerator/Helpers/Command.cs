@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class Command
     {
-        public static string GetGeneratedCode(IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
         {
-            CommandFeatures features = GetCommandFeatures(additionalFiles);
+            CommandFeatures features = reader.GetFeatures(additionalFiles);
             StringBuilder sb = new();
             foreach (CommandFeature feature in features.Items)
             {
@@ -20,22 +17,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
             }
 
             return sb.ToString();
-        }
-
-        private static CommandFeatures GetCommandFeatures(IEnumerable<AdditionalText> additionalFiles)
-        {
-            SourceText? commands = additionalFiles
-                    .Where(x => x.Path.EndsWith("commands.xml"))
-                    .Select(x => x.GetText())
-                    .SingleOrDefault();
-
-            XmlSerializer serializer = new XmlSerializer(typeof(CommandFeatures));
-
-            using (TextReader reader = new StringReader(commands.ToString()))
-            {
-                CommandFeatures result = (CommandFeatures)serializer.Deserialize(reader);
-                return result;
-            }
         }
 
         private static string CreateCodeSnippet(CommandFeature feature, string rootNamespace)
@@ -68,7 +49,7 @@ namespace {rootNamespace}.Commands.{feature.Name}
 
         private static string GetUsings()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("\tusing System;");
             sb.AppendLine("\tusing System.Collections.Generic;");
             sb.AppendLine("\tusing System.Threading.Tasks;");

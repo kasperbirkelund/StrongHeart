@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class Query
     {
-        public static string GetGeneratedCode(IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
         {
-            QueryFeatures features = GetQueryFeatures(additionalFiles);
+            QueryFeatures features = reader.GetFeatures(additionalFiles);
             StringBuilder sb = new();
             foreach (QueryFeature feature in features.Items)
             {
@@ -20,22 +17,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
             }
 
             return sb.ToString();
-        }
-
-        private static QueryFeatures GetQueryFeatures(IEnumerable<AdditionalText> additionalFiles)
-        {
-            SourceText? queries = additionalFiles
-                    .Where(x => x.Path.EndsWith("queries.xml"))
-                    .Select(x => x.GetText())
-                    .SingleOrDefault();
-
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryFeatures));
-
-            using (TextReader reader = new StringReader(queries.ToString()))
-            {
-                QueryFeatures result = (QueryFeatures)serializer.Deserialize(reader);
-                return result;
-            }
         }
 
         private static string CreateCodeSnippet(QueryFeature feature, string rootNamespace)
@@ -59,7 +40,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 
         private static string GetUsings(QueryResponse response)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             if (response.IsListResponse)
             {
                 sb.AppendLine("\tusing System.Collections.Generic;");

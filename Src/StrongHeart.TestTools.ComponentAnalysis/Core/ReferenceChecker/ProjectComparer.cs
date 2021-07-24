@@ -15,7 +15,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.ReferenceChecker
 
         public int GetHashCode(Project obj)
         {
-            return (obj.Name != null ? obj.Name.GetHashCode() : 0);
+            return obj.Name != null ? obj.Name.GetHashCode() : 0;
         }
     }
 }

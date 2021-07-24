@@ -24,6 +24,6 @@ namespace StrongHeart.Features.Decorators.Retry
             return _inner;
         }
 
-        protected override IRetryable GetConfig() => ((IRetryable)this.GetInnerMostFeature());
+        protected override IRetryable GetConfig() => (IRetryable)this.GetInnerMostFeature();
     }
 }
