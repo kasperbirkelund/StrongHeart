@@ -1,114 +1,30 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Xunit;
+using System.Reflection;
+using StrongHeart.DemoApp.Business.Features;
+using StrongHeart.TestTools.Xunit;
+using Xunit.Abstractions;
 
 namespace StrongHeart.DemoApp.Business.Tests
 {
-    public class FeatureConventionsTest
+    public class FeatureConventionsTest : FeatureConventionsTestBase
     {
-        [Fact]
-        public void SingleItemResponseShouldBeImmutable()
+        //all tests (Facts) are inherited from the base class so any future
+        //additional tests in the StrongHeart base class will automatically be executed  
+
+        public FeatureConventionsTest(ITestOutputHelper helper) : base(helper)
         {
-            var lines = File.ReadAllLines(
-                @"C:\development\azuredevops\StrongHeart\DemoApp\StrongHeart.DemoApp.Business\Features\Commands\commands.yaml");
-            var v = GetCommands(lines).ToArray();
         }
 
-        private IEnumerable<CommandFeature> GetCommands(IList<string> lines)
+        protected override IEnumerable<Assembly> GetFeatureAssemblies()
         {
-            lines = lines.Skip(1).ToArray();
-
-            CommandFeature feature = null;
-            for (int i = 0; i < lines.Count; i++)
-            {
-                string line = lines[i];
-
-                if (line.Contains("- name:"))
-                {
-                    feature = new CommandFeature()
-                    {
-                        Request = new CommandRequest()
-                    };
-                    feature.Name = line.Replace("- name:", string.Empty).Trim();
-                }
-                else if (line.Contains("additionalRequestProperties"))
-                {
-                    List<string> list = new();
-                    for (++i;; i++)
-                    {
-                        if (i < lines.Count)
-                        {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature.Request.AdditionalRequestProperties = list;
-                                line = innerLine;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                }
-                if (line.Contains("dtoProperties"))
-                {
-                    List<string> list = new();
-                    for (++i;; i++)
-                    {
-                        if (i < lines.Count)
-                        {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature.Request.DtoProperties = list;
-                                line = innerLine;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            feature.Request.DtoProperties = list;
-                            yield return feature;
-                            break;
-                        }
-                    }
-                }
-
-                if (line == string.Empty)
-                {
-                    yield return feature;
-                }
-            }
+            yield return typeof(CommandFeatureBase<,>).Assembly;
         }
 
 
-        public class CommandRequest
-        {
-            public List<string> AdditionalRequestProperties { get; set; }
-            public List<string> DtoProperties { get; set; }
-        }
-
-        public class CommandFeatures
-        {
-            public string RootNamespace { get; set; }
-            public CommandFeature[] Items { get; set; }
-        }
-
-        public class CommandFeature
-        {
-            public string Name { get; set; }
-            public CommandRequest Request { get; set; }
-        }
+        //If you for one or another reason don't want a rule to be enforced - just skip it like this:
+        //[Fact(Skip = "Rule is not enforced")]
+        //public override void SingleItemResponseShouldBeImmutable()
+        //{
+        //}
     }
 }

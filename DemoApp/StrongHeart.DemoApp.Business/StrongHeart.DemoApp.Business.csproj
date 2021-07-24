@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Features\Commands\commands.xml" />
     <AdditionalFiles Include="Features\Commands\commands.yaml" />
-    <AdditionalFiles Include="Features\Queries\queries.xml" />
     <AdditionalFiles Include="Features\Queries\queries.yaml" />
   </ItemGroup>
 

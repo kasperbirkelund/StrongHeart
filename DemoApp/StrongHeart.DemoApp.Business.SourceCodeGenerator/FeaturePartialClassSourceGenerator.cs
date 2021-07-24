@@ -2,7 +2,6 @@
 using System.Text;
 using Microsoft.CodeAnalysis;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers;
-using StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Xml;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
