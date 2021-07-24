@@ -31,7 +31,6 @@ namespace {rootNamespace}.Commands.{feature.Name}
     }}
 
     public record {feature.Name}Request({GetRequestParameters(feature)}) : IRequest<{GetDtoName(feature.Name)}>;
-
     public record {GetDtoName(feature.Name)}({GetDtoParameters(feature)}) : IRequestDto;
 }}";
             return template;

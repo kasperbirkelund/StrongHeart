@@ -8,11 +8,16 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     public static class Extensions
     {
-        public static string GetFileContent(this IEnumerable<AdditionalText> additionalFiles, Predicate<AdditionalText> predicate)
+        public static string? GetFileContent(this IEnumerable<AdditionalText> additionalFiles, Predicate<AdditionalText> predicate)
         {
-            string? content = additionalFiles
+            return additionalFiles.GetFileContent(predicate, x => x.GetText()?.ToString());
+        }
+
+        public static T GetFileContent<T>(this IEnumerable<AdditionalText> additionalFiles, Predicate<AdditionalText> predicate, Func<AdditionalText, T> selector)
+        {
+            T? content = additionalFiles
                 .Where(x => predicate(x))
-                .Select(x => x.GetText()?.ToString())
+                .Select(selector)
                 .SingleOrDefault();
 
             if (content == null)

@@ -1,10 +1,6 @@
-﻿- name: GetTester
-  request:
-    properties:
-    - string A
-    - string B
-- name: GetTester2
-  request:
-    properties:
-    - string A
-    - string B
+﻿- rootNameSpace: StrongHeart.DemoApp.Business.Features
+- name: CreateCar
+  additionalRequestProperties:
+    - Guid Id
+  dtoProperties:
+    - string Model

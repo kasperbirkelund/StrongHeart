@@ -33,7 +33,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
     public record {feature.Name}Response({GetResponseParameters(feature.Response)}) : {GetResponseInterface(feature.Response)};
     public record {feature.Response.ResponseTypeName}({string.Join(", ", feature.Response.Properties)});
 }}
-
 ";
             return template;
         }

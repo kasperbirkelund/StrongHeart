@@ -1,20 +1,19 @@
-﻿- name: GetTester
-  request:
-    properties:
-    - string A
-    - string B
-  response:
-    responseTypeName: Car
-    properties:
+﻿- rootNameSpace: StrongHeart.DemoApp.Business.Features
+- name: GetCar
+  requestProperties:
+  responseTypeName: CarDetails
+  isListResponse: false
+  responseProperties:
     - string Model
-    - int Age
-- name: GetTester2
-  request:
-    properties:
-    - string A
-    - string B
-  response:
-    responseTypeName: Car
-    properties:
+    - int Year
+    - string Detail1
+    - string Detail2    
+
+- name: GetCars
+  requestProperties:
+    - string? Model    
+  responseTypeName: Car
+  isListResponse: true
+  responseProperties:
     - string Model
-    - int Age
+    - int Year

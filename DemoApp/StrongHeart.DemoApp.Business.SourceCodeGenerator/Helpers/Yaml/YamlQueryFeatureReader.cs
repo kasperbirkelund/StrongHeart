@@ -1,41 +1,54 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Xunit;
+using Microsoft.CodeAnalysis;
+using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
-namespace StrongHeart.DemoApp.Business.Tests
+namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
 {
-    public class FeatureConventionsTest
+    public class YamlQueryFeatureReader : IFeatureReader<QueryFeatures>
     {
-        [Fact]
-        public void SingleItemResponseShouldBeImmutable()
+        public QueryFeatures GetFeatures(IEnumerable<AdditionalText> additionalFiles)
         {
-            var lines = File.ReadAllLines(
-                @"C:\development\azuredevops\StrongHeart\DemoApp\StrongHeart.DemoApp.Business\Features\Commands\commands.yaml");
-            var v = GetCommands(lines).ToArray();
+            var path = additionalFiles.GetFileContent(x => x.Path.EndsWith("queries.yaml"), text => text.Path)!;
+            string[] lines = File.ReadAllLines(path);
+            string ns = GetNameSpace(lines);
+            var q = GetQueries(lines);
+
+            return new QueryFeatures()
+            {
+                RootNamespace = ns,
+                Items = q.ToArray()
+            };
         }
 
-        private IEnumerable<CommandFeature> GetCommands(IList<string> lines)
+        private string GetNameSpace(string[] lines)
+        {
+            return lines.First().Replace("- rootNameSpace: ", string.Empty).Trim();
+        }
+
+        private IEnumerable<QueryFeature> GetQueries(IList<string> lines)
         {
             lines = lines.Skip(1).ToArray();
 
-            CommandFeature feature = null;
+            QueryFeature feature = null;
             for (int i = 0; i < lines.Count; i++)
             {
                 string line = lines[i];
 
                 if (line.Contains("- name:"))
                 {
-                    feature = new CommandFeature()
+                    feature = new QueryFeature()
                     {
-                        Request = new CommandRequest()
+                        Response = new QueryResponse(),
+                        Request = new QueryRequest()
                     };
                     feature.Name = line.Replace("- name:", string.Empty).Trim();
                 }
-                else if (line.Contains("additionalRequestProperties"))
+                else if (line.Contains("requestProperties"))
                 {
                     List<string> list = new();
-                    for (++i;; i++)
+                    for (++i; ; i++)
                     {
                         if (i < lines.Count)
                         {
@@ -46,21 +59,26 @@ namespace StrongHeart.DemoApp.Business.Tests
                             }
                             else
                             {
-                                feature.Request.AdditionalRequestProperties = list;
+                                feature.Request.Properties = list;
                                 line = innerLine;
                                 break;
                             }
                         }
-                        else
-                        {
-                            break;
-                        }
+                        else { break; }
                     }
                 }
-                if (line.Contains("dtoProperties"))
+                else if (line.Contains("isListResponse: "))
+                {
+                    feature.Response.IsListResponse = bool.Parse(line.Replace("isListResponse: ", string.Empty).Trim());
+                }
+                if (line.Contains("responseTypeName:"))
+                {
+                    feature.Response.ResponseTypeName = line.Replace("responseTypeName:", string.Empty).Trim();
+                }
+                else if (line.Contains("responseProperties"))
                 {
                     List<string> list = new();
-                    for (++i;; i++)
+                    for (++i; ; i++)
                     {
                         if (i < lines.Count)
                         {
@@ -71,14 +89,14 @@ namespace StrongHeart.DemoApp.Business.Tests
                             }
                             else
                             {
-                                feature.Request.DtoProperties = list;
+                                feature.Response.Properties = list;
                                 line = innerLine;
                                 break;
                             }
                         }
                         else
                         {
-                            feature.Request.DtoProperties = list;
+                            feature.Response.Properties = list;
                             yield return feature;
                             break;
                         }
@@ -90,25 +108,6 @@ namespace StrongHeart.DemoApp.Business.Tests
                     yield return feature;
                 }
             }
-        }
-
-
-        public class CommandRequest
-        {
-            public List<string> AdditionalRequestProperties { get; set; }
-            public List<string> DtoProperties { get; set; }
-        }
-
-        public class CommandFeatures
-        {
-            public string RootNamespace { get; set; }
-            public CommandFeature[] Items { get; set; }
-        }
-
-        public class CommandFeature
-        {
-            public string Name { get; set; }
-            public CommandRequest Request { get; set; }
         }
     }
 }

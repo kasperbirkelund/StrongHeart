@@ -11,12 +11,16 @@
 
   <ItemGroup>
     <None Remove="Features\commands.xml" />
+    <None Remove="Features\Commands\commands.yaml" />
     <None Remove="Features\queries.xml" />
+    <None Remove="Features\Queries\queries.yaml" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="Features\Commands\commands.xml" />
+    <AdditionalFiles Include="Features\Commands\commands.yaml" />
     <AdditionalFiles Include="Features\Queries\queries.xml" />
+    <AdditionalFiles Include="Features\Queries\queries.yaml" />
   </ItemGroup>
 
   <ItemGroup>
