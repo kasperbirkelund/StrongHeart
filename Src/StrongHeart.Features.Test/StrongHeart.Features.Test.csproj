@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StrongHeart.Features\StrongHeart.Features.csproj" />
-    <ProjectReference Include="..\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj" />
+    <ProjectReference Include="..\StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj" />
   </ItemGroup>
 
 </Project>

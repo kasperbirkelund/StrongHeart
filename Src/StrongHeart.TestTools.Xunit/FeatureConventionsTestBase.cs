@@ -51,10 +51,18 @@ namespace StrongHeart.TestTools.Xunit
         [Fact]
         public virtual void QueryFeaturesRequestAndResponseMatch()
         {
-            VerifyThat
+            var result = VerifyThat
                 .AllTypesFromAssemblies(GetFeatureAssemblies())
                 .DoesComplyToRule(new QueryFeaturesRequestAndResponseMatch())
                 .Print(s => _helper.WriteLine(s));
+
+            //below part is not intended to be used in regular test scenarios. Just for demonstration.
+            Assert.True(result.IsPassed);
+            Assert.True(result.AllVerifiedItems.Count> 0);
+            //result.AllVerifiedItems.Count.Should().BeGreaterThan(0);
+            //result.ItemsWithError.Count.Should().Be(0);
+            //result.Message.Should().Be("All verified items comply to rule");
+            //result.Output.Should().BeNull();
         }
 
         [Fact]

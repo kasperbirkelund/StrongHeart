@@ -26,7 +26,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             VerificationResult<T> result = new(new T[0], new T[0], "No items found for verification. Check your selection.", null);
             if (throwOnException)
             {
-                throw new RuleNotCompliedException<T>(result);
+                throw new RuleNotCompliedException(result.ToString());
             }
             return result;
         }
@@ -41,7 +41,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             VerificationResult<T> result = new(allVerifiedItems, itemsWithError, correctiveAction, output);
             if (throwOnException)
             {
-                throw new RuleNotCompliedException<T>(result);
+                throw new RuleNotCompliedException(result.ToString());
             }
             return result;
         }
@@ -50,7 +50,9 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
         {
             string output = string.IsNullOrWhiteSpace(Output) ? string.Empty : $"Details: {Output}";
             return
-                $@"Types verified: {AllVerifiedItems.Count}
+$@"
+Message: {Message}
+Types verified: {AllVerifiedItems.Count}
 Types with error {ItemsWithError.Count}:
 {string.Join(Environment.NewLine, ItemsWithError.Select(x => "-" + x))}
 {output}";

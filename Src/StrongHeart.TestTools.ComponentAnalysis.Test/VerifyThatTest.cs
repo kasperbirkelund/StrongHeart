@@ -26,7 +26,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
                     .AllTypesFromAssembly(GetType().Assembly)
                     .DoesComplyToRule(new DemoRuleWhichWillFail());
             };
-            action.Should().Throw<RuleNotCompliedException<Type>>();
+            action.Should().Throw<RuleNotCompliedException>();
         }
 
         [Fact]

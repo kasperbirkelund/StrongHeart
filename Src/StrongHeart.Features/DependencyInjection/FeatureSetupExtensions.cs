@@ -22,7 +22,7 @@ namespace StrongHeart.Features.DependencyInjection
 
             List<Type> featureTypes = assemblies
                 .SelectMany(x => x.GetTypes())
-                .Where(x => x.GetInterfaces().Any(Extensions.IsFeature))
+                .Where(x => x.GetInterfaces().Any(Extensions.IsFeatureInterface))
                 .ToList();
 
             foreach (Type featureType in featureTypes)
@@ -35,7 +35,7 @@ namespace StrongHeart.Features.DependencyInjection
 
         private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options)
         {
-            Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeature);
+            Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeatureInterface);
 
             List<Type> pipeline = new();
 
@@ -55,11 +55,11 @@ namespace StrongHeart.Features.DependencyInjection
         private static IEnumerable<Type> GetMandatoryDecorators(Type interfaceType, Type serviceType, FeatureSetupOptions options)
         {
             //the first returned decorator will become the outer-most in the pipeline
-            if (interfaceType.IsQueryFeature())
+            if (interfaceType.IsQueryFeatureInterface())
             {
                 return GetDecoratorChain(options.Extensions, x => x.QueryTypeDecorator, serviceType);
             }
-            if (interfaceType.IsCommandFeature())
+            if (interfaceType.IsCommandFeatureInterface())
             {
                 return GetDecoratorChain(options.Extensions, x => x.CommandTypeDecorator, serviceType);
             }
@@ -123,7 +123,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (parameterType.IsFeature())
+            if (parameterType.IsFeatureInterface())
             {
                 return current;
             }

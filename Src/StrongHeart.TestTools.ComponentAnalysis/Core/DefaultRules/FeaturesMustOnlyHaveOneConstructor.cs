@@ -9,7 +9,7 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
 
         public bool DoVerifyItem(Type item)
         {
-            return item.IsFeature();
+            return item.IsFeatureClass() && !item.IsFeatureDecorator();
         }
 
         public bool IsValid(Type item, Action<string> output)

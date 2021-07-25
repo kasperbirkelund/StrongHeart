@@ -2,6 +2,7 @@
 using System.Linq;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
+using StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 namespace StrongHeart.Features
 {
@@ -19,47 +20,78 @@ namespace StrongHeart.Features
 
             return @interface.IsAssignableFrom(type);
         }
+        //public static bool DoesImplementInterface(this Type type, Type genericType)
+        //{
+        //    if (genericType.IsGenericType)
+        //    {
+        //        return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == genericType);
+        //    }
 
-        public static bool IsFeature(this Type type)
+        //    if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
+        //    {
+        //        return true;
+        //    }
+
+        //    Type? baseType = type.BaseType;
+        //    if (baseType == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    return DoesImplementInterface(baseType, genericType);
+
+        //    //return @interface.IsAssignableFrom(type);
+        //}
+
+        public static bool IsFeatureInterface(this Type type)
         {
-            return type.IsCommandFeature() || type.IsQueryFeature();
+            return type.IsCommandFeatureInterface() || type.IsQueryFeatureInterface();
+        }
+
+        ///// <summary>
+        ///// Returns false is the type is a decorator or an abstract class
+        ///// </summary>
+        //public static bool IsDecorator(this Type type)
+        //{
+        //    return
+        //        type.DoesImplementInterface(typeof(ICommandDecorator<,>)) ||
+        //        type.DoesImplementInterface(typeof(IQueryDecorator<,>));
+        //}
+
+        /// <summary>
+        /// Returns false is the type is a decorator or an abstract class
+        /// </summary>
+        public static bool IsCommandFeatureInterface(this Type type)
+        {
+            return IsFeatureInterface(type, typeof(ICommandFeature<,>));
         }
 
         /// <summary>
         /// Returns false is the type is a decorator or an abstract class
         /// </summary>
-        public static bool IsDecorator(this Type type)
+        public static bool IsQueryFeatureInterface(this Type type)
         {
-            return
-                type.DoesImplementInterface(typeof(ICommandDecorator<,>)) ||
-                type.DoesImplementInterface(typeof(IQueryDecorator<,>));
+            return IsFeatureInterface (type, typeof(IQueryFeature<,>));
         }
 
-        /// <summary>
-        /// Returns false is the type is a decorator or an abstract class
-        /// </summary>
-        public static bool IsCommandFeature(this Type type)
+        public static bool IsFeatureClass(this Type type)
         {
-            if (!type.IsGenericType || type.IsAbstract || type.IsDecorator())
+            return IsFeatureClassAlgorithm.IsFeatureClass(type);
+        }
+
+        public static bool IsFeatureDecorator(this Type type)
+        {
+            return IsFeatureClassAlgorithm.IsFeatureDecorator(type);
+        }
+
+        private static bool IsFeatureInterface(Type type, Type interfaceType)
+        {
+            if (!type.IsGenericType || !type.IsInterface)
             {
                 return false;
             }
-
             Type typeDefinition = type.GetGenericTypeDefinition();
-            return typeDefinition == typeof(ICommandFeature<,>);
-        }
-
-        /// <summary>
-        /// Returns false is the type is a decorator or an abstract class
-        /// </summary>
-        public static bool IsQueryFeature(this Type type)
-        {
-            if (!type.IsGenericType || type.IsAbstract || type.IsDecorator())
-            {
-                return false;
-            }
-            Type typeDefinition = type.GetGenericTypeDefinition();
-            return typeDefinition == typeof(IQueryFeature<,>);
+            return typeDefinition == interfaceType;
         }
     }
 }

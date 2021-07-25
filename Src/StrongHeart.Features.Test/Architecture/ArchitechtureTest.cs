@@ -1,50 +1,22 @@
-﻿using System;
-using FluentAssertions;
-using StrongHeart.TestTools.ComponentAnalysis.Core;
-using StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules;
-using Xunit;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using StrongHeart.TestTools.Xunit;
+using Xunit.Abstractions;
 
 namespace StrongHeart.Features.Test.Architecture
 {
-    public class ArchitectureTest
+    public class FeatureConventionsTest : FeatureConventionsTestBase
     {
-        [Fact]
-        public void GivenAllQueryFeatures_WhenCheckNaming_ThenNoErrors()
-        {
-            VerificationResult<Type> result = VerifyThat
-                .AllTypesFromAssembly(GetType().Assembly)
-                .DoesComplyToRule(new QueryFeaturesRequestAndResponseMatch());
+        //all tests (Facts) are inherited from the base class so any future
+        //additional tests in the StrongHeart base class will automatically be executed  
 
-            //below part is not intended to be used in regular test scenarios. Just for demonstration.
-            result.IsPassed.Should().BeTrue();
-            result.AllVerifiedItems.Count.Should().BeGreaterThan(0);
-            result.ItemsWithError.Count.Should().Be(0);
-            result.Message.Should().Be("All verified items comply to rule");
-            result.Output.Should().BeNull();
+        public FeatureConventionsTest(ITestOutputHelper helper) : base(helper)
+        {
         }
 
-        [Fact]
-        public void GivenAllCommandFeatures_WhenCheckNaming_ThenNoErrors()
+        protected override IEnumerable<Assembly> GetFeatureAssemblies()
         {
-            VerifyThat
-                .AllTypesFromAssembly(GetType().Assembly)
-                .DoesComplyToRule(new CommandFeaturesRequestAndResponseMatch());
-        }
-
-        [Fact]
-        public void ResponseDtoShouldBeMoreSpecific()
-        {
-            VerifyThat
-                .AllTypesFromAssembly(GetType().Assembly)
-                .DoesComplyToRule(new ResponseDtoShouldBeMoreSpecificRule());
-        }
-
-        [Fact]
-        public void FeaturesCannotDependOnFeatures()
-        {
-            VerifyThat
-                .AllTypesFromAssembly(GetType().Assembly)
-                .DoesComplyToRule(new FeaturesCannotDependOnFeaturesRule());
+            yield return GetType().Assembly;
         }
     }
 }
