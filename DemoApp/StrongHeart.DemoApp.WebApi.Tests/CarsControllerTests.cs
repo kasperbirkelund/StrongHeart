@@ -23,7 +23,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         [Fact]
         public async Task GetCar()
         {
-            HttpClient client = _factory.CreateClient();
+            using HttpClient client = _factory.CreateClient();
             Car result = await client.GetFromJsonAsync<Car>("/Cars/242");
             Assert.NotNull(result);
             Assert.Equal("Renault", result.Model);
@@ -32,7 +32,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         [Fact]
         public async Task GetCars()
         {
-            HttpClient client = _factory.CreateClient();
+            using HttpClient client = _factory.CreateClient();
             List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars/Fiat");
             Assert.NotNull(result);
             Assert.Equal("Fiat", result.Single().Model);
@@ -42,7 +42,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         public async Task CreateCar_NoValidationError()
         {
             CreateCarDto dto = new("Skoda");
-            HttpClient client = _factory.CreateClient();
+            using HttpClient client = _factory.CreateClient();
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
             HttpStatusCode actual = response.StatusCode;
             Assert.Equal(HttpStatusCode.Accepted, actual);
@@ -52,7 +52,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         public async Task CreateCar_WithValidationError()
         {
             CreateCarDto dto = new("Not Skoda"); //"Skoda" is the only valid model name in this demo
-            HttpClient client = _factory.CreateClient();
+            using HttpClient client = _factory.CreateClient();
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             string content = await response.Content.ReadAsStringAsync();
