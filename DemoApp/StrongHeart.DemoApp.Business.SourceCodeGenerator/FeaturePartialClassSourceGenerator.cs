@@ -18,8 +18,8 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
             StringBuilder sb = new();
 
             sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            sb.AppendLine(Query.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
-            sb.AppendLine(Command.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
+            sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
+            sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
             
             context.AddSource("Features.generated.cs", sb.ToString());
         }

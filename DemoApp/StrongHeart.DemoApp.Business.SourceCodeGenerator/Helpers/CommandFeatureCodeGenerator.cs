@@ -5,7 +5,7 @@ using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
-    internal class Command
+    internal class CommandFeatureCodeGenerator
     {
         public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
         {

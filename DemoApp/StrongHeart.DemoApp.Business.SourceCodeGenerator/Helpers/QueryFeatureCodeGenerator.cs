@@ -5,7 +5,7 @@ using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
-    internal class Query
+    internal class QueryFeatureCodeGenerator
     {
         public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
         {
