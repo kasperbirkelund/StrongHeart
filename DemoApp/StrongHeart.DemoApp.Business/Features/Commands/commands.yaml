@@ -4,3 +4,14 @@
     - Guid Id
   dtoProperties:
     - string Model
+
+- name: UpdateCar
+  additionalRequestProperties:    
+  dtoProperties:
+    - Guid Id
+    - string Model
+
+- name: DeleteCar
+  additionalRequestProperties:    
+  dtoProperties:
+    - Guid Id

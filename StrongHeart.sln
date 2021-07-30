@@ -5,43 +5,41 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{489DC3A2-C8DE-4819-A187-9168EC2B75BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Build", "Build\StrongHeart.Build\StrongHeart.Build.csproj", "{4721FF3A-93EF-4E84-9992-2A920AD6D0D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Build", "Build\StrongHeart.Build\StrongHeart.Build.csproj", "{4721FF3A-93EF-4E84-9992-2A920AD6D0D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoApp", "DemoApp", "{B395AA1C-29C4-4769-901F-EE16AB97D6A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business", "DemoApp\StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj", "{84B06174-F65F-49ED-A16B-3AF6D42322C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business", "DemoApp\StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj", "{84B06174-F65F-49ED-A16B-3AF6D42322C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business.SourceCodeGenerator", "DemoApp\StrongHeart.DemoApp.Business.SourceCodeGenerator\StrongHeart.DemoApp.Business.SourceCodeGenerator.csproj", "{1940E7DF-017A-4687-9BE8-133C8BD842E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.SourceCodeGenerator", "DemoApp\StrongHeart.DemoApp.Business.SourceCodeGenerator\StrongHeart.DemoApp.Business.SourceCodeGenerator.csproj", "{1940E7DF-017A-4687-9BE8-133C8BD842E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business.Tests", "DemoApp\StrongHeart.DemoApp.Business.Tests\StrongHeart.DemoApp.Business.Tests.csproj", "{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.Tests", "DemoApp\StrongHeart.DemoApp.Business.Tests\StrongHeart.DemoApp.Business.Tests.csproj", "{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Features", "DemoApp\StrongHeart.DemoApp.Features\StrongHeart.DemoApp.Features.csproj", "{E0ECF016-24DB-47D9-BD17-EE2503807660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.WebApi", "DemoApp\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", "{D04A0C08-79C4-4545-A45C-C3F819E94264}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.WebApi", "DemoApp\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", "{D04A0C08-79C4-4545-A45C-C3F819E94264}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.WebApi.Tests", "DemoApp\StrongHeart.DemoApp.WebApi.Tests\StrongHeart.DemoApp.WebApi.Tests.csproj", "{7BEA817E-2983-45BA-B788-1D8A930BFDEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.WebApi.Tests", "DemoApp\StrongHeart.DemoApp.WebApi.Tests\StrongHeart.DemoApp.WebApi.Tests.csproj", "{7BEA817E-2983-45BA-B788-1D8A930BFDEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{4B36214E-417D-486F-A70E-C410A8F50059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Core", "Src\StrongHeart.Core\StrongHeart.Core.csproj", "{9C3487AD-497D-409E-B120-D58B8C3ECFDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core", "Src\StrongHeart.Core\StrongHeart.Core.csproj", "{9C3487AD-497D-409E-B120-D58B8C3ECFDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Core.Test", "Src\StrongHeart.Core.Test\StrongHeart.Core.Test.csproj", "{37794617-CC10-498E-B6A2-D7394CEB08C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core.Test", "Src\StrongHeart.Core.Test\StrongHeart.Core.Test.csproj", "{37794617-CC10-498E-B6A2-D7394CEB08C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.EfCore", "Src\StrongHeart.EfCore\StrongHeart.EfCore.csproj", "{674DF23D-0E45-4DD2-A47E-9CEF76C742B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.EfCore", "Src\StrongHeart.EfCore\StrongHeart.EfCore.csproj", "{674DF23D-0E45-4DD2-A47E-9CEF76C742B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Features", "Src\StrongHeart.Features\StrongHeart.Features.csproj", "{179F0D71-E2CB-48A5-9A25-9FB93270086C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features", "Src\StrongHeart.Features\StrongHeart.Features.csproj", "{179F0D71-E2CB-48A5-9A25-9FB93270086C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Features.AspNetCore", "Src\StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{383F9F7B-5B32-4B13-8859-5DCB70B1AA4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.AspNetCore", "Src\StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{383F9F7B-5B32-4B13-8859-5DCB70B1AA4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Features.Test", "Src\StrongHeart.Features.Test\StrongHeart.Features.Test.csproj", "{25DE7D76-62F3-4BE0-AF03-FBADF7F05AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Test", "Src\StrongHeart.Features.Test\StrongHeart.Features.Test.csproj", "{25DE7D76-62F3-4BE0-AF03-FBADF7F05AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.Migrations", "Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj", "{3BB13FA7-440B-49EC-87C6-134B4E3740D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Migrations", "Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj", "{3BB13FA7-440B-49EC-87C6-134B4E3740D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.ComponentAnalysis", "Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj", "{1FED1B17-0527-4368-A251-FED69BF4095C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis", "Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj", "{1FED1B17-0527-4368-A251-FED69BF4095C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.ComponentAnalysis.Test", "Src\StrongHeart.TestTools.ComponentAnalysis.Test\StrongHeart.TestTools.ComponentAnalysis.Test.csproj", "{49B85C9C-FC44-4DC5-AF72-7F72B1E8CD23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis.Test", "Src\StrongHeart.TestTools.ComponentAnalysis.Test\StrongHeart.TestTools.ComponentAnalysis.Test.csproj", "{49B85C9C-FC44-4DC5-AF72-7F72B1E8CD23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.Xunit", "Src\StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{89F66343-3309-4545-BFA5-178FA3766870}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Xunit", "Src\StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{89F66343-3309-4545-BFA5-178FA3766870}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4721FF3A-93EF-4E84-9992-2A920AD6D0D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -104,18 +99,6 @@ Global
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Release|x64.Build.0 = Release|Any CPU
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Release|x86.ActiveCfg = Release|Any CPU
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Release|x86.Build.0 = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|x64.Build.0 = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Debug|x86.Build.0 = Debug|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|x64.ActiveCfg = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|x64.Build.0 = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|x86.ActiveCfg = Release|Any CPU
-		{E0ECF016-24DB-47D9-BD17-EE2503807660}.Release|x86.Build.0 = Release|Any CPU
 		{D04A0C08-79C4-4545-A45C-C3F819E94264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D04A0C08-79C4-4545-A45C-C3F819E94264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D04A0C08-79C4-4545-A45C-C3F819E94264}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -261,12 +244,14 @@ Global
 		{89F66343-3309-4545-BFA5-178FA3766870}.Release|x86.ActiveCfg = Release|Any CPU
 		{89F66343-3309-4545-BFA5-178FA3766870}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4721FF3A-93EF-4E84-9992-2A920AD6D0D4} = {489DC3A2-C8DE-4819-A187-9168EC2B75BF}
 		{84B06174-F65F-49ED-A16B-3AF6D42322C6} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{1940E7DF-017A-4687-9BE8-133C8BD842E1} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
-		{E0ECF016-24DB-47D9-BD17-EE2503807660} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{D04A0C08-79C4-4545-A45C-C3F819E94264} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{7BEA817E-2983-45BA-B788-1D8A930BFDEC} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{9C3487AD-497D-409E-B120-D58B8C3ECFDF} = {4B36214E-417D-486F-A70E-C410A8F50059}
@@ -279,5 +264,8 @@ Global
 		{1FED1B17-0527-4368-A251-FED69BF4095C} = {4B36214E-417D-486F-A70E-C410A8F50059}
 		{49B85C9C-FC44-4DC5-AF72-7F72B1E8CD23} = {4B36214E-417D-486F-A70E-C410A8F50059}
 		{89F66343-3309-4545-BFA5-178FA3766870} = {4B36214E-417D-486F-A70E-C410A8F50059}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {215278D2-4A2E-4724-9477-824B44D802AE}
 	EndGlobalSection
 EndGlobal

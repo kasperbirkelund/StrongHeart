@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,8 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using StrongHeart.DemoApp.Business.Features.Commands.CreateCar;
+using StrongHeart.DemoApp.Business.Features.Commands.DeleteCar;
+using StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
 using Xunit;
 
@@ -58,6 +61,26 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             string content = await response.Content.ReadAsStringAsync();
             Assert.Equal(@"Validation messages: 
 - Model must be Skoda", content);
+        }
+
+        [Fact]
+        public async Task UpdateCar_NoValidationError()
+        {
+            UpdateCarDto dto = new(Guid.NewGuid(), "Skoda");
+            using HttpClient client = _factory.CreateClient();
+            HttpResponseMessage response = await client.PutAsJsonAsync("/Cars", dto);
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.Accepted, actual);
+        }
+
+        [Fact]
+        public async Task DeleteCar()
+        {
+            DeleteCarDto dto = new(Guid.NewGuid());
+            using HttpClient client = _factory.CreateClient();
+            HttpResponseMessage response = await client.DeleteAsync($"/Cars/{dto.Id}");
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.OK, actual);
         }
     }
 }

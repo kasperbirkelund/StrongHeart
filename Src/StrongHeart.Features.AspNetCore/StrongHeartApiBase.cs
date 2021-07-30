@@ -7,16 +7,22 @@ namespace StrongHeart.Features.AspNetCore
 {
     public abstract class StrongHeartApiBase : ControllerBase
     {
-        protected IActionResult FromResultCommand(Result result,
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        protected const HttpStatusCode
+            DefaultServerErrorStatusCode = HttpStatusCode.InternalServerError,
+            DefaultClientErrorStatusCode = HttpStatusCode.BadRequest;
+
+        protected virtual ActionResult<T> FromResultCommand<T>(Result result, T args, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
+        {
+            Result<T> genericResult = Result<T>.FromResult(result, args);
+            return FromResultQuery(genericResult, x => x, serverErrorStatusCode, clientErrorStatusCode);
+        }
+
+        protected virtual IActionResult FromResultCommand(Result result, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
         {
             return FromResultCommand(result, x => x.Ok(), serverErrorStatusCode, clientErrorStatusCode);
         }
 
-        protected IActionResult FromResultCommand(Result result, Func<ControllerBase, IActionResult> executedSuccessfullySelector,
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        protected virtual IActionResult FromResultCommand(Result result, Func<ControllerBase, IActionResult> executedSuccessfullySelector, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
         {
             return result.Status switch
             {
@@ -28,14 +34,12 @@ namespace StrongHeart.Features.AspNetCore
             };
         }
 
-        protected ActionResult<TValue> FromResultQuery<T, TValue>(Result<T> result, Func<T, TValue> selector,
-            HttpStatusCode serverErrorStatusCode = HttpStatusCode.InternalServerError,
-            HttpStatusCode clientErrorStatusCode = HttpStatusCode.BadRequest)
+        protected virtual ActionResult<TValue> FromResultQuery<T, TValue>(Result<T> result, Func<T, TValue> selector, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
         {
             return result.Status switch
             {
                 ResultType.ExecutedSuccessfully => Ok(selector(result.Value)),
-                ResultType.QueuedForLaterExecution => Accepted(),
+                ResultType.QueuedForLaterExecution => Accepted(selector(result.Value)),
                 ResultType.ClientError => StatusCode((int)clientErrorStatusCode, result.Error),
                 ResultType.ServerError => StatusCode((int)serverErrorStatusCode, "Internal server error"),
                 _ => Ok()

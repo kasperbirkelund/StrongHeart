@@ -25,17 +25,29 @@ namespace StrongHeart.Features.Core
 
         public static Result<T> ClientError(string error)
         {
-            return new (error, default, ResultType.ClientError);
+            return new(error, default, ResultType.ClientError);
         }
 
         public static Result<T> ServerError(string error)
         {
-            return new(error,default, ResultType.ServerError);
+            return new(error, default, ResultType.ServerError);
         }
 
-        public static Result<T> QueuedForLaterExecution()
+        public static Result<T> QueuedForLaterExecution(T value)
         {
-            return new(default, default, ResultType.QueuedForLaterExecution);
+            return new(default, value, ResultType.QueuedForLaterExecution);
+        }
+
+        public static Result<T> FromResult<T>(Result result, T args)
+        {
+            return result.Status switch
+            {
+                ResultType.ExecutedSuccessfully => Result<T>.Success(args),
+                ResultType.QueuedForLaterExecution => Result<T>.QueuedForLaterExecution(args),
+                ResultType.ClientError => Result<T>.ClientError(result.Error!),
+                ResultType.ServerError => Result<T>.ServerError(result.Error!),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 
