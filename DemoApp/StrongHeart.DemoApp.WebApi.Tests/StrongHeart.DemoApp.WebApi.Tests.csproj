@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj" />
     <ProjectReference Include="..\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj" />
   </ItemGroup>
 

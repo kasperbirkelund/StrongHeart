@@ -22,6 +22,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<CarDetails>> GetCar([FromServices] IQueryFeature<GetCarRequest, GetCarResponse> feature, int id)
         {
             GetCarRequest request = new(GetCaller());
@@ -30,7 +31,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpGet("{model}")]
-        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ICollection<Car>>> GetCars([FromServices] IQueryFeature<GetCarsRequest, GetCarsResponse> feature, string model)
         {
             GetCarsRequest request = new(model, GetCaller());
@@ -60,9 +61,9 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)] //In this API delete is done synchronously and will return 200
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete([FromServices] ICommandFeature<DeleteCarRequest, DeleteCarDto> feature, [FromRoute]Guid id)
+        public async Task<IActionResult> Delete([FromServices] ICommandFeature<DeleteCarRequest, DeleteCarDto> feature, [FromRoute] Guid id)
         {
             DeleteCarRequest request = new(new DeleteCarDto(id), GetCaller());
             Result result = await feature.Execute(request);
