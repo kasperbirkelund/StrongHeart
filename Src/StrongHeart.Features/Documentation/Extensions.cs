@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using StrongHeart.Features.Documentation.Sections;
+using StrongHeart.Features.Documentation.Visitors;
 
 namespace StrongHeart.Features.Documentation
 {
@@ -18,7 +20,7 @@ namespace StrongHeart.Features.Documentation
 
         public static TableSection<TDest> MapToTableSection<TSource, TDest>(this IEnumerable<TSource> source, Func<TSource, TDest> selector)
         {
-            return new TableSection<TDest>(source.Select(x => new TableRow<TDest>(selector(x))));
+            return new(source.Select(x => new TableRow<TDest>(selector(x))));
         }
 
         public static string GetPropertyName(this MemberInfo property)

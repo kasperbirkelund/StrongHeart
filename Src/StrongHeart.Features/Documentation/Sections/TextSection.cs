@@ -1,4 +1,6 @@
-﻿namespace StrongHeart.Features.Documentation
+﻿using StrongHeart.Features.Documentation.Visitors;
+
+namespace StrongHeart.Features.Documentation.Sections
 {
     public class TextSection : ISection
     {

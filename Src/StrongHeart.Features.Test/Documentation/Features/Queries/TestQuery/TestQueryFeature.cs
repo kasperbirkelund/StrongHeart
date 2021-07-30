@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Documentation;
+using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
 {

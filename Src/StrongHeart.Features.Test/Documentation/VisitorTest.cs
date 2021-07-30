@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using StrongHeart.Features.Documentation;
+using StrongHeart.Features.Documentation.Sections;
+using StrongHeart.Features.Documentation.Visitors;
 using StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery;
 using StrongHeart.Features.Test.Helpers;
 using Xunit;
@@ -13,7 +15,7 @@ namespace StrongHeart.Features.Test.Documentation
         [Fact]
         public void HtmlVisitorTest()
         {
-            VisitorTestRunner(new HtmlVisitor(), x => x.AsString(includeHtmlTags: true), ExpectedHtml);
+            VisitorTestRunner(new HtmlVisitor(), x => x.AsString(includeLeadingHtmlTags: true), ExpectedHtml);
         }
 
         [Fact]

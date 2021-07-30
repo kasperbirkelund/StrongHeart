@@ -1,23 +1,29 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Xml;
-using System.Reflection;
+using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.Features.Documentation
+namespace StrongHeart.Features.Documentation.Visitors
 {
     public class HtmlVisitor : ISectionVisitor
     {
         private readonly StringBuilder _sb = new();
 
-        public string AsString(bool includeHtmlTags)
+        public string AsString(bool includeLeadingHtmlTags)
         {
-            if (includeHtmlTags)
+            if (includeLeadingHtmlTags)
             {
                 string html = "<html>" + _sb + "</html>";
                 string prettyHtml = PrettyXml(html);
                 return prettyHtml;
             }
             return _sb.ToString();
+        }
+
+        public void VisitHeader(HeaderSection section)
+        {
+            _sb.AppendLine($"<h2>{section.Text}</h2>");
         }
 
         public void VisitText(TextSection section)

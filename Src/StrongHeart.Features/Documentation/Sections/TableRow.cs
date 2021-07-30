@@ -1,4 +1,4 @@
-﻿namespace StrongHeart.Features.Documentation
+﻿namespace StrongHeart.Features.Documentation.Sections
 {
     public class TableRow<T>
     {

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
+using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Commands.DeleteCar
 {
@@ -14,6 +16,11 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.DeleteCar
         }
 
         protected override IEnumerable<ValidationMessage> ValidateRequest(DeleteCarRequest request)
+        {
+            yield break;
+        }
+
+        protected override IEnumerable<ISection> GetLocalDocumentationSections(ICaller caller)
         {
             yield break;
         }

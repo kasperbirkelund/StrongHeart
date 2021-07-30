@@ -1,8 +1,9 @@
 ﻿using System.Linq;
-using System.Text;
 using System.Reflection;
+using System.Text;
+using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.Features.Documentation
+namespace StrongHeart.Features.Documentation.Visitors
 {
     public class MarkDownVisitor : ISectionVisitor
     {
@@ -11,6 +12,11 @@ namespace StrongHeart.Features.Documentation
         public string AsString()
         {
             return _sb.ToString().TrimEnd();
+        }
+
+        public void VisitHeader(HeaderSection section)
+        {
+            _sb.AppendLine($"### {section.Text}");
         }
 
         public void VisitText(TextSection section)

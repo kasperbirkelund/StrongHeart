@@ -10,8 +10,8 @@ namespace StrongHeart.DemoApp.Business.Features
     /// This class is a project specific class where you can apply your project specific decorators.
     /// Make sure that all your features inherent this base class to be able to make streamlined behaviour
     /// </summary>
-    public abstract class CommandFeatureBase<TRequest, TRequestDto> : ICommandFeature<TRequest, TRequestDto>, IRequestValidatable<TRequest>
-        where TRequest : IRequest<TRequestDto> 
+    public abstract class CommandFeatureBase<TRequest, TRequestDto> : FeatureBase, ICommandFeature<TRequest, TRequestDto>, IRequestValidatable<TRequest>
+        where TRequest : IRequest<TRequestDto>
         where TRequestDto : IRequestDto
     {
         public abstract Task<Result> Execute(TRequest request);
