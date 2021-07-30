@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace StrongHeart.TestTools.ComponentAnalysis.Core
 {
@@ -66,22 +68,28 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core
             return types.SelectMany(x => x.GetMethods());
         }
 
-        public static IEnumerable<T> GetFromCustomSqlQuery<T>(Func<DbConnection> connectionFactory, string sql, Func<DbDataReader, T> readFunc)
+        public static IEnumerable<T> GetFromCustomSqlQuery<T>(Func<IDbConnection> connectionFactory, string sql, Func<IDataReader, T> readFunc)
         {
             using (var connection = connectionFactory())
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = sql;
-                    using DbDataReader reader = command.ExecuteReader();
-                    List<T> list = new();
-                    while (reader.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-                        list.Add(readFunc(reader));
-                    }
+                        List<T> list = new();
+                        while (reader.Read())
+                        {
+                            list.Add(readFunc(reader));
+                        }
 
-                    return list;
+                        return list;
+                    } 
                 }
             }
         }

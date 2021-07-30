@@ -11,6 +11,5 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
             return false;
         }
         public bool IsValid(Type item, Action<string> output) => throw new NotSupportedException();
-        public bool DoFailIfNoItemsToVerify => true;
     }
 }

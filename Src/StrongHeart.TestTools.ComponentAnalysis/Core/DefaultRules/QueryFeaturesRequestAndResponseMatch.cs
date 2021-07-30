@@ -32,5 +32,4 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
             return featureResponseRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
         }
     }
-
 }

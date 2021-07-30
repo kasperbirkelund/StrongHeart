@@ -17,7 +17,5 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
             output("Details goes here: " + item.IsClass);
             return false;
         }
-
-        public bool DoFailIfNoItemsToVerify => true;
     }
 }

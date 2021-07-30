@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data;
 using FluentAssertions;
+using Moq;
 using StrongHeart.TestTools.ComponentAnalysis.Core;
 using Xunit;
 
@@ -44,5 +46,39 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
             result.Message.Should().NotBe("All verified items comply to rule");
             result.Output.Should().NotBeNullOrWhiteSpace();
         }
+
+        [Fact]
+        public void A()
+        {
+            int i = 0;
+            Mock<IDataReader> readerMock = new Mock<IDataReader>();
+            readerMock.Setup(x => x.Read()).Returns(() => i++ < 5);
+
+            Mock<IDbCommand> comMock = new Mock<IDbCommand>();
+            comMock.Setup(x => x.ExecuteReader()).Returns(readerMock.Object);
+
+            Mock<IDbConnection> conMock = new Mock<IDbConnection>();
+            conMock.Setup(x => x.CreateCommand()).Returns(comMock.Object);
+
+            var result =
+                VerifyThat
+                    .GetFromCustomSqlQuery(() => conMock.Object, "SELECT * FROM Nothing", reader => new A(4))
+                    .DoesComplyToRule(new B());
+        }
     }
+    public class B : IRule<A>
+    {
+        public string CorrectiveAction => "";
+
+        public bool DoVerifyItem(A item)
+        {
+            return true;
+        }
+
+        public bool IsValid(A item, Action<string> output)
+        {
+            return true;
+        }
+    }
+    public record A(int i);
 }
