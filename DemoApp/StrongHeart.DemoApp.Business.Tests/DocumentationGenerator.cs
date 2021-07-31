@@ -36,9 +36,11 @@ namespace StrongHeart.DemoApp.Business.Tests
             IServiceProvider provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
             {
-                var items = features
+                IEnumerable<IDocumentationDescriber> items = features
                     .Select(x => scope.ServiceProvider.GetRequiredService(x))
                     .OfType<IDocumentationDescriber>();
+
+                CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDir<GetCarFeature>(@"\DemoApp\");
 
                 foreach (IDocumentationDescriber item in items)
                 {

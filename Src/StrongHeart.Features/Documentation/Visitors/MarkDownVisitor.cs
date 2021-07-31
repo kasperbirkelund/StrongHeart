@@ -26,11 +26,11 @@ namespace StrongHeart.Features.Documentation.Visitors
 
         public void VisitCodeComment(CodeCommentSection section)
         {
-            foreach (DocSnippet snippet in section.Snippets)
+            foreach (CodeSnippet snippet in section.Snippets)
             {
                 _sb.AppendLine(snippet.Title);
                 _sb.AppendLine("```");
-                _sb.AppendLine(snippet.Code);
+                _sb.AppendLine(snippet.Code.TrimEnd());
                 _sb.AppendLine("```");
             }
         }

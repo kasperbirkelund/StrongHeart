@@ -17,13 +17,16 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
 
         public Task<Result<TestQueryResponse>> Execute(TestQueryRequest request)
         {
+            //DOC-START This is the only line
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
+            //DOC-END
         }
 
         public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
         {
             yield return new TextSection("Rules");
             yield return Rules.MapToTableSection(x => new RuleCodes(x.Key, x.Value.GetType().Name, "Any description"));
+            yield return new CodeCommentSection(GetType());
         }
 
         private class RuleCodes

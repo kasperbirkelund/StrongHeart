@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Web;
 using System.Xml;
 using StrongHeart.Features.Documentation.Sections;
 
@@ -24,17 +25,22 @@ namespace StrongHeart.Features.Documentation.Visitors
 
         public void VisitCodeComment(CodeCommentSection section)
         {
-            throw new NotSupportedException("CodeComments are not supported in HTML");
+            foreach (CodeSnippet snippet in section.Snippets)
+            {
+                
+                _sb.AppendLine($"<p>{Encode(snippet.Title)}</p>");
+                _sb.AppendLine($"<code>{Encode(snippet.Code.TrimEnd())}</code>");
+            }
         }
 
         public void VisitHeader(HeaderSection section)
         {
-            _sb.AppendLine($"<h2>{section.Text}</h2>");
+            _sb.AppendLine($"<h2>{Encode(section.Text)}</h2>");
         }
 
         public void VisitText(TextSection section)
         {
-            _sb.AppendLine($"<p>{section.Text}</p>");
+            _sb.AppendLine($"<p>{Encode(section.Text)}</p>");
         }
 
         public void VisitTable<T>(TableSection<T> section)
@@ -58,7 +64,7 @@ namespace StrongHeart.Features.Documentation.Visitors
                 foreach (PropertyInfo t in properties)
                 {
                     string? text = t.GetValue(row.Item)?.ToString();
-                    _sb.AppendLine($"<td>{text}</td>");
+                    _sb.AppendLine($"<td>{Encode(text)}</td>");
                 }
 
                 _sb.AppendLine("</tr>");
@@ -72,7 +78,7 @@ namespace StrongHeart.Features.Documentation.Visitors
             _sb.AppendLine("<thead><tr>");
             foreach (PropertyInfo t in properties)
             {
-                _sb.AppendLine($"<th scope=\"col\">{t.GetPropertyName()}</th>");
+                _sb.AppendLine($"<th scope=\"col\">{Encode(t.GetPropertyName())}</th>");
             }
 
             _sb.AppendLine("</tr></thead>");
@@ -97,6 +103,11 @@ namespace StrongHeart.Features.Documentation.Visitors
                     }
                 }
             }
+        }
+
+        private string? Encode(string? input)
+        {
+            return input == null ? null : HttpUtility.HtmlEncode(input);
         }
     }
 }

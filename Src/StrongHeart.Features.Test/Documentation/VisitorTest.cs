@@ -11,6 +11,11 @@ namespace StrongHeart.Features.Test.Documentation
 {
     public class VisitorTest
     {
+        public VisitorTest()
+        {
+            CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDir<TestQueryFeature>(@"\Src\");
+        }
+
         [Fact]
         public void HtmlVisitorTest()
         {
@@ -58,12 +63,18 @@ namespace StrongHeart.Features.Test.Documentation
       </tr>
     </tbody>
   </table>
+  <p>This is the only line</p>
+  <code>            return Task.FromResult(Result&lt;TestQueryResponse&gt;.Success(new TestQueryResponse(new PersonDto(""PersonA""))));</code>
 </html>";
 
         private const string ExpectedMarkDown = @"Rules
 |Kode|Rule name|Description|
 |-|-|-|
 |A|RuleA|Any description|
-|B|RuleB|Any description|";
+|B|RuleB|Any description|
+This is the only line
+```
+            return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto(""PersonA""))));
+```";
     }
 }
