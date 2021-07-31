@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
@@ -21,7 +20,7 @@ namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto("PersonA"))));
         }
 
-        public IEnumerable<ISection> GetDocumentationSections(ICaller user)
+        public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
         {
             yield return new TextSection("Rules");
             yield return Rules.MapToTableSection(x => new RuleCodes(x.Key, x.Value.GetType().Name, "Any description"));

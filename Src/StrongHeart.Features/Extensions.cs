@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 namespace StrongHeart.Features

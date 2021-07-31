@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators.Retry;
 using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.Test.Decorators.TimeAlert.Features.Command.TestCommand

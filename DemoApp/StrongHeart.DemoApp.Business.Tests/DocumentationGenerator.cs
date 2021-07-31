@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
-using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.Features.DependencyInjection;
@@ -46,18 +43,11 @@ namespace StrongHeart.DemoApp.Business.Tests
                 foreach (IDocumentationDescriber item in items)
                 {
                     var visitor = new MarkDownVisitor();
-                    IEnumerable<ISection> sections = item!.GetDocumentationSections(new DummyCaller());
+                    IEnumerable<ISection> sections = item!.GetDocumentationSections(new DocumentationGenerationContext());
                     visitor.Accept(sections);
                     _helper.WriteLine(visitor.AsString());
                 }
             }
-        }
-
-        internal class DummyCaller : ICaller
-        {
-            public Guid Id => Guid.Empty;
-
-            public IReadOnlyList<Claim> Claims => new Collection<Claim>();
         }
     }
 }

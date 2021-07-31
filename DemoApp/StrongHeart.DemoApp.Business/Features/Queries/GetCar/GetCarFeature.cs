@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar
@@ -22,7 +22,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar
             return Task.FromResult(Result<GetCarResponse>.Success(new GetCarResponse(item)));
         }
 
-        protected override IEnumerable<ISection> GetLocalDocumentationSections(ICaller caller)
+        protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
         {
             yield break;
         }

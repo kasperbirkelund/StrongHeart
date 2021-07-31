@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.RequestValidation

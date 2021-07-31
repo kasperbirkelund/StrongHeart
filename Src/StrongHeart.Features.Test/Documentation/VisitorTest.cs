@@ -5,7 +5,6 @@ using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 using StrongHeart.Features.Documentation.Visitors;
 using StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery;
-using StrongHeart.Features.Test.Helpers;
 using Xunit;
 
 namespace StrongHeart.Features.Test.Documentation
@@ -27,7 +26,7 @@ namespace StrongHeart.Features.Test.Documentation
         private static void VisitorTestRunner<T>(T visitor, Func<T, string> getActual, string expected) where T : ISectionVisitor
         {
             IDocumentationDescriber sut = new TestQueryFeature();
-            IEnumerable<ISection> sections = sut.GetDocumentationSections(new TestAdminCaller());
+            IEnumerable<ISection> sections = sut.GetDocumentationSections(new DocumentationGenerationContext());
 
             visitor.Accept(sections);
 

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.Filtering;
 using StrongHeart.Features.Decorators.Retry;
+using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
@@ -41,7 +41,7 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
             return false;
         }
 
-        protected override IEnumerable<ISection> GetLocalDocumentationSections(ICaller caller)
+        protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
         {
             yield break;
         }
