@@ -35,7 +35,8 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
         protected override IEnumerable<ValidationMessage> ValidateRequest(CreateCarRequest request)
         {
             //Just any insane validation
-            //DOC-START Min tekst
+
+            //DOC-START Validation rule
             if (request.Model.Model != "Skoda")
             {
                 yield return "Model must be Skoda";

@@ -23,49 +23,52 @@ namespace StrongHeart.Features.Documentation.Sections
 
         public void Accept(ISectionVisitor visitor)
         {
-            DirectoryInfo dir = GetDir(_type);
-            var files = dir.EnumerateFiles("*.cs", SearchOption.AllDirectories);
+            DirectoryInfo dir = GetSourceCodeDir(_type);
+            IEnumerable<FileInfo> files = dir.EnumerateFiles("*.cs", SearchOption.AllDirectories);
             foreach (var file in files.Where(x => !x.FullName.Contains(".generated.cs")))
             {
                 SyntaxTree tree = CSharpSyntaxTree.ParseText(File.ReadAllText(file.FullName));
                 CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
-                var c = root
+                IEnumerable<MethodDeclarationSyntax> methods = root
                     .DescendantNodes()
                     .OfType<ClassDeclarationSyntax>()
-                    .Where(x => MyPredicate(x, _type));
+                    .Where(x => IsMatchingClass(x, _type))
+                    .SelectMany(x => x.DescendantNodes().OfType<MethodDeclarationSyntax>());
 
-                foreach (ClassDeclarationSyntax cl in c)
+                foreach (MethodDeclarationSyntax method in methods)
                 {
-                    foreach (MethodDeclarationSyntax method in cl.DescendantNodes().OfType<MethodDeclarationSyntax>())
-                    {
-                        string code = string.Empty;
-                        string title = string.Empty;
-                        bool isInScope = false;
-                        foreach (var line in method.Body.ToFullString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
-                        {
-                            if (line.Contains("//DOC-START"))
-                            {
-                                title = line.Replace("//DOC-START", string.Empty).Trim();
-                                isInScope = true;
-                            }
-                            else if (line.Contains("//DOC-END"))
-                            {
-                                isInScope = false;
-                                _snippets.Add(new DocSnippet(title, code));
-                            }
-                            else if (isInScope)
-                            {
-                                code += line + Environment.NewLine;
-                            }
-
-                        }
-                    }
+                    _snippets.AddRange(GetSnippets(method));
                 }
             }
             visitor.VisitCodeComment(this);
         }
 
-        private static DirectoryInfo GetDir(Type type)
+        private IEnumerable<DocSnippet> GetSnippets(MethodDeclarationSyntax method)
+        {
+            string code = string.Empty;
+            string title = string.Empty;
+            bool isInScope = false;
+            foreach (var line in method.Body.ToFullString()
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (line.Contains("//DOC-START"))
+                {
+                    title = line.Replace("//DOC-START", string.Empty).Trim();
+                    isInScope = true;
+                }
+                else if (line.Contains("//DOC-END"))
+                {
+                    isInScope = false;
+                    yield return new DocSnippet(title, code);
+                }
+                else if (isInScope)
+                {
+                    code += line + Environment.NewLine;
+                }
+            }
+        }
+
+        private static DirectoryInfo GetSourceCodeDir(Type type)
         {
             string currentDir = Environment.CurrentDirectory;
             string searchString = @"\DemoApp\";
@@ -75,11 +78,10 @@ namespace StrongHeart.Features.Documentation.Sections
             return new DirectoryInfo(pathFull);
         }
 
-        private static bool MyPredicate(ClassDeclarationSyntax arg, Type type)
+        private static bool IsMatchingClass(ClassDeclarationSyntax arg, Type type)
         {
             var ns = arg.Parent as NamespaceDeclarationSyntax;
             return arg.Identifier.ValueText == type.Name && ns.Name.ToString() == type.Namespace;
-
         }
     }
 }
