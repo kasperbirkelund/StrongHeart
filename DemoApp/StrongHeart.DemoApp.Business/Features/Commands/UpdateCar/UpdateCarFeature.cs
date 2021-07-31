@@ -15,6 +15,9 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.UpdateCar
         public override Task<Result> Execute(UpdateCarRequest request)
         {
             //Do work
+
+            //Put the request on a queue and return "QueuedForLaterExecution" -
+            //OR do the job immediately and return Result.Success()
             return Task.FromResult(Result.QueuedForLaterExecution());
         }
 

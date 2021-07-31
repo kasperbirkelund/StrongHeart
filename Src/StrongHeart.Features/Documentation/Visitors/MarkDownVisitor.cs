@@ -24,6 +24,17 @@ namespace StrongHeart.Features.Documentation.Visitors
             _sb.AppendLine(section.Text);
         }
 
+        public void VisitCodeComment(CodeCommentSection section)
+        {
+            foreach (DocSnippet snippet in section.Snippets)
+            {
+                _sb.AppendLine(snippet.Title);
+                _sb.AppendLine("```");
+                _sb.AppendLine(snippet.Code);
+                _sb.AppendLine("```");
+            }
+        }
+
         public void VisitTable<T>(TableSection<T> section)
         {
             PropertyInfo[] properties = typeof(T).GetProperties();

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -19,6 +20,11 @@ namespace StrongHeart.Features.Documentation.Visitors
                 return prettyHtml;
             }
             return _sb.ToString();
+        }
+
+        public void VisitCodeComment(CodeCommentSection section)
+        {
+            throw new NotSupportedException("CodeComments are not supported in HTML");
         }
 
         public void VisitHeader(HeaderSection section)

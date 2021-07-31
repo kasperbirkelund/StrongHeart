@@ -11,23 +11,41 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
     {
         public override Task<Result> Execute(CreateCarRequest request)
         {
-            //Put the request on a queue and return "QueuedForLaterExecution" -
-            //OR do the job immediately and return Result.Success()
+            //DOC-START Special customer rule...
+            bool isCustomer = IsCustomer();
+            if (isCustomer)
+            {
+                SendGift();
+            }
+            //DOC-END
+
             return Task.FromResult(Result.QueuedForLaterExecution());
+        }
+
+        private bool IsCustomer()
+        {
+            return true;
+        }
+
+        private void SendGift()
+        {
+            //Do something
         }
 
         protected override IEnumerable<ValidationMessage> ValidateRequest(CreateCarRequest request)
         {
             //Just any insane validation
+            //DOC-START Min tekst
             if (request.Model.Model != "Skoda")
             {
                 yield return "Model must be Skoda";
             }
+            //DOC-END
         }
 
         protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
         {
-            yield break;
+            yield return new CodeCommentSection(GetType());
         }
     }
 }
