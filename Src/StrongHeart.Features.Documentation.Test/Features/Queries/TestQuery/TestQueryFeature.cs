@@ -2,10 +2,9 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
-using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
+namespace StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery
 {
     public class TestQueryFeature : IQueryFeature<TestQueryRequest, TestQueryResponse>, IDocumentationDescriber
     {

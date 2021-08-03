@@ -59,7 +59,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
                             }
                             else
                             {
-                                feature.Request.Properties = list;
+                                feature!.Request.Properties = list;
                                 line = innerLine;
                                 break;
                             }
@@ -69,11 +69,11 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
                 }
                 else if (line.Contains("isListResponse: "))
                 {
-                    feature.Response.IsListResponse = bool.Parse(line.Replace("isListResponse: ", string.Empty).Trim());
+                    feature!.Response.IsListResponse = bool.Parse(line.Replace("isListResponse: ", string.Empty).Trim());
                 }
                 if (line.Contains("responseTypeName:"))
                 {
-                    feature.Response.ResponseTypeName = line.Replace("responseTypeName:", string.Empty).Trim();
+                    feature!.Response.ResponseTypeName = line.Replace("responseTypeName:", string.Empty).Trim();
                 }
                 else if (line.Contains("responseProperties"))
                 {
@@ -89,14 +89,14 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
                             }
                             else
                             {
-                                feature.Response.Properties = list;
+                                feature!.Response.Properties = list;
                                 line = innerLine;
                                 break;
                             }
                         }
                         else
                         {
-                            feature.Response.Properties = list;
+                            feature!.Response.Properties = list;
                             yield return feature;
                             break;
                         }
@@ -105,7 +105,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
 
                 if (line == string.Empty)
                 {
-                    yield return feature;
+                    yield return feature!;
                 }
             }
         }

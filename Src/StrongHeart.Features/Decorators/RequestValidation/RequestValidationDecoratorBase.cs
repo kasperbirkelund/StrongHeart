@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Linq;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
@@ -12,7 +12,7 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
             IRequestValidatable<TRequest> validator = GetValidator<TRequest>();
-            ICollection<ValidationMessage> errors = validator.ValidationFunc()(request).ToImmutableArray();
+            ICollection<ValidationMessage> errors = validator.ValidationFunc()(request).ToList().AsReadOnly();
             Conclusion = new(errors);
             if (Conclusion.IsValid)
             {

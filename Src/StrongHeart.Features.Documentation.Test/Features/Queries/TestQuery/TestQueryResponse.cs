@@ -1,6 +1,6 @@
 ﻿using StrongHeart.Features.Core;
 
-namespace StrongHeart.Features.Test.Documentation.Features.Queries.TestQuery
+namespace StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery
 {
     public record TestQueryResponse(PersonDto Item) : IGetSingleItemResponse<PersonDto>;
 }
