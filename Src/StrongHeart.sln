@@ -21,7 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core.Test", "St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.AspNetCore", "StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{B2807B50-64A5-462E-8AB9-F4F263869198}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.TestTools.Xunit", "StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{E7517B29-93BA-4923-82F0-721BD2405212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Xunit", "StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{E7517B29-93BA-4923-82F0-721BD2405212}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Documentation", "StrongHeart.Features.Documentation\StrongHeart.Features.Documentation.csproj", "{2B44B5ED-7892-413F-B4FC-91D88D542B68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Documentation.Test", "StrongHeart.Features.Documentation.Test\StrongHeart.Features.Documentation.Test.csproj", "{955F729D-EAB2-4D95-9A73-50ABE49C9F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +73,14 @@ Global
 		{E7517B29-93BA-4923-82F0-721BD2405212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7517B29-93BA-4923-82F0-721BD2405212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7517B29-93BA-4923-82F0-721BD2405212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B44B5ED-7892-413F-B4FC-91D88D542B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B44B5ED-7892-413F-B4FC-91D88D542B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B44B5ED-7892-413F-B4FC-91D88D542B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B44B5ED-7892-413F-B4FC-91D88D542B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{955F729D-EAB2-4D95-9A73-50ABE49C9F75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{955F729D-EAB2-4D95-9A73-50ABE49C9F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{955F729D-EAB2-4D95-9A73-50ABE49C9F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{955F729D-EAB2-4D95-9A73-50ABE49C9F75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
