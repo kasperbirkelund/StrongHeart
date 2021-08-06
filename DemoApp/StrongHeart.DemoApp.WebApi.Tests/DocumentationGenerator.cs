@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
+using StrongHeart.DemoApp.WebApi.Controllers;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
@@ -12,7 +13,7 @@ using StrongHeart.Features.Documentation.Visitors;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace StrongHeart.DemoApp.Business.Tests
+namespace StrongHeart.DemoApp.WebApi.Tests
 {
     public class DocumentationGenerator
     {
@@ -26,15 +27,17 @@ namespace StrongHeart.DemoApp.Business.Tests
         [Fact]
         public void GenerateDocumentation()
         {
-            Assembly assembly = typeof(FeatureBase).Assembly;
+            Mock<IConfiguration> configMock = new Mock<IConfiguration>();
+            var config = configMock.Object;
+            Assembly assembly = typeof(CarsController).Assembly;
             IServiceCollection services = new ServiceCollection();
-            services.AddStrongHeart(_ => { }, assembly);
-            services.AddTransient<IFoo, Foo>();
+            services.AddTransient<IConfiguration>(_ => config);
+            new Startup(config).ConfigureServices(services);
 
-            string sourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<GetCarFeature>(@"\DemoApp\");
+            var sourceCodeDir = @"C:\development\azuredevops\StrongHeart\DemoApp\StrongHeart.DemoApp.WebApi";//CodeCommentSection.GetSourceCodeDirFromFeature<CarsController>(@"\DemoApp\");
 
             MarkDownVisitor visitor = new MarkDownVisitor();
-            DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor);
+            DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor, x=> x.DocName == DocumentationConstants.Setup);
             _helper.WriteLine(visitor.AsString());
         }
     }

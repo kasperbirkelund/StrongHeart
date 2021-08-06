@@ -1,10 +1,14 @@
-﻿using StrongHeart.Core.Security;
+﻿using System.Collections.Generic;
+using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.AspNetCore;
+using StrongHeart.Features.Documentation;
+using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
-    public abstract class ApiBase : StrongHeartApiBase
+    //DOC-START
+    public abstract class ApiBase : StrongHeartApiBase, IDocumentationDescriber
     {
         private readonly IClaimsProvider _claimsProvider;
 
@@ -17,6 +21,16 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         {
             //Read certificate, token, http context, whatever and extract claims
             return new WebApiCaller(_claimsProvider.ExtractClaims());
+        }
+        //DOC-END
+
+        public string? DocName => DocumentationConstants.Setup;
+        public int? Order => 2;
+
+        public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
+        {
+            yield return new TextSection($"{nameof(StrongHeartApiBase)} is only applicable on WebApis. If not a WebApi remove {nameof(StrongHeartApiBase)}");
+            yield return new CodeCommentSection(GetType());
         }
     }
 }

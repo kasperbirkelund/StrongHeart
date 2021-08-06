@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,10 +9,12 @@ using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.DependencyInjection;
+using StrongHeart.Features.Documentation;
+using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.WebApi
 {
-    public class Startup
+    public class Startup : IDocumentationDescriber
     {
         public Startup(IConfiguration configuration)
         {
@@ -20,7 +23,7 @@ namespace StrongHeart.DemoApp.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        //DOC-START
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFoo, Foo>();
@@ -31,7 +34,8 @@ namespace StrongHeart.DemoApp.WebApi
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
             }, typeof(CommandFeatureBase<,>).Assembly);
             services.AddControllers();
-            
+            //DOC-END
+
             //Swagger is good for testing the api. Not important for StrongHeart
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +59,16 @@ namespace StrongHeart.DemoApp.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public string? DocName => DocumentationConstants.Setup;
+        public int? Order => 1;
+
+        public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
+        {
+            yield return new TextSection("Changes required in the top level assembly (eg. a WebApi)", true);
+            yield return new TextSection($"Setup dependencies and call {nameof(FeatureSetupExtensions.AddStrongHeart)}(). Here the default pipeline is used.");
+            yield return new CodeCommentSection(GetType());
         }
     }
 }

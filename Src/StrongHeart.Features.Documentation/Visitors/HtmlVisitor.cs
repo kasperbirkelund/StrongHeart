@@ -33,14 +33,16 @@ namespace StrongHeart.Features.Documentation.Visitors
             }
         }
 
-        public void VisitHeader(HeaderSection section)
-        {
-            _sb.AppendLine($"<h2>{Encode(section.Text)}</h2>");
-        }
-
         public void VisitText(TextSection section)
         {
-            _sb.AppendLine($"<p>{Encode(section.Text)}</p>");
+            if (section.IsHeader)
+            {
+                _sb.AppendLine($"<h2>{Encode(section.Text)}</h2>");
+            }
+            else
+            {
+                _sb.AppendLine($"<p>{Encode(section.Text)}</p>");
+            }
         }
 
         public void VisitTable<T>(TableSection<T> section)

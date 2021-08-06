@@ -12,7 +12,7 @@ namespace StrongHeart.Features.Documentation.Test
     {
         public VisitorTest()
         {
-            CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDir<TestQueryFeature>(@"\Src\");
+            CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<TestQueryFeature>(@"\Src\");
         }
 
         [Fact]

@@ -25,7 +25,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 namespace {rootNamespace}.Commands.{feature.Name}
 {{
 {GetUsings()}
-
     public partial class {feature.Name}Feature : CommandFeatureBase<{feature.Name}Request, {GetDtoName(feature.Name)}>
     {{        
     }}
