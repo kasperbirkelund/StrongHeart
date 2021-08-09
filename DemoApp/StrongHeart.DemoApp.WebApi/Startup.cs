@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.DemoApp.Business.Features;
+using StrongHeart.DemoApp.Business.Features.Commands;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.DependencyInjection;
@@ -23,18 +24,18 @@ namespace StrongHeart.DemoApp.WebApi
 
         public IConfiguration Configuration { get; }
 
-        //DOC-START
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFoo, Foo>();
             services.AddTransient<IClaimsProvider, MyCustomClaimsProvider>();
             services.AddHttpContextAccessor();
+            //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
             }, typeof(CommandFeatureBase<,>).Assembly);
-            services.AddControllers();
             //DOC-END
+            services.AddControllers();
 
             //Swagger is good for testing the api. Not important for StrongHeart
             services.AddSwaggerGen(c =>
@@ -67,7 +68,6 @@ namespace StrongHeart.DemoApp.WebApi
         public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
         {
             yield return new TextSection("Changes required in the top level assembly (eg. a WebApi)", true);
-            yield return new TextSection($"Setup dependencies and call {nameof(FeatureSetupExtensions.AddStrongHeart)}(). Here the default pipeline is used.");
             yield return new CodeCommentSection(GetType());
         }
     }

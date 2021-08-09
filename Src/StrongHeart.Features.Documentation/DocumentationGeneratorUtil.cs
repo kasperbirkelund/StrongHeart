@@ -14,6 +14,7 @@ namespace StrongHeart.Features.Documentation
         {
             GenerateToVisitor(assembly, services, sourceCodeDir, visitor, _ => true);
         }
+
         public static void GenerateToVisitor(Assembly assembly, IServiceCollection services, string sourceCodeDir, ISectionVisitor visitor, Func<IDocumentationDescriber, bool> predicate)
         {
             CodeCommentSection.SourceCodeDir = sourceCodeDir;

@@ -21,6 +21,9 @@ namespace StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery
             //DOC-END
         }
 
+        public string? DocName => null;
+        public int? Order => null;
+
         public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
         {
             yield return new TextSection("Rules");

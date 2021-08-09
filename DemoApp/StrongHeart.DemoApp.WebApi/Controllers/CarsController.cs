@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.DemoApp.Business.Features.Commands.DeleteCar;
 using StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
+using StrongHeart.Features.AspNetCore;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
@@ -43,7 +44,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         public async Task<ActionResult<ICollection<Car>>> GetCars([FromServices] IQueryFeature<GetCarsRequest, GetCarsResponse> feature, string model)
         {
             GetCarsRequest request = new(model, GetCaller());
-            Result<GetCarsResponse> result = await feature.Execute(request);
+            Result<GetCarsResponse> result = await feature.Execute(request).ConfigureAwait(false); ;
             return FromResultQuery(result, x => x.Items);
         }
         //DOC-END
@@ -52,12 +53,12 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Guid>> Create([FromServices] ICommandFeature<CreateCarRequest, CreateCarDto> feature, [FromBody] CreateCarDto? dto)
+        public async Task<ActionResult<CreateResponse>> Create([FromServices] ICommandFeature<CreateCarRequest, CreateCarDto> feature, [FromBody] CreateCarDto dto)
         {
             Guid id = Guid.NewGuid();
             CreateCarRequest request = new(id, dto, GetCaller());
-            Result result = await feature.Execute(request);
-            return FromResultCommand(result, id);
+            Result result = await feature.Execute(request).ConfigureAwait(false); ;
+            return FromResultCommand(result, new CreateResponse(id));
         }
         //DOC-END
 
@@ -65,10 +66,10 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromServices] ICommandFeature<UpdateCarRequest, UpdateCarDto> feature, [FromBody] UpdateCarDto? dto)
+        public async Task<IActionResult> Update([FromServices] ICommandFeature<UpdateCarRequest, UpdateCarDto> feature, [FromBody] UpdateCarDto dto)
         {
             UpdateCarRequest request = new(dto, GetCaller());
-            Result result = await feature.Execute(request);
+            Result result = await feature.Execute(request).ConfigureAwait(false); ;
             return FromResultCommand(result);
         }
         //DOC-END
@@ -80,7 +81,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         public async Task<IActionResult> Delete([FromServices] ICommandFeature<DeleteCarRequest, DeleteCarDto> feature, [FromRoute] Guid id)
         {
             DeleteCarRequest request = new(new DeleteCarDto(id), GetCaller());
-            Result result = await feature.Execute(request);
+            Result result = await feature.Execute(request).ConfigureAwait(false); ;
             return FromResultCommand(result);
         }
         //DOC-END
