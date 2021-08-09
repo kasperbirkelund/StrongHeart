@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using StrongHeart.Core.FeatureToggling;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
+using StrongHeart.DemoApp.WebApi.Toggles;
 using StrongHeart.Features.DependencyInjection;
 
 namespace StrongHeart.DemoApp.WebApi
@@ -24,14 +26,17 @@ namespace StrongHeart.DemoApp.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFoo, Foo>();
+            services.AddTransient<IConfigurationReader, ConfigurationReaderImpl>();
             services.AddTransient<IClaimsProvider, MyCustomClaimsProvider>();
             services.AddHttpContextAccessor();
+            services.AddControllers();
+            services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
+
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
             }, typeof(CommandFeatureBase<,>).Assembly);
-            services.AddControllers();
-            
+
             //Swagger is good for testing the api. Not important for StrongHeart
             services.AddSwaggerGen(c =>
             {
@@ -39,7 +44,6 @@ namespace StrongHeart.DemoApp.WebApi
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

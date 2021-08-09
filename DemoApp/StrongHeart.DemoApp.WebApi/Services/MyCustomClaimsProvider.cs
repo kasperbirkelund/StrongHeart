@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +21,7 @@ namespace StrongHeart.DemoApp.WebApi.Services
             {
                 return _httpContextAccessor.HttpContext.User.Claims.ToArray();
             }
-            return new Claim[0];
+            return Array.Empty<Claim>();
         }
     }
 }
