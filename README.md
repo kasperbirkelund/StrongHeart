@@ -1,3 +1,6 @@
+[!code-razor[](~/Src/StrongHeart.Features/Extensions.cs?highlight=10-18)]
+
+
 # StrongHeart.Features
 ## Why StrongHeart.Features?
 Provides at structured and streamlined way of organizing .NET applications / webapis / console applications ect. 
