@@ -1,4 +1,4 @@
-[!code-razor[](~/Src/StrongHeart.Features/Extensions.cs?highlight=10-18)]
+https://github.com/kasperbirkelund/StrongHeart/blob/6acb2a4fd4db39ab76d3a9bc1363476a172b031a/Src/StrongHeart.Features/Extensions.cs#L10-L17
 
 
 # StrongHeart.Features
