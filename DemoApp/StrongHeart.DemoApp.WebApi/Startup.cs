@@ -9,6 +9,7 @@ using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.DemoApp.WebApi.Toggles;
+using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 
 namespace StrongHeart.DemoApp.WebApi
@@ -31,6 +32,7 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
+            services.AddSingleton<IEventPublisher, SimpleEventPublisher>();
 
             services.AddStrongHeart(options =>
             {

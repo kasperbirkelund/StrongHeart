@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Src\StrongHeart.Features.Documentation\StrongHeart.Features.Documentation.csproj" />
     <ProjectReference Include="..\..\Src\StrongHeart.Features\StrongHeart.Features.csproj" />
+    <ProjectReference Include="..\StrongHeart.DemoApp.Business.Events\StrongHeart.DemoApp.Business.Events.csproj" />
     <ProjectReference Include="..\StrongHeart.DemoApp.Business.SourceCodeGenerator\StrongHeart.DemoApp.Business.SourceCodeGenerator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 
