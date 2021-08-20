@@ -127,7 +127,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (parameterType.IsFeatureInterface())
+            if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
             {
                 return current;
             }

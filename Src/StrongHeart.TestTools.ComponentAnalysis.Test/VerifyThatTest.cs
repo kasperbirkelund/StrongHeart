@@ -80,5 +80,5 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Test
             return true;
         }
     }
-    public record A(int i);
+    public record A(int Id);
 }
