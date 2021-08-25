@@ -62,7 +62,7 @@ namespace StrongHeart.Features.Documentation.Test
       </tr>
     </tbody>
   </table>
-  <p>This is the only line</p>
+  <p>TestQueryFeature.cs: This is the only line</p>
   <code>            return Task.FromResult(Result&lt;TestQueryResponse&gt;.Success(new TestQueryResponse(new PersonDto(""PersonA""))));</code>
 </html>";
 
@@ -71,7 +71,7 @@ namespace StrongHeart.Features.Documentation.Test
 |-|-|-|
 |A|RuleA|Any description|
 |B|RuleB|Any description|
-This is the only line
+TestQueryFeature.cs: This is the only line
 ```
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto(""PersonA""))));
 ```";
