@@ -16,20 +16,40 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
             //    StringBuilder sb = new();
             //    sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
             //    sb.AppendLine("#nullable enable");
-            //    sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
+            //    sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, )), context.AdditionalFiles));
             //    sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
-
+                
             //    context.AddSource("Features.generated.cs", sb.ToString());
             //});
         }
+
+        public const string A = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
+- name: GetCar
+  requestProperties:
+  responseTypeName: CarDetails
+  isListResponse: false
+  responseProperties:
+    - string Model
+    - int Year
+    - string Detail1
+    - string Detail2    
+
+- name: GetCars
+  requestProperties:
+    - string? Model    
+  responseTypeName: Car
+  isListResponse: true
+  responseProperties:
+    - string Model
+    - int Year";
 
         public void Execute(GeneratorExecutionContext context)
         {
             StringBuilder sb = new();
             sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
             sb.AppendLine("#nullable enable");
-            sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
-            sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
+            sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "queries.yaml")), context.AdditionalFiles));
+            sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "commands.yaml")), context.AdditionalFiles));
 
             context.AddSource("Features.generated.cs", sb.ToString());
         }
