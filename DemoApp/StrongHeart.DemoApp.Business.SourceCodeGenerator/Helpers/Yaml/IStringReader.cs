@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.CodeAnalysis;
 
@@ -9,11 +10,26 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
         string[] ReadLines();
     }
 
+    public class StringReader : IStringReader
+    {
+        private readonly string _s;
+
+        public StringReader(string s)
+        {
+            _s = s;
+        }
+
+        public string[] ReadLines()
+        {
+            return _s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        }
+    }
+
     public class AdditionalTextStringReader : IStringReader
     {
         private readonly IEnumerable<AdditionalText> _additionalFiles;
         private readonly string _fileName;
-        
+
         public AdditionalTextStringReader(IEnumerable<AdditionalText> additionalFiles, string fileName)
         {
             _additionalFiles = additionalFiles;

@@ -11,19 +11,37 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
     {
         public void Initialize(GeneratorInitializationContext context)
         {
-            //context.RegisterForPostInitialization(context =>
-            //{
-            //    StringBuilder sb = new();
-            //    sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            //    sb.AppendLine("#nullable enable");
-            //    sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, )), context.AdditionalFiles));
-            //    sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
-                
-            //    context.AddSource("Features.generated.cs", sb.ToString());
-            //});
+            context.RegisterForPostInitialization(context =>
+            {
+                StringBuilder sb = new();
+                sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
+                sb.AppendLine("#nullable enable");
+                sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new StringReader(Q))));
+                sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new StringReader(C))));
+
+                context.AddSource("Features.generated.cs", sb.ToString());
+            });
         }
 
-        public const string A = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
+        public const string C = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
+- name: CreateCar
+  additionalRequestProperties:
+    - Guid Id
+  dtoProperties:
+    - string Model
+
+- name: UpdateCar
+  additionalRequestProperties:    
+  dtoProperties:
+    - Guid Id
+    - string Model
+
+- name: DeleteCar
+  additionalRequestProperties:    
+  dtoProperties:
+    - Guid Id";
+
+        public const string Q = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
 - name: GetCar
   requestProperties:
   responseTypeName: CarDetails
@@ -45,13 +63,13 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
 
         public void Execute(GeneratorExecutionContext context)
         {
-            StringBuilder sb = new();
-            sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            sb.AppendLine("#nullable enable");
-            sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "queries.yaml")), context.AdditionalFiles));
-            sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "commands.yaml")), context.AdditionalFiles));
+            //StringBuilder sb = new();
+            //sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
+            //sb.AppendLine("#nullable enable");
+            //sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "queries.yaml"))));
+            //sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "commands.yaml"))));
 
-            context.AddSource("Features.generated.cs", sb.ToString());
+            //context.AddSource("Features.generated.cs", sb.ToString());
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.CodeAnalysis;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
@@ -14,10 +13,8 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
             _stringReader = stringReader;
         }
 
-        public QueryFeatures GetFeatures(IEnumerable<AdditionalText> additionalFiles)
+        public QueryFeatures GetFeatures()
         {
-            //var path = additionalFiles.GetFileContent(x => x.Path.EndsWith("queries.yaml"), text => text.Path)!;
-            //string[] lines = File.ReadAllLines(path);
             string[] lines = _stringReader.ReadLines();
             string ns = GetNameSpace(lines);
             var q = GetQueries(lines);

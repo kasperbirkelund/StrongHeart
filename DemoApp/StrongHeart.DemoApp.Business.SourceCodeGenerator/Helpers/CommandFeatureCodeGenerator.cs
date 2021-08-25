@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using System.Text;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class CommandFeatureCodeGenerator
     {
-        public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader)
         {
-            CommandFeatures features = reader.GetFeatures(additionalFiles);
+            CommandFeatures features = reader.GetFeatures();
             StringBuilder sb = new();
             foreach (CommandFeature feature in features.Items)
             {

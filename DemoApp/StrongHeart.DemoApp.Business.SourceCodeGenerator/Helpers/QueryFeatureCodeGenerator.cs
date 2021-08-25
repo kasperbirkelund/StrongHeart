@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using System.Text;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class QueryFeatureCodeGenerator
     {
-        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader)
         {
-            QueryFeatures features = reader.GetFeatures(additionalFiles);
+            QueryFeatures features = reader.GetFeatures();
             StringBuilder sb = new();
             foreach (QueryFeature feature in features.Items)
             {
