@@ -14,14 +14,16 @@ namespace StrongHeart.Features.Documentation.Visitors
             return _sb.ToString().TrimEnd();
         }
 
-        public void VisitHeader(HeaderSection section)
-        {
-            _sb.AppendLine($"### {section.Text}");
-        }
-
         public void VisitText(TextSection section)
         {
-            _sb.AppendLine(section.Text);
+            if (section.IsHeader)
+            {
+                _sb.AppendLine($"### {section.Text}");
+            }
+            else
+            {
+                _sb.AppendLine(section.Text);
+            }
         }
 
         public void VisitCodeComment(CodeCommentSection section)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,14 +7,17 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.Core.FeatureToggling;
 using StrongHeart.DemoApp.Business.Features;
+using StrongHeart.DemoApp.Business.Features.Commands;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.DemoApp.WebApi.Toggles;
 using StrongHeart.Features.DependencyInjection;
+using StrongHeart.Features.Documentation;
+using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.WebApi
 {
-    public class Startup
+    public class Startup : IDocumentationDescriber
     {
         public Startup(IConfiguration configuration)
         {
@@ -22,7 +26,6 @@ namespace StrongHeart.DemoApp.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IFoo, Foo>();
@@ -32,10 +35,12 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddControllers();
             services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
 
+            //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
             }, typeof(CommandFeatureBase<,>).Assembly);
+            //DOC-END
 
             //Swagger is good for testing the api. Not important for StrongHeart
             services.AddSwaggerGen(c =>
@@ -59,6 +64,15 @@ namespace StrongHeart.DemoApp.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public string? DocName => DocumentationConstants.Setup;
+        public int? Order => 1;
+
+        public IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
+        {
+            yield return new TextSection("Changes required in the top level assembly (eg. a WebApi)", true);
+            yield return new CodeCommentSection(GetType());
         }
     }
 }

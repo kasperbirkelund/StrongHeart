@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using StrongHeart.DemoApp.Business.Features;
+using StrongHeart.DemoApp.Business.Features.Commands;
 using StrongHeart.TestTools.Xunit;
 using Xunit.Abstractions;
 

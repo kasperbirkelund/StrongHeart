@@ -5,7 +5,6 @@ namespace StrongHeart.Features.Documentation.Visitors
     public interface ISectionVisitor
     {
         void VisitCodeComment(CodeCommentSection section);
-        void VisitHeader(HeaderSection section);
         void VisitText(TextSection section);
         void VisitTable<T>(TableSection<T> section);
     }
