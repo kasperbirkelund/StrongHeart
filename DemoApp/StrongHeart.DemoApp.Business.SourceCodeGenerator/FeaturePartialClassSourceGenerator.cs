@@ -11,7 +11,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
     {
         public void Initialize(GeneratorInitializationContext context)
         {
-            context.RegisterForPostInitialization(context =>
+            context.RegisterForPostInitialization(x =>
             {
                 StringBuilder sb = new();
                 sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
@@ -19,7 +19,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
                 sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new StringReader(Q))));
                 sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new StringReader(C))));
 
-                context.AddSource("Features.generated.cs", sb.ToString());
+                x.AddSource("Features.generated.cs", sb.ToString());
             });
         }
 
@@ -63,13 +63,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
 
         public void Execute(GeneratorExecutionContext context)
         {
-            //StringBuilder sb = new();
-            //sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            //sb.AppendLine("#nullable enable");
-            //sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "queries.yaml"))));
-            //sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new AdditionalTextStringReader(context.AdditionalFiles, "commands.yaml"))));
-
-            //context.AddSource("Features.generated.cs", sb.ToString());
+            //NO OP
         }
     }
 }

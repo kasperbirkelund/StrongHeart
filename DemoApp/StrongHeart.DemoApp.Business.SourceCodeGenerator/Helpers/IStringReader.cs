@@ -1,0 +1,7 @@
+﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
+{
+    public interface IStringReader
+    {
+        string[] ReadLines();
+    }
+}
