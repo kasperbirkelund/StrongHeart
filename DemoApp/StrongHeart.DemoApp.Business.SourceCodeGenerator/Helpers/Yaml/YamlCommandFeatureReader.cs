@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.CodeAnalysis;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
 {
     public class YamlCommandFeatureReader : IFeatureReader<CommandFeatures>
     {
-        public CommandFeatures GetFeatures(IEnumerable<AdditionalText> additionalFiles)
+        private readonly IStringReader _stringReader;
+
+        public YamlCommandFeatureReader(IStringReader stringReader)
         {
-            var path = additionalFiles.GetFileContent(x => x.Path.EndsWith("commands.yaml"), text => text.Path)!;
-            string[] lines = File.ReadAllLines(path);
+            _stringReader = stringReader;
+        }
+        public CommandFeatures GetFeatures()
+        {
+            string[] lines = _stringReader.ReadLines();
             string ns = GetNameSpace(lines);
             var q = GetCommands(lines);
 
