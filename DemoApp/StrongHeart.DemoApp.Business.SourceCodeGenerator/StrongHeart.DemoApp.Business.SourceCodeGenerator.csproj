@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="commands.yaml" />
-    <None Remove="queries.yaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="commands.yaml" />
     <EmbeddedResource Include="queries.yaml" />
   </ItemGroup>
