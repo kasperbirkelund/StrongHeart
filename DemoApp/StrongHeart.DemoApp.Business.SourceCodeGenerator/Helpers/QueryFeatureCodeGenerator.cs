@@ -22,7 +22,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
         {
             string template = $@"namespace {rootNamespace}.Queries.{feature.Name}
 {{
-{GetUsings(feature.Response)}
+{GetUsings(feature.Response.IsListResponse)}
 
     public partial class {feature.Name}Feature : QueryFeatureBase<{feature.Name}Request, {feature.Name}Response>
     {{
@@ -36,10 +36,10 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
             return template;
         }
 
-        private static string GetUsings(QueryResponse response)
+        private static string GetUsings(bool isListResponse)
         {
             StringBuilder sb = new();
-            if (response.IsListResponse)
+            if (isListResponse)
             {
                 sb.AppendLine("\tusing System.Collections.Generic;");
             }

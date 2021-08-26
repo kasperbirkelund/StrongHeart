@@ -48,7 +48,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
         {
             StringBuilder sb = new();
             sb.AppendLine("\tusing System;");
-            sb.AppendLine("\tusing System.Collections.Generic;");
             sb.AppendLine("\tusing StrongHeart.Core.Security;");
             sb.AppendLine("\tusing StrongHeart.Features.Core;");
             return sb.ToString();
