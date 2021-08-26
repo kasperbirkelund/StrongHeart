@@ -9,6 +9,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
         {
             QueryFeatures features = reader.GetFeatures();
             StringBuilder sb = new();
+            sb.AppendLine($"/* Queries (count={features.Items.Length})*/");
             foreach (QueryFeature feature in features.Items)
             {
                 sb.AppendLine(CreateCodeSnippet(feature, features.RootNamespace));
@@ -42,7 +43,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
             {
                 sb.AppendLine("\tusing System.Collections.Generic;");
             }
-            sb.AppendLine("\tusing System.Threading.Tasks;");
             sb.AppendLine("\tusing StrongHeart.Core.Security;");
             sb.AppendLine("\tusing StrongHeart.DemoApp.Business.Features;");
             sb.Append("\tusing StrongHeart.Features.Core;");

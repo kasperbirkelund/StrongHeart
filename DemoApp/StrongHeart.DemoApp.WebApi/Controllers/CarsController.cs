@@ -86,8 +86,8 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
         //DOC-END
 
-        public string? DocName => DocumentationConstants.Setup;
-        public int? Order => 3;
+        public override string? DocName => DocumentationConstants.Setup;
+        public override int? Order => 3;
 
         //Explicit impl of interface to ensure that unit tests validates public api class correctly.
         IEnumerable<ISection> IDocumentationDescriber.GetDocumentationSections(DocumentationGenerationContext context)
