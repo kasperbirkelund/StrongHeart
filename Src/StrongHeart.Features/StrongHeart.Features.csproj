@@ -4,9 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <Authors>Birkelund</Authors>
-    <Company />
     <Product>StrongHeart.Features</Product>
-    <PackageLicense>https://github.com/kasperbirkelund/StrongHeart/blob/master/LICENSE</PackageLicense>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
