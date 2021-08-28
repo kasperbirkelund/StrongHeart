@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
@@ -35,8 +36,9 @@ namespace StrongHeart.DemoApp.Business.Tests
         [Fact]
         public void GenerateDocumentation()
         {
+            Assembly assembly = typeof(FeatureBase).Assembly;
             IServiceCollection services = new ServiceCollection();
-            services.AddStrongHeart(_ => { }, typeof(FeatureBase).Assembly);
+            services.AddStrongHeart(_ => { }, assembly);
             services.AddTransient<IFoo, Foo>();
             services.AddSingleton<IEventPublisher, A>();
             Type[] features = typeof(FeatureBase).Assembly.GetExportedTypes()
@@ -44,23 +46,11 @@ namespace StrongHeart.DemoApp.Business.Tests
                 .ToArray();
             Array.ForEach(features, type => services.AddTransient(type));
 
-            IServiceProvider provider = services.BuildServiceProvider();
-            using (var scope = provider.CreateScope())
-            {
-                IEnumerable<IDocumentationDescriber> items = features
-                    .Select(x => scope.ServiceProvider.GetRequiredService(x))
-                    .OfType<IDocumentationDescriber>();
+            string sourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<GetCarFeature>(@"\DemoApp\");
 
-                CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDir<GetCarFeature>(@"\DemoApp\");
-
-                foreach (IDocumentationDescriber item in items)
-                {
-                    var visitor = new MarkDownVisitor();
-                    IEnumerable<ISection> sections = item!.GetDocumentationSections(new DocumentationGenerationContext());
-                    visitor.Accept(sections);
-                    _helper.WriteLine(visitor.AsString());
-                }
-            }
+            MarkDownVisitor visitor = new MarkDownVisitor();
+            DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor);
+            _helper.WriteLine(visitor.AsString());
         }
     }
 }

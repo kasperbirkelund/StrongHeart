@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using System.Text;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class CommandFeatureCodeGenerator
     {
-        public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<CommandFeatures> reader)
         {
-            CommandFeatures features = reader.GetFeatures(additionalFiles);
+            CommandFeatures features = reader.GetFeatures();
             StringBuilder sb = new();
+            sb.AppendLine($"/* Commands (count={features.Items.Length})*/");
+
             foreach (CommandFeature feature in features.Items)
             {
                 sb.AppendLine(CreateCodeSnippet(feature, features.RootNamespace));
@@ -21,11 +21,9 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 
         private static string CreateCodeSnippet(CommandFeature feature, string rootNamespace)
         {
-            string template = $@"
-namespace {rootNamespace}.Commands.{feature.Name}
+            string template = $@"namespace {rootNamespace}.Commands.{feature.Name}
 {{
 {GetUsings()}
-
     public partial class {feature.Name}Feature : CommandFeatureBase<{feature.Name}Request, {GetDtoName(feature.Name)}>
     {{        
     }}
@@ -50,12 +48,8 @@ namespace {rootNamespace}.Commands.{feature.Name}
         {
             StringBuilder sb = new();
             sb.AppendLine("\tusing System;");
-            sb.AppendLine("\tusing System.Collections.Generic;");
-            sb.AppendLine("\tusing System.Threading.Tasks;");
             sb.AppendLine("\tusing StrongHeart.Core.Security;");
             sb.AppendLine("\tusing StrongHeart.Features.Core;");
-            sb.AppendLine("\tusing StrongHeart.Features.Decorators.RequestValidation;");
-            sb.AppendLine("\tusing StrongHeart.DemoApp.Business.Features;");
             return sb.ToString();
         }
        

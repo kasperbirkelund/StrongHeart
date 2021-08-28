@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.DemoApp.Business.Features
+namespace StrongHeart.DemoApp.Business.Features.Queries
 {
     /// <summary>
     /// This class is a project specific class where you can apply your project specific decorators.

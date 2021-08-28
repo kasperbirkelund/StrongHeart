@@ -49,6 +49,15 @@ namespace StrongHeart.Features.Core
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
+
+        public T ExtractSuccessful()
+        {
+            if (IsSuccess)
+            {
+                return Value;
+            }
+            throw new Exception("State is not successful");
+        }
     }
 
     public class Result : IResult

@@ -5,6 +5,8 @@ namespace StrongHeart.Features.Documentation
 {
     public interface IDocumentationDescriber
     {
+        string? DocName { get; }
+        int? Order { get; }
         IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context);
     }
 }

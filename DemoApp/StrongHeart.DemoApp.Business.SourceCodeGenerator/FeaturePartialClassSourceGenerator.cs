@@ -11,27 +11,59 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
     {
         public void Initialize(GeneratorInitializationContext context)
         {
-            //context.RegisterForPostInitialization(context =>
-            //{
-            //    StringBuilder sb = new();
-            //    sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            //    sb.AppendLine("#nullable enable");
-            //    sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
-            //    sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
+            context.RegisterForPostInitialization(x =>
+            {
+                StringBuilder sb = new();
+                sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
+                sb.AppendLine("#nullable enable");
+                sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(new EmbeddedResourceReader("queries.yaml"))));
+                sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(new EmbeddedResourceReader("commands.yaml"))));
 
-            //    context.AddSource("Features.generated.cs", sb.ToString());
-            //});
+                x.AddSource("Features.generated.cs", sb.ToString());
+            });
         }
+
+        //        public const string C = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
+        //- name: CreateCar
+        //  additionalRequestProperties:
+        //    - Guid Id
+        //  dtoProperties:
+        //    - string Model
+
+        //- name: UpdateCar
+        //  additionalRequestProperties:    
+        //  dtoProperties:
+        //    - Guid Id
+        //    - string Model
+
+        //- name: DeleteCar
+        //  additionalRequestProperties:    
+        //  dtoProperties:
+        //    - Guid Id";
+
+        //        public const string Q = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
+        //- name: GetCar
+        //  requestProperties:
+        //  responseTypeName: CarDetails
+        //  isListResponse: false
+        //  responseProperties:
+        //    - string Model
+        //    - int Year
+        //    - string Detail1
+        //    - string Detail2    
+
+        //- name: GetCars
+        //  requestProperties:
+        //    - string? Model    
+        //  responseTypeName: Car
+        //  isListResponse: true
+        //  responseProperties:
+        //    - string Model
+        //    - int Year";
 
         public void Execute(GeneratorExecutionContext context)
         {
-            StringBuilder sb = new();
-            sb.AppendLine($"//Generated: {DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}");
-            sb.AppendLine("#nullable enable");
-            sb.AppendLine(QueryFeatureCodeGenerator.GetGeneratedCode(new YamlQueryFeatureReader(), context.AdditionalFiles));
-            sb.AppendLine(CommandFeatureCodeGenerator.GetGeneratedCode(new YamlCommandFeatureReader(), context.AdditionalFiles));
-
-            context.AddSource("Features.generated.cs", sb.ToString());
+            //NO OP
         }
     }
 }

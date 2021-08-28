@@ -1,6 +1,2 @@
-claims
-lav QueryTypeDecorator strongly typed
-fjern nullable types ved compiler directive
 Fjern compiler warnings
-Lav sample project separat fra test projektet
 IContext

@@ -9,6 +9,8 @@ namespace StrongHeart.DemoApp.WebApi.Tests
     public abstract class WebApiMethodRuleBase : IRule<Type>
     {
         public abstract string CorrectiveAction { get; }
+        protected bool IsGetter(MethodInfo method) => method.Name.StartsWith("get_");
+        protected bool IsSetter(MethodInfo method) => method.Name.StartsWith("set_");
 
         public bool DoVerifyItem(Type item)
         {
@@ -19,7 +21,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         {
             string[] faultedMethods = item
                 .GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public)
-                .Where(MethodPredicate)
+                .Where(IsInValidMethod)
                 .Select(x => $"{item.Name}.{x.Name}")
                 .ToArray();
 
@@ -27,6 +29,6 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             return faultedMethods.Length == 0;
         }
 
-        protected abstract bool MethodPredicate(MethodInfo method);
+        protected abstract bool IsInValidMethod(MethodInfo method);
     }
 }

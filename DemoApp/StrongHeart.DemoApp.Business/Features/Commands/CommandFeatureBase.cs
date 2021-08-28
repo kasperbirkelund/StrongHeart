@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 
-namespace StrongHeart.DemoApp.Business.Features
+namespace StrongHeart.DemoApp.Business.Features.Commands
 {
     /// <summary>
     /// This class is a project specific class where you can apply your project specific decorators.

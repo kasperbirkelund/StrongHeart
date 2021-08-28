@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using System.Text;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
 namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
 {
     internal class QueryFeatureCodeGenerator
     {
-        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader, IEnumerable<AdditionalText> additionalFiles)
+        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader)
         {
-            QueryFeatures features = reader.GetFeatures(additionalFiles);
+            QueryFeatures features = reader.GetFeatures();
             StringBuilder sb = new();
+            sb.AppendLine($"/* Queries (count={features.Items.Length})*/");
             foreach (QueryFeature feature in features.Items)
             {
                 sb.AppendLine(CreateCodeSnippet(feature, features.RootNamespace));
@@ -23,7 +22,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
         {
             string template = $@"namespace {rootNamespace}.Queries.{feature.Name}
 {{
-{GetUsings(feature.Response)}
+{GetUsings(feature.Response.IsListResponse)}
 
     public partial class {feature.Name}Feature : QueryFeatureBase<{feature.Name}Request, {feature.Name}Response>
     {{
@@ -37,14 +36,13 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
             return template;
         }
 
-        private static string GetUsings(QueryResponse response)
+        private static string GetUsings(bool isListResponse)
         {
             StringBuilder sb = new();
-            if (response.IsListResponse)
+            if (isListResponse)
             {
                 sb.AppendLine("\tusing System.Collections.Generic;");
             }
-            sb.AppendLine("\tusing System.Threading.Tasks;");
             sb.AppendLine("\tusing StrongHeart.Core.Security;");
             sb.AppendLine("\tusing StrongHeart.DemoApp.Business.Features;");
             sb.Append("\tusing StrongHeart.Features.Core;");

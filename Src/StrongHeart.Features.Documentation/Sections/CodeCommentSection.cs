@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -38,40 +39,42 @@ namespace StrongHeart.Features.Documentation.Sections
             {
                 SyntaxTree tree = CSharpSyntaxTree.ParseText(File.ReadAllText(file.FullName));
                 CompilationUnitSyntax root = tree.GetCompilationUnitRoot();
-                IEnumerable<MethodDeclarationSyntax> methods = root
+                IEnumerable<ClassDeclarationSyntax> classes = root
                     .DescendantNodes()
                     .OfType<ClassDeclarationSyntax>()
-                    .Where(x => IsMatchingClass(x, _type))
-                    .SelectMany(x => x.DescendantNodes().OfType<MethodDeclarationSyntax>());
+                    .Where(x => IsMatchingClass(x, _type));
 
-                foreach (MethodDeclarationSyntax method in methods)
+                foreach (ClassDeclarationSyntax c in classes)
                 {
-                    _snippets.AddRange(GetSnippets(method));
+                    _snippets.AddRange(GetSnippets(file, c.ToFullString()));
                 }
             }
             visitor.VisitCodeComment(this);
         }
 
-        private IEnumerable<CodeSnippet> GetSnippets(MethodDeclarationSyntax method)
+        private static IEnumerable<CodeSnippet> GetSnippets(FileInfo file, string classText)
         {
-            string code = string.Empty;
+            StringBuilder code = new();
             string title = string.Empty;
             bool isInSnippetScope = false;
-            foreach (var line in method.Body.ToFullString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+
+            foreach (var line in classText.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
             {
                 if (line.Contains("//DOC-START"))
                 {
-                    title = line.Replace("//DOC-START", string.Empty).Trim();
+                    string titleFromFile = line.Replace("//DOC-START", string.Empty).Trim();
+                    title = $"{Path.GetFileName(file.FullName)}: {titleFromFile}";
                     isInSnippetScope = true;
                 }
                 else if (line.Contains("//DOC-END"))
                 {
                     isInSnippetScope = false; //if DOC-END is not in place, no snippets will be returned.
-                    yield return new CodeSnippet(title, code);
+                    yield return new CodeSnippet(title, code.ToString());
+                    code = code.Clear();
                 }
                 else if (isInSnippetScope)
                 {
-                    code += line + Environment.NewLine;
+                    code.AppendLine(line);
                 }
             }
         }
@@ -82,7 +85,7 @@ namespace StrongHeart.Features.Documentation.Sections
             return arg.Identifier.ValueText == type.Name && ns.Name.ToString() == type.Namespace;
         }
 
-        public static string GetSourceCodeDir<TFeature>(string parentDirectory) where TFeature : IFeatureMarker
+        public static string GetSourceCodeDirFromFeature<TFeature>(string parentDirectory) where TFeature : IFeatureMarker
         {
             string currentDir = Environment.CurrentDirectory;
             int index = currentDir.IndexOf(parentDirectory, StringComparison.Ordinal);
@@ -90,5 +93,14 @@ namespace StrongHeart.Features.Documentation.Sections
             string pathFull = Path.Combine(path, typeof(TFeature).Assembly.GetName().Name);
             return pathFull;
         }
+
+        //public static string GetSourceCodeDir(string parentDirectory)
+        //{
+        //    string currentDir = Environment.CurrentDirectory;
+        //    int index = currentDir.IndexOf(parentDirectory, StringComparison.Ordinal);
+        //    string path = currentDir.Substring(0, index + parentDirectory.Length);
+        //    string pathFull = Path.Combine(path, typeof(TFeature).Assembly.GetName().Name);
+        //    return pathFull;
+        //}
     }
 }
