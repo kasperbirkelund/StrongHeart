@@ -4,6 +4,6 @@ namespace StrongHeart.Features.Core.Events
 {
     public interface IEventPublisher
     {
-        Task Publish<T>(T evt) where T : IEvent;
+        Task Publish<T>(T evt) where T : class, IEvent;
     }
 }

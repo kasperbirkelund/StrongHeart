@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.Core.FeatureToggling;
-using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Commands;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;

@@ -91,29 +91,28 @@ namespace StrongHeart.Features.DependencyInjection
                 {
                     Type type = x.IsGenericType ? x.MakeGenericType(interfaceType.GenericTypeArguments) : x;
                     return type.GetConstructors();
-                });
+                }).ToList();
 
-            object? Func(IServiceProvider provider)
+            return provider => ObjectFactory(provider, constructors);
+        }
+
+        private static object? ObjectFactory(IServiceProvider provider, IEnumerable<ConstructorInfo> constructors)
+        {
+            object? current = null;
+
+            foreach (ConstructorInfo ctor in constructors)
             {
-                object? current = null;
-
-                foreach (ConstructorInfo ctor in constructors)
-                {
-                    List<ParameterInfo> parameterInfos = ctor.GetParameters().ToList();
-
-                    object[] parameters = GetParameters(parameterInfos, current, provider);
-
-                    current = ctor.Invoke(parameters);
-                }
-
-                return current;
+                List<ParameterInfo> parameterInfos = ctor.GetParameters().ToList();
+                object?[] parameters = GetParameters(parameterInfos, current, provider);
+                current = ctor.Invoke(parameters);
             }
 
-            return Func;
+            return current;
         }
-        private static object[] GetParameters(IList<ParameterInfo> parameterInfos, object? current, IServiceProvider provider)
+
+        private static object?[] GetParameters(IList<ParameterInfo> parameterInfos, object? current, IServiceProvider provider)
         {
-            var result = new object[parameterInfos.Count];
+            var result = new object?[parameterInfos.Count];
 
             for (int i = 0; i < parameterInfos.Count; i++)
             {
@@ -127,7 +126,8 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
+            //if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
+            if(parameterType.IsFeatureInterface())
             {
                 return current;
             }

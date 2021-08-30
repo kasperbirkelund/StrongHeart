@@ -2,5 +2,5 @@
 
 namespace StrongHeart.DemoApp.Business.Events
 {
-    public record CarCreatedEvent : IEvent;
+    public record CarCreatedEvent() : IEvent;
 }
