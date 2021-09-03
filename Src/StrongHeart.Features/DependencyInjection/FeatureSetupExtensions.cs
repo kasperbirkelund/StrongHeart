@@ -8,10 +8,9 @@ using static System.Linq.Enumerable;
 
 namespace StrongHeart.Features.DependencyInjection
 {
-    public delegate Type? SpecialTypeHandler(Type interfaceType, Type serviceType);
     public static class FeatureSetupExtensions
     {
-        public static IServiceCollection AddStrongHeart(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, SpecialTypeHandler? specialTypeHandler = null, params Assembly[] assemblies)
+        public static IServiceCollection AddStrongHeart(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, params Assembly[] assemblies)
         {
             if (!assemblies.Any())
             {
@@ -28,13 +27,13 @@ namespace StrongHeart.Features.DependencyInjection
 
             foreach (Type featureType in featureTypes)
             {
-                AddFeatureRegistration(services, featureType, options, specialTypeHandler);
+                AddFeatureRegistration(services, featureType, options);
             }
 
             return services;
         }
 
-        private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options, SpecialTypeHandler? specialTypeHandler)
+        private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options)
         {
             Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeatureInterface);
 
@@ -48,7 +47,7 @@ namespace StrongHeart.Features.DependencyInjection
 
             pipeline.AddRange(types);
 
-            Func<IServiceProvider, object?> factory = BuildPipeline(pipeline, interfaceType, specialTypeHandler);
+            Func<IServiceProvider, object?> factory = BuildPipeline(pipeline, interfaceType);
 
             services.AddTransient(interfaceType, factory);
         }
@@ -60,14 +59,11 @@ namespace StrongHeart.Features.DependencyInjection
             {
                 return GetDecoratorChain(options.Extensions, x => x.QueryTypeDecorator, serviceType);
             }
-            else if (interfaceType.IsCommandFeatureInterface())
+            if (interfaceType.IsCommandFeatureInterface())
             {
                 return GetDecoratorChain(options.Extensions, x => x.CommandTypeDecorator, serviceType);
             }
-            else
-            {
-                return Empty<Type>();
-            }
+            return Empty<Type>();
         }
 
         private static IEnumerable<Type> GetDecoratorChain(IEnumerable<IPipelineExtension> extensions, Func<IPipelineExtension, Type> selector, Type serviceType)
@@ -81,17 +77,13 @@ namespace StrongHeart.Features.DependencyInjection
             }
         }
 
-        private static Func<IServiceProvider, object?> BuildPipeline(IEnumerable<Type> pipeline, Type interfaceType, SpecialTypeHandler? specialTypeHandler = null)
+        private static Func<IServiceProvider, object?> BuildPipeline(IEnumerable<Type> pipeline, Type interfaceType)
         {
             IEnumerable<ConstructorInfo> constructors = pipeline
                 .SelectMany(x =>
                 {
-                    Type? t = specialTypeHandler?.Invoke(interfaceType, x);
-                    if (t == null)
-                    {
-                        t = x.IsGenericType ? x.MakeGenericType(interfaceType.GenericTypeArguments) : x;
-                    }
-                    return t.GetConstructors();
+                    Type type = x.IsGenericType ? x.MakeGenericType(interfaceType.GenericTypeArguments) : x;
+                    return type.GetConstructors();
                 }).ToList();
 
             return provider => ObjectFactory(provider, constructors);

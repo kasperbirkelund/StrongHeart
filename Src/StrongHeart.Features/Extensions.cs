@@ -19,6 +19,7 @@ namespace StrongHeart.Features
 
             return @interface.IsAssignableFrom(type);
         }
+
         //public static bool DoesImplementInterface(this Type type, Type genericType)
         //{
         //    if (genericType.IsGenericType)
@@ -64,11 +65,6 @@ namespace StrongHeart.Features
         {
             return IsFeatureInterface(type, typeof(ICommandFeature<,>));
         }
-        
-        //public static bool IsEventHandlerFeatureInterface(this Type type)
-        //{
-        //    return IsFeatureInterface(type, typeof(IEventHandler<,>));
-        //}
 
         /// <summary>
         /// Returns false is the type is a decorator or an abstract class

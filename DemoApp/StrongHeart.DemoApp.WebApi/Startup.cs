@@ -46,7 +46,7 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
-            }, SpecialTypeHandler, typeof(CommandFeatureBase<,>).Assembly);
+            }, null, typeof(CommandFeatureBase<,>).Assembly);
             //DOC-END
 
             //Swagger is good for testing the api. Not important for StrongHeart
