@@ -61,7 +61,7 @@ namespace StrongHeart.Features.Test
             services.AddStrongHeart(x =>
             {
                 x.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
-            }, typeof(FeatureQueryTest).Assembly);
+            }, null, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
             {

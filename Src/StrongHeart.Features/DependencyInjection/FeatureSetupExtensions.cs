@@ -8,9 +8,10 @@ using static System.Linq.Enumerable;
 
 namespace StrongHeart.Features.DependencyInjection
 {
+    public delegate Type? SpecialTypeHandler(Type interfaceType, Type serviceType);
     public static class FeatureSetupExtensions
     {
-        public static IServiceCollection AddStrongHeart(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, params Assembly[] assemblies)
+        public static IServiceCollection AddStrongHeart(this IServiceCollection services, Action<FeatureSetupOptions> optionsAction, SpecialTypeHandler? specialTypeHandler = null, params Assembly[] assemblies)
         {
             if (!assemblies.Any())
             {
@@ -27,13 +28,13 @@ namespace StrongHeart.Features.DependencyInjection
 
             foreach (Type featureType in featureTypes)
             {
-                AddFeatureRegistration(services, featureType, options);
+                AddFeatureRegistration(services, featureType, options, specialTypeHandler);
             }
 
             return services;
         }
 
-        private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options)
+        private static void AddFeatureRegistration(IServiceCollection services, Type type, FeatureSetupOptions options, SpecialTypeHandler? specialTypeHandler)
         {
             Type interfaceType = type.GetInterfaces().Single(Extensions.IsFeatureInterface);
 
@@ -47,7 +48,7 @@ namespace StrongHeart.Features.DependencyInjection
 
             pipeline.AddRange(types);
 
-            Func<IServiceProvider, object?> factory = BuildPipeline(pipeline, interfaceType);
+            Func<IServiceProvider, object?> factory = BuildPipeline(pipeline, interfaceType, specialTypeHandler);
 
             services.AddTransient(interfaceType, factory);
         }
@@ -84,13 +85,17 @@ namespace StrongHeart.Features.DependencyInjection
             }
         }
 
-        private static Func<IServiceProvider, object?> BuildPipeline(IEnumerable<Type> pipeline, Type interfaceType)
+        private static Func<IServiceProvider, object?> BuildPipeline(IEnumerable<Type> pipeline, Type interfaceType, SpecialTypeHandler? specialTypeHandler = null)
         {
             IEnumerable<ConstructorInfo> constructors = pipeline
                 .SelectMany(x =>
                 {
-                    Type type = x.IsGenericType ? x.MakeGenericType(interfaceType.GenericTypeArguments) : x;
-                    return type.GetConstructors();
+                    Type? t = specialTypeHandler?.Invoke(interfaceType, x);
+                    if (t == null)
+                    {
+                        t = x.IsGenericType ? x.MakeGenericType(interfaceType.GenericTypeArguments) : x;
+                    }
+                    return t.GetConstructors();
                 }).ToList();
 
             return provider => ObjectFactory(provider, constructors);
@@ -125,8 +130,8 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            //if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
-            if(parameterType.IsFeatureInterface())
+            if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
+            //if (parameterType.IsFeatureInterface())
             {
                 return current;
             }

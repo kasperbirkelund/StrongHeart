@@ -27,7 +27,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         public virtual string? DocName => DocumentationConstants.Setup;
         public virtual int? Order => 2;
 
-        public virtual IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context)
+        IEnumerable<ISection> IDocumentationDescriber.GetDocumentationSections(DocumentationGenerationContext context)
         {
             yield return new TextSection($"{nameof(StrongHeartApiBase)} is only applicable on WebApis. If not a WebApi remove {nameof(StrongHeartApiBase)}");
             yield return new CodeCommentSection(GetType());

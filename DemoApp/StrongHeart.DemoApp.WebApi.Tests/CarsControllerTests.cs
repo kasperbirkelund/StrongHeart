@@ -94,5 +94,16 @@ namespace StrongHeart.DemoApp.WebApi.Tests
                 Assert.Equal(HttpStatusCode.OK, actual);
             }
         }
+
+        [Fact]
+        public async Task LoadSwagger()
+        {
+            using (HttpClient client = _factory.CreateClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("/swagger/v1/swagger.json");
+                HttpStatusCode actual = response.StatusCode;
+                Assert.Equal(HttpStatusCode.OK, actual);
+            }
+        }
     }
 }
