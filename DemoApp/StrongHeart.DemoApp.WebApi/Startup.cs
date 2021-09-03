@@ -46,7 +46,7 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
-            }, null, typeof(CommandFeatureBase<,>).Assembly);
+            }, typeof(CommandFeatureBase<,>).Assembly);
             //DOC-END
 
             //Swagger is good for testing the api. Not important for StrongHeart
@@ -54,16 +54,6 @@ namespace StrongHeart.DemoApp.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StrongHeart.DemoApp.WebApi", Version = "v1" });
             });
-        }
-
-        private static Type? SpecialTypeHandler(Type interfaceType, Type serviceType)
-        {
-            //This handles a special case there the FeatureBase class has fever parameters that the interface type
-            if (serviceType == typeof(EventHandlerFeatureBase<>))
-            {
-                return serviceType.MakeGenericType(interfaceType.GenericTypeArguments.First());
-            }
-            return null;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

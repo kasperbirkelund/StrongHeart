@@ -37,7 +37,7 @@ namespace StrongHeart.DemoApp.Business.Tests
         {
             Assembly assembly = typeof(FeatureBase).Assembly;
             IServiceCollection services = new ServiceCollection();
-            services.AddStrongHeart(_ => { }, null, assembly);
+            services.AddStrongHeart(_ => { }, assembly);
             services.AddTransient<IFoo, Foo>();
             services.AddSingleton<IEventPublisher, DummyEventPublisher>();
             Type[] features = typeof(FeatureBase).Assembly.GetExportedTypes()

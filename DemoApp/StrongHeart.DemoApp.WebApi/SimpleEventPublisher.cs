@@ -25,16 +25,5 @@ namespace StrongHeart.DemoApp.WebApi
                 await feature.Execute(new EventMessage<T, DemoAppSpecificMetadata>(metadata, @event));
             }
         }
-
-        //switch (@event)
-        //{
-        //    case CarCreatedEvent e:
-        //        {
-        //            using var scope = _serviceProvider.CreateScope();
-        //            var feature = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<CarCreatedEvent, DemoAppSpecificMetadata>>();
-        //            await feature.Execute(new EventMessage<CarCreatedEvent, DemoAppSpecificMetadata>(metadata, e));
-        //            break;
-        //        }
-        //}
     }
 }

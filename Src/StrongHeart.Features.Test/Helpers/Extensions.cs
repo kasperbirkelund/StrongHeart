@@ -15,7 +15,7 @@ namespace StrongHeart.Features.Test.Helpers
             services.AddStrongHeart(x =>
             {
                 x.AddPipelineExtensions(extensions);
-            }, null, typeof(FeatureQueryTest).Assembly);
+            }, typeof(FeatureQueryTest).Assembly);
             servicesAction?.Invoke(services);
             var provider = services.BuildServiceProvider();
             return provider.CreateScope();
