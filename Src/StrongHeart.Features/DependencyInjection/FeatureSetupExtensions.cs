@@ -99,7 +99,6 @@ namespace StrongHeart.Features.DependencyInjection
         private static object? ObjectFactory(IServiceProvider provider, IEnumerable<ConstructorInfo> constructors)
         {
             object? current = null;
-
             foreach (ConstructorInfo ctor in constructors)
             {
                 List<ParameterInfo> parameterInfos = ctor.GetParameters().ToList();
