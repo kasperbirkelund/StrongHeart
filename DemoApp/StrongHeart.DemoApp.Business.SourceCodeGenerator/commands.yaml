@@ -15,3 +15,7 @@
   additionalRequestProperties:    
   dtoProperties:
     - Guid Id
+
+- name: NewCarCustomerNotification
+  additionalRequestProperties:    
+  dtoProperties: 

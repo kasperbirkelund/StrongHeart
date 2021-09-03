@@ -9,7 +9,6 @@ namespace StrongHeart.Features.Decorators.TimeAlert
         public Func<Type, bool> ShouldApplyPipelineExtension => serviceType => serviceType.DoesImplementInterface(typeof(ITimeAlert));
         public Type QueryTypeDecorator => typeof(TimeAlertQueryDecorator<,>);
         public Type CommandTypeDecorator => typeof(TimeAlertCommandDecorator<,>);
-
         public void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ITimeAlertExceededLogger, TTimeAlertExceededLogger>();

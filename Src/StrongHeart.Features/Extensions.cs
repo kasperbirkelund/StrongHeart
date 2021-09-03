@@ -19,6 +19,7 @@ namespace StrongHeart.Features
 
             return @interface.IsAssignableFrom(type);
         }
+
         //public static bool DoesImplementInterface(this Type type, Type genericType)
         //{
         //    if (genericType.IsGenericType)

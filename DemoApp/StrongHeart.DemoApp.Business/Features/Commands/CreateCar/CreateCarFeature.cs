@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
@@ -9,7 +11,13 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
 {
     public partial class CreateCarFeature
     {
-        public override Task<Result> Execute(CreateCarRequest request)
+        private readonly IEventPublisher _eventPublisher;
+
+        public CreateCarFeature(IEventPublisher eventPublisher)
+        {
+            _eventPublisher = eventPublisher;
+        }
+        public override async Task<Result> Execute(CreateCarRequest request)
         {
             //DOC-START Special customer rule...
             bool isCustomer = IsCustomer();
@@ -18,8 +26,8 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
                 SendGift();
             }
             //DOC-END
-
-            return Task.FromResult(Result.QueuedForLaterExecution());
+            await _eventPublisher.Publish(new CarCreatedEvent());
+            return Result.Success();
         }
 
         private bool IsCustomer()

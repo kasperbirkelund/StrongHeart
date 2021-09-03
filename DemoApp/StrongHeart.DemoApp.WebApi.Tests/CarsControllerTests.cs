@@ -53,7 +53,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
                 HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.Accepted, actual);
+                Assert.Equal(HttpStatusCode.OK, actual);
             }
         }
 
@@ -90,6 +90,17 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             using (HttpClient client = _factory.CreateClient())
             {
                 HttpResponseMessage response = await client.DeleteAsync($"/Cars/{dto.Id}");
+                HttpStatusCode actual = response.StatusCode;
+                Assert.Equal(HttpStatusCode.OK, actual);
+            }
+        }
+
+        [Fact]
+        public async Task LoadSwagger()
+        {
+            using (HttpClient client = _factory.CreateClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("/swagger/v1/swagger.json");
                 HttpStatusCode actual = response.StatusCode;
                 Assert.Equal(HttpStatusCode.OK, actual);
             }

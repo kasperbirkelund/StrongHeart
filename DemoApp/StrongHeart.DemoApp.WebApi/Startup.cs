@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.Core.FeatureToggling;
-using StrongHeart.DemoApp.Business.Features;
+using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.DemoApp.Business.Features.Commands;
+using StrongHeart.DemoApp.Business.Features.EventHandlers;
+using StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.DemoApp.WebApi.Toggles;
+using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
@@ -34,12 +39,14 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
+            services.AddSingleton<IEventPublisher, SimpleEventPublisher>();
+            services.AddTransient<IEventHandler<CarCreatedEvent, DemoAppSpecificMetadata>, CarCreatedHandler>();
 
             //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
             services.AddStrongHeart(options =>
             {
                 options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
-            }, typeof(CommandFeatureBase<,>).Assembly);
+            }, null, typeof(CommandFeatureBase<,>).Assembly);
             //DOC-END
 
             //Swagger is good for testing the api. Not important for StrongHeart
@@ -47,6 +54,16 @@ namespace StrongHeart.DemoApp.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StrongHeart.DemoApp.WebApi", Version = "v1" });
             });
+        }
+
+        private static Type? SpecialTypeHandler(Type interfaceType, Type serviceType)
+        {
+            //This handles a special case there the FeatureBase class has fever parameters that the interface type
+            if (serviceType == typeof(EventHandlerFeatureBase<>))
+            {
+                return serviceType.MakeGenericType(interfaceType.GenericTypeArguments.First());
+            }
+            return null;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

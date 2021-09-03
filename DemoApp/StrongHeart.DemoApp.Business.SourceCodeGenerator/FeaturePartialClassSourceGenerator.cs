@@ -23,44 +23,6 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator
             });
         }
 
-        //        public const string C = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
-        //- name: CreateCar
-        //  additionalRequestProperties:
-        //    - Guid Id
-        //  dtoProperties:
-        //    - string Model
-
-        //- name: UpdateCar
-        //  additionalRequestProperties:    
-        //  dtoProperties:
-        //    - Guid Id
-        //    - string Model
-
-        //- name: DeleteCar
-        //  additionalRequestProperties:    
-        //  dtoProperties:
-        //    - Guid Id";
-
-        //        public const string Q = @"- rootNameSpace: StrongHeart.DemoApp.Business.Features
-        //- name: GetCar
-        //  requestProperties:
-        //  responseTypeName: CarDetails
-        //  isListResponse: false
-        //  responseProperties:
-        //    - string Model
-        //    - int Year
-        //    - string Detail1
-        //    - string Detail2    
-
-        //- name: GetCars
-        //  requestProperties:
-        //    - string? Model    
-        //  responseTypeName: Car
-        //  isListResponse: true
-        //  responseProperties:
-        //    - string Model
-        //    - int Year";
-
         public void Execute(GeneratorExecutionContext context)
         {
             //NO OP
