@@ -21,7 +21,7 @@ namespace StrongHeart.DemoApp.WebApi
 
             using (var scope = _serviceProvider.CreateScope())
             {
-                var feature = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<T, DemoAppSpecificMetadata>>();
+                var feature = scope.ServiceProvider.GetRequiredService<IEventHandler<T, DemoAppSpecificMetadata>>();
                 await feature.Execute(new EventMessage<T, DemoAppSpecificMetadata>(metadata, @event));
             }
         }

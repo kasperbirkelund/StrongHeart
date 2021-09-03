@@ -64,10 +64,6 @@ namespace StrongHeart.Features.DependencyInjection
             {
                 return GetDecoratorChain(options.Extensions, x => x.CommandTypeDecorator, serviceType);
             }
-            else if (interfaceType.IsEventHandlerFeatureInterface())
-            {
-                return GetDecoratorChain(options.Extensions, x => x.EventHandlerDecorator, serviceType);
-            }
             else
             {
                 return Empty<Type>();
@@ -130,8 +126,7 @@ namespace StrongHeart.Features.DependencyInjection
         {
             Type parameterType = parameterInfo.ParameterType;
 
-            if (parameterType.IsCommandFeatureInterface() || parameterType.IsQueryFeatureInterface())
-            //if (parameterType.IsFeatureInterface())
+            if (parameterType.IsFeatureInterface())
             {
                 return current;
             }

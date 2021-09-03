@@ -6,6 +6,6 @@ namespace StrongHeart.Features.Decorators
         where TEvent : class, IEvent
         where TMetadata : class, IMetadata
     {
-        IEventHandlerFeature<TEvent, TMetadata> GetInnerFeature();
+        IEventHandler<TEvent, TMetadata> GetInnerFeature();
     }
 }

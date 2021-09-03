@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using StrongHeart.Core.FeatureToggling;
+using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.DemoApp.Business.Features.Commands;
 using StrongHeart.DemoApp.Business.Features.EventHandlers;
+using StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.DemoApp.WebApi.Toggles;
@@ -38,6 +40,7 @@ namespace StrongHeart.DemoApp.WebApi
             services.AddControllers();
             services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
             services.AddSingleton<IEventPublisher, SimpleEventPublisher>();
+            services.AddTransient<IEventHandler<CarCreatedEvent, DemoAppSpecificMetadata>, CarCreatedHandler>();
 
             //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
             services.AddStrongHeart(options =>

@@ -6,11 +6,11 @@ using StrongHeart.Features.Core.Events;
 
 namespace StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated
 {
-    public class CarCreatedFeature : EventHandlerFeatureBase<CarCreatedEvent>
+    public class CarCreatedHandler : EventHandlerFeatureBase<CarCreatedEvent>
     {
         private readonly ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> _feature;
 
-        public CarCreatedFeature(ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> feature)
+        public CarCreatedHandler(ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> feature)
         {
             _feature = feature;
         }

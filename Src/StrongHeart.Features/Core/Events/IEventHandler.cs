@@ -2,7 +2,7 @@
 
 namespace StrongHeart.Features.Core.Events
 {
-    public interface IEventHandlerFeature<TEvent, TMetadata>
+    public interface IEventHandler<TEvent, TMetadata>
         where TEvent : class, IEvent
         where TMetadata : class, IMetadata
     {

@@ -8,6 +8,7 @@ using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.DemoApp.Business.Features.Commands.NewCarCustomerNotification;
 using StrongHeart.DemoApp.Business.Features.EventHandlers;
+using StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Core.Events;
@@ -65,10 +66,11 @@ namespace StrongHeart.DemoApp.Business.Tests
             services.AddStrongHeart(_ => { }, null, assembly);
             services.AddTransient<IFoo, Foo>();
             services.AddSingleton<IEventPublisher, DummyEventPublisher>();
+            services.AddTransient<IEventHandler<CarCreatedEvent, DemoAppSpecificMetadata>, CarCreatedHandler>();
 
             var sp = services.BuildServiceProvider();
             using var scope = sp.CreateScope();
-            var feature = scope.ServiceProvider.GetRequiredService<IEventHandlerFeature<CarCreatedEvent, DemoAppSpecificMetadata>>();
+            var feature = scope.ServiceProvider.GetRequiredService<IEventHandler<CarCreatedEvent, DemoAppSpecificMetadata>>();
             var f2 = scope.ServiceProvider.GetRequiredService<ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto>>();
                                                               
             Assert.NotNull(feature);

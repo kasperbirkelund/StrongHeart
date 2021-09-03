@@ -53,7 +53,7 @@ namespace StrongHeart.DemoApp.WebApi.Tests
             {
                 HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
                 HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.Accepted, actual);
+                Assert.Equal(HttpStatusCode.OK, actual);
             }
         }
 
