@@ -11,8 +11,6 @@ using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.Business.Features.Commands.DeleteCar;
 using StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
 using StrongHeart.Features.AspNetCore;
-using StrongHeart.Features.Documentation;
-using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
 {
