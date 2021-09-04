@@ -6,6 +6,6 @@ namespace StrongHeart.Features.Core.Events
         where TEvent : class, IEvent
         where TMetadata : class, IMetadata
     {
-        Task Execute(EventMessage<TEvent, TMetadata> @event);
+        Task Execute(EventMessage<TEvent, TMetadata> evt);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace StrongHeart.DemoApp.WebApi.Services
+namespace StrongHeart.Core.Security
 {
     public interface IClaimsProvider
     {

@@ -1,6 +1,7 @@
-﻿using StrongHeart.Features.Core.Events;
+﻿using System;
+using StrongHeart.Features.Core.Events;
 
 namespace StrongHeart.DemoApp.Business.Events
 {
-    public record CarCreatedEvent() : IEvent;
+    public record CarCreatedEvent(Guid Id) : IEvent;
 }

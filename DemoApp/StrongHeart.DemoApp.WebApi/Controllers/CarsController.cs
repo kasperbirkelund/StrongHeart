@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using StrongHeart.DemoApp.Business.Features.Commands.CreateCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
-using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.Features.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.Business.Features.Commands.DeleteCar;
 using StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
 using StrongHeart.Features.AspNetCore;
@@ -21,9 +21,9 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
     //DOC-START Make your controller inherit base class
     public class CarsController : ApiBase
     //DOC-END
-        , IDocumentationDescriber
+//        , IDocumentationDescriber
     {
-        public CarsController(IClaimsProvider claimsProvider) : base(claimsProvider)
+        public CarsController(ICallerProvider callerProvider) : base(callerProvider)
         {
         }
 
@@ -86,13 +86,13 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         }
         //DOC-END
 
-        public override string? DocName => DocumentationConstants.Setup;
-        public override int? Order => 3;
+        //public override string? DocName => DocumentationConstants.Setup;
+        //public override int? Order => 3;
 
         //Explicit impl of interface to ensure that unit tests validates public api class correctly.
-        IEnumerable<ISection> IDocumentationDescriber.GetDocumentationSections(DocumentationGenerationContext context)
-        {
-            yield return new CodeCommentSection(GetType());
-        }
+        //IEnumerable<ISection> IDocumentationDescriber.GetDocumentationSections(DocumentationGenerationContext context)
+        //{
+        //    yield return new CodeCommentSection(GetType());
+        //}
     }
 }
