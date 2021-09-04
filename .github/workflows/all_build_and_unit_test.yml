@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.yml'
+      - '**/*.cmd'
+      - '**/*.cake'
+      - '**/*.json'
+      - '**/*.archimate'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'      
+    branches:    
+      - master
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'release/**'
+
+env:  
+    
+  Sha: ${{ github.sha }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest 
+    
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.203    
+    
+    - name: Run CI Build via Cake
+      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target CiBuild
