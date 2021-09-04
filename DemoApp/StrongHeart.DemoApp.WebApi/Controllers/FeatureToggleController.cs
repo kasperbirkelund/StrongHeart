@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StrongHeart.Core.FeatureToggling;
 using StrongHeart.Core.Security;
-using StrongHeart.DemoApp.WebApi.Services;
 using StrongHeart.DemoApp.WebApi.Toggles;
 
 namespace StrongHeart.DemoApp.WebApi.Controllers
@@ -11,7 +10,9 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
 
     public class FeatureToggleController : ApiBase
     {
-        
+        public FeatureToggleController(ICallerProvider callerProvider) : base(callerProvider)
+        {
+        }
 
         [HttpGet]
         public IActionResult GetToggledValue([FromServices] IFeatureToggle<MyToggle> toggle)
@@ -22,10 +23,6 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
             }
 
             return NotFound("Toggle is disabled");
-        }
-
-        public FeatureToggleController(ICallerProvider callerProvider) : base(callerProvider)
-        {
         }
     }
 }
