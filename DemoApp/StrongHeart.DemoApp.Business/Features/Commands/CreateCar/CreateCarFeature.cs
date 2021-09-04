@@ -26,7 +26,7 @@ namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar
                 SendGift();
             }
             //DOC-END
-            await _eventPublisher.Publish(new CarCreatedEvent());
+            await _eventPublisher.Publish(new CarCreatedEvent(request.Id));
             return Result.Success();
         }
 
