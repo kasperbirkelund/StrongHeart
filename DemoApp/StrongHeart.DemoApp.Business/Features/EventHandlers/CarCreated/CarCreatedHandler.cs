@@ -7,7 +7,7 @@ using StrongHeart.Features.Core.Events;
 
 namespace StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated
 {
-    public class CarCreatedHandler : EventHandlerFeatureBase<CarCreatedEvent>
+    public class CarCreatedHandler : EventHandlerBase<CarCreatedEvent>
     {
         private readonly ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> _feature;
         private readonly ICallerProvider _callerProvider;

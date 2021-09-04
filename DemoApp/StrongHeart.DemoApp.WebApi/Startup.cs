@@ -37,8 +37,8 @@ namespace StrongHeart.DemoApp.WebApi
         {
             services.AddTransient<IFoo, Foo>();
             services.AddTransient<IConfigurationReader, ConfigurationReaderImpl>();
-            services.AddTransient<IClaimsProvider, MyCustomClaimsProvider>();
-            services.AddTransient<ICallerProvider, WebApiCallerProvider>();
+            services.AddScoped<IClaimsProvider, MyCustomClaimsProvider>();
+            services.AddScoped<ICallerProvider, WebApiCallerProvider>();
             services.AddHttpContextAccessor();
             services.AddControllers();
             services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
