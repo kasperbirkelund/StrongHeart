@@ -84,6 +84,15 @@ namespace StrongHeart.TestTools.Xunit
         }
 
         [Fact]
+        public virtual void EventHandlersMustDependOnACommandFeature()
+        {
+            VerifyThat
+                .AllTypesFromAssemblies(GetFeatureAssemblies())
+                .DoesComplyToRule(new EventHandlersMustDependOnACommandFeatureRule())
+                .Print(s => _helper.WriteLine(s));
+        }
+
+        [Fact]
         public virtual void SingleItemResponseShouldBeImmutable()
         {
             VerifyThat

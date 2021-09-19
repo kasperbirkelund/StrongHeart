@@ -34,15 +34,15 @@ namespace StrongHeart.Features.AspNetCore
             };
         }
 
-        protected virtual ActionResult<TValue> FromResultQuery<T, TValue>(Result<T> result, Func<T, TValue> selector, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
+        protected virtual ActionResult<TValue> FromResultQuery<T, TValue>(Result<T> result, Func<T, TValue?> selector, HttpStatusCode serverErrorStatusCode = DefaultServerErrorStatusCode, HttpStatusCode clientErrorStatusCode = DefaultClientErrorStatusCode)
         {
             return result.Status switch
             {
-                ResultType.ExecutedSuccessfully => Ok(selector(result.Value)),
+                ResultType.ExecutedSuccessfully => selector(result.Value) == null ? NotFound() : Ok(selector(result.Value)),
                 ResultType.QueuedForLaterExecution => Accepted(selector(result.Value)),
                 ResultType.ClientError => StatusCode((int)clientErrorStatusCode, result.Error),
                 ResultType.ServerError => StatusCode((int)serverErrorStatusCode, "Internal server error"),
-                _ => Ok()
+                _ => Ok(selector(result.Value))
             };
         }
     }

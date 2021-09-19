@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using StrongHeart.Features.Core;
+using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 namespace StrongHeart.Features
@@ -63,7 +64,7 @@ namespace StrongHeart.Features
         /// </summary>
         public static bool IsCommandFeatureInterface(this Type type)
         {
-            return IsFeatureInterface(type, typeof(ICommandFeature<,>));
+            return IsInterface(type, typeof(ICommandFeature<,>));
         }
 
         /// <summary>
@@ -71,7 +72,12 @@ namespace StrongHeart.Features
         /// </summary>
         public static bool IsQueryFeatureInterface(this Type type)
         {
-            return IsFeatureInterface (type, typeof(IQueryFeature<,>));
+            return IsInterface(type, typeof(IQueryFeature<,>));
+        }
+
+        public static bool IsEventHandlerInterface(this Type type)
+        {
+            return IsInterface(type, typeof(IEventHandler<,>));
         }
 
         public static bool IsFeatureClass(this Type type)
@@ -84,7 +90,7 @@ namespace StrongHeart.Features
             return IsFeatureClassAlgorithm.IsFeatureDecorator(type);
         }
 
-        private static bool IsFeatureInterface(Type type, Type interfaceType)
+        private static bool IsInterface(Type type, Type interfaceType)
         {
             if (!type.IsGenericType || !type.IsInterface)
             {

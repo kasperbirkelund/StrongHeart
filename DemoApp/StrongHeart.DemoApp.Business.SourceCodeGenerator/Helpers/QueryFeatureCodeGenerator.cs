@@ -54,7 +54,7 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
         {
             return response.IsListResponse ?
                 $"ICollection<{response.ResponseTypeName}> Items" :
-                $"{response.ResponseTypeName} Item";
+                $"{response.ResponseTypeName}? Item";
         }
 
         private static string GetRequestParameters(QueryRequest request)

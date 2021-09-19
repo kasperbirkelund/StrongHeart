@@ -1,6 +1,7 @@
 ﻿- rootNameSpace: StrongHeart.DemoApp.Business.Features
 - name: GetCar
   requestProperties:
+    - int Id
   responseTypeName: CarDetails
   isListResponse: false
   responseProperties:

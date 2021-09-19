@@ -30,7 +30,7 @@ namespace StrongHeart.DemoApp.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<CarDetails>> GetCar([FromServices] IQueryFeature<GetCarRequest, GetCarResponse> feature, int id)
         {
-            GetCarRequest request = new(GetCaller());
+            GetCarRequest request = new(id, GetCaller());
             Result<GetCarResponse> result = await feature.Execute(request);
             return FromResultQuery(result, x => x.Item);
         }
