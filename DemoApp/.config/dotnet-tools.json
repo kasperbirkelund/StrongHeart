@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "strongheart.featuretool": {
+      "version": "1.0.5",
+      "commands": [
+        "AddFeature"
+      ]
+    }
+  }
+}
