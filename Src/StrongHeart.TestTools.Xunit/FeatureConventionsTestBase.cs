@@ -83,7 +83,7 @@ namespace StrongHeart.TestTools.Xunit
                 .Print(s => _helper.WriteLine(s));
         }
 
-        [Fact]
+        [Fact(Skip = "Not complete")]
         public virtual void EventHandlersMustDependOnACommandFeature()
         {
             VerifyThat
