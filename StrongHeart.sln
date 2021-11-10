@@ -45,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Docume
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Documentation", "Src\StrongHeart.Features.Documentation\StrongHeart.Features.Documentation.csproj", "{18197785-B468-47E7-AF69-812FA3AD82F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business.Events", "DemoApp\StrongHeart.DemoApp.Business.Events\StrongHeart.DemoApp.Business.Events.csproj", "{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.Events", "DemoApp\StrongHeart.DemoApp.Business.Events\StrongHeart.DemoApp.Business.Events.csproj", "{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.FeatureTool", "Src\StrongHeart.FeatureTool\StrongHeart.FeatureTool.csproj", "{FC46C947-9AA1-4561-8C9A-35376630F948}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,6 +287,18 @@ Global
 		{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2}.Release|x64.Build.0 = Release|Any CPU
 		{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2}.Release|x86.Build.0 = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|x64.Build.0 = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC46C947-9AA1-4561-8C9A-35376630F948}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -309,6 +323,7 @@ Global
 		{2C9BC3BE-1E82-432F-9F1D-0CF555B2FF42} = {4B36214E-417D-486F-A70E-C410A8F50059}
 		{18197785-B468-47E7-AF69-812FA3AD82F4} = {4B36214E-417D-486F-A70E-C410A8F50059}
 		{2DB5CFB2-9659-443D-9C10-F0B452D0B0E2} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
+		{FC46C947-9AA1-4561-8C9A-35376630F948} = {4B36214E-417D-486F-A70E-C410A8F50059}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {215278D2-4A2E-4724-9477-824B44D802AE}
