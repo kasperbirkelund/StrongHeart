@@ -35,4 +35,4 @@ jobs:
         dotnet-version: 5.0.203    
     
     - name: Run CI Build via Cake
-      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target CiBuild
+      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target BuildStrongHeart
