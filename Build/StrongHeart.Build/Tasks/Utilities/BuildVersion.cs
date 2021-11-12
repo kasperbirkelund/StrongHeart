@@ -1,3 +1,4 @@
+using Cake.Common.Build;
 using Cake.Common.Tools.GitVersion;
 using Cake.Core;
 
@@ -26,11 +27,16 @@ namespace StrongHeart.Build.Tasks.Utilities
 
         public static BuildVersion Calculate(ICakeContext context)
         {
-            GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
+            if (context.BuildSystem().IsLocalBuild)
             {
-                //OutputType = GitVersionOutput.Json
-            });
-            return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer, assertedVersions.Sha);
+                GitVersion assertedVersions = context.GitVersion(new GitVersionSettings
+                {
+                    //OutputType = GitVersionOutput.Json
+                });
+                return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer,
+                    assertedVersions.Sha);
+            }
+            else return new BuildVersion("0.9.0.0", "0.9.0.0", "no-sha-available");
         }
 
         public override string ToString()

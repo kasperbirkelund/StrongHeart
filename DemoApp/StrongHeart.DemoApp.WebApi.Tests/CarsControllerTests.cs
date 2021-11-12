@@ -24,13 +24,26 @@ namespace StrongHeart.DemoApp.WebApi.Tests
         }
 
         [Fact]
-        public async Task GetCar()
+        public async Task GetCar_Found()
         {
             using (HttpClient client = _factory.CreateClient())
             {
-                Car result = await client.GetFromJsonAsync<Car>("/Cars/242");
+                Car result = await client.GetFromJsonAsync<Car>("/Cars/242"); //any positive number returns a result
                 Assert.NotNull(result);
                 Assert.Equal("Renault", result.Model);
+            }
+        }
+
+        [Fact]
+        public async Task GetCar_NotFound()
+        {
+            using (HttpClient client = _factory.CreateClient())
+            {
+                Task<HttpResponseMessage> taskResponse = client.GetAsync("/Cars/-1", HttpCompletionOption.ResponseHeadersRead);
+                using (HttpResponseMessage response = await taskResponse.ConfigureAwait(false))
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+                }
             }
         }
 

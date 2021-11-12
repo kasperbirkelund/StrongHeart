@@ -123,13 +123,7 @@ namespace StrongHeart.Features.DependencyInjection
                 return current;
             }
 
-            object service = provider.GetService(parameterType);
-            if (service != null)
-            {
-                return service;
-            }
-
-            throw new ArgumentException($"Type {parameterType} not found");
+            return provider.GetRequiredService(parameterType);
         }
 
         private static IEnumerable<Type> GetDecorators(Type serviceType)

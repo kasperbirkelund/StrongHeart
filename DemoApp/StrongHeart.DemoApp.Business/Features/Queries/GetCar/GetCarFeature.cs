@@ -18,7 +18,11 @@ namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar
         public override Task<Result<GetCarResponse>> Execute(GetCarRequest request)
         {
             _foo.DoWork(request.Caller);
-            CarDetails item = new("Renault", 2012, "whatever", "whatever");
+            CarDetails? item = null;
+            if (request.Id > 0)
+            {
+                item = new("Renault", 2012, "whatever", "whatever");
+            }
             return Task.FromResult(Result<GetCarResponse>.Success(new GetCarResponse(item)));
         }
 
