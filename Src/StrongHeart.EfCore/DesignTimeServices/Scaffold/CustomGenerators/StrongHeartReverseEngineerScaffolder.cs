@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 1591
+#pragma warning disable EF1001
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,6 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using StrongHeart.EfCore.DesignTimeServices.Scaffold.Roslyn;
 using StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder;
 
@@ -14,7 +14,7 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
 {
     public class StrongHeartReverseEngineerScaffolder : ReverseEngineerScaffolder
     {
-        public StrongHeartReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory, IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector, ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper, INamedConnectionStringResolver connectionStringResolver, IOperationReporter reporter, ApplicationSpecificOptions applicationSpecificOptions) 
+        public StrongHeartReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory, IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector, ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper, IDesignTimeConnectionStringResolver connectionStringResolver, IOperationReporter reporter, string? rootNamespace, string? contextName, ApplicationSpecificOptions applicationSpecificOptions) 
             : base(databaseModelFactory, scaffoldingModelFactory, modelCodeGeneratorSelector, cSharpUtilities, cSharpHelper, connectionStringResolver, reporter)
         {
             ApplicationSpecificOptions = applicationSpecificOptions;
@@ -88,3 +88,4 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
     }
 }
 #pragma warning restore 1591
+#pragma warning restore EF1001
