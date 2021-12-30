@@ -14,10 +14,12 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
         {
         }
 
-        public override string WriteCode(IModel model, string contextName, string connectionString, string contextNamespace,
-            string modelNamespace, bool useDataAnnotations, bool suppressConnectionStringWarning, bool suppressOnConfiguring)
+        public override string WriteCode(IModel model, string contextName, string connectionString, string? contextNamespace,
+            string? modelNamespace, bool useDataAnnotations, bool useNullableReferenceTypes,
+            bool suppressConnectionStringWarning, bool suppressOnConfiguring)
         {
-            string code = base.WriteCode(model, contextName, connectionString, contextNamespace, modelNamespace, useDataAnnotations, suppressConnectionStringWarning, suppressOnConfiguring);
+            string code = base.WriteCode(model, contextName, connectionString, contextNamespace, modelNamespace, useDataAnnotations, useNullableReferenceTypes, suppressConnectionStringWarning, suppressOnConfiguring);
+
             //string usingPrefix = "using Xxx;" + Environment.NewLine;
             const string parameterlessConstructor = @"public MyDbContext()
         {
