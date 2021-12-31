@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=.\sqlexpress;Database=dbname;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir DataModels -force -DataAnnotations -Context MyDemoContext -Project StrongHeart.DempApp.EfCoreConsole -UseDatabaseNames

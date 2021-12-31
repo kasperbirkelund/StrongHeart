@@ -10,7 +10,8 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
     /// </summary>
     public class StrongHeartDbContextGenerator : CSharpDbContextGenerator
     {
-        public StrongHeartDbContextGenerator(IProviderConfigurationCodeGenerator providerConfigurationCodeGenerator, IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper) : base(providerConfigurationCodeGenerator, annotationCodeGenerator, cSharpHelper)
+        public StrongHeartDbContextGenerator(IProviderConfigurationCodeGenerator providerConfigurationCodeGenerator, IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper) 
+            : base(providerConfigurationCodeGenerator, annotationCodeGenerator, cSharpHelper)
         {
         }
 

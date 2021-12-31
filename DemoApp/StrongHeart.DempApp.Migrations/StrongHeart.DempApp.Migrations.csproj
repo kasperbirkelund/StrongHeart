@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Schema\dbo\Store\**" />
+    <EmbeddedResource Remove="Schema\dbo\Store\**" />
+    <None Remove="Schema\dbo\Store\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Schema\dbo\Functions\DemoFunction.sql" />
+    <None Remove="Schema\dbo\StoredProcedures\DemoStoredProc.sql" />
+    <None Remove="Schema\dbo\Views\DemoView.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Schema\dbo\Functions\DemoFunction.sql" />
+    <EmbeddedResource Include="Schema\dbo\StoredProcedures\DemoStoredProc.sql" />
+    <EmbeddedResource Include="Schema\dbo\Views\DemoView.sql" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentMigrator" Version="3.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj" />
+	</ItemGroup>
+</Project>

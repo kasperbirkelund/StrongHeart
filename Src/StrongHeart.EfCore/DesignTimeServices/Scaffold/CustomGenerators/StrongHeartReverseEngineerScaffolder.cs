@@ -14,8 +14,7 @@ namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
 {
     public class StrongHeartReverseEngineerScaffolder : ReverseEngineerScaffolder
     {
-        public StrongHeartReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory, IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector, ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper, IDesignTimeConnectionStringResolver connectionStringResolver, IOperationReporter reporter, string? rootNamespace, string? contextName, ApplicationSpecificOptions applicationSpecificOptions) 
-            : base(databaseModelFactory, scaffoldingModelFactory, modelCodeGeneratorSelector, cSharpUtilities, cSharpHelper, connectionStringResolver, reporter)
+        public StrongHeartReverseEngineerScaffolder(IDatabaseModelFactory databaseModelFactory, IScaffoldingModelFactory scaffoldingModelFactory, IModelCodeGeneratorSelector modelCodeGeneratorSelector, ICSharpUtilities cSharpUtilities, ICSharpHelper cSharpHelper, IDesignTimeConnectionStringResolver connectionStringResolver, IOperationReporter reporter, ApplicationSpecificOptions applicationSpecificOptions) : base(databaseModelFactory, scaffoldingModelFactory, modelCodeGeneratorSelector, cSharpUtilities, cSharpHelper, connectionStringResolver, reporter)
         {
             ApplicationSpecificOptions = applicationSpecificOptions;
         }

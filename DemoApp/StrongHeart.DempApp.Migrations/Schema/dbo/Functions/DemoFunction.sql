@@ -1,0 +1,7 @@
+﻿CREATE OR ALTER FUNCTION [dbo].DemoFunction (@InputNumber INT)
+RETURNS INT
+AS
+BEGIN
+	RETURN 4 * @InputNumber
+END
+GO
