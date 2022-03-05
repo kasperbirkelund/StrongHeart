@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StrongHeart.EfCore;
-using StrongHeart.DempApp.EfCoreConsole.DataModels.ReadModels;
 using StrongHeart.DempApp.EfCoreConsole.DataModels.WriteModels;
 using StrongHeart.DempApp.EfCoreConsole.DataModels.Context;
 using System;
