@@ -60,7 +60,7 @@ namespace StrongHeart.Features.Core
         }
     }
 
-    public class Result : IResult
+    public class Result : IResult, IRequestDto
     {
         public bool IsFailure => Status == ResultType.ClientError || Status == ResultType.ServerError;
         public bool IsSuccess => !IsFailure;

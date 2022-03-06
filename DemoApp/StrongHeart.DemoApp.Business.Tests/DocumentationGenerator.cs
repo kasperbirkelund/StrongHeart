@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.DemoApp.Business.Features;
-using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
@@ -15,7 +14,7 @@ using Xunit.Abstractions;
 
 namespace StrongHeart.DemoApp.Business.Tests
 {
-    public class DummyEventPublisher : IEventPublisher
+    internal class DummyEventPublisher : IEventPublisher
     {
         public Task Publish<T>(T evt) where T : class, IEvent
         {
