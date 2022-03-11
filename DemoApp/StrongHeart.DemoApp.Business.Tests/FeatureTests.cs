@@ -16,7 +16,7 @@ public class FeatureTests
         services.AddSingleton<IEventPublisher, DummyEventPublisher>();
         services.AddTransient<IFoo, Foo>();
 
-        using (var executor = TestExecutor.Create(services))
+        using (ITestExecutor executor = TestExecutorFactory.Create(services))
         {
             //await executor.RunCommand<CreateCarRequest, CreateCarDto>(new CreateCarRequest(Guid.NewGuid(), new CreateCarDto("Skoda"), new TestAdminCaller()));
             await executor.RunQuery<GetCarRequest, GetCarResponse>(new GetCarRequest(1, new TestAdminCaller()));
