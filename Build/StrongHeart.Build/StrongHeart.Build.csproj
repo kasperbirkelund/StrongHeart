@@ -6,8 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Cake.Core" Version="2.1.0" />
     <PackageReference Include="Cake.Curl" Version="4.1.0" />
     <PackageReference Include="Cake.Frosting" Version="1.1.0" />
+    <PackageReference Include="Cake.Git" Version="2.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 </Project>

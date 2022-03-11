@@ -262,3 +262,5 @@ __pycache__/
 /out/Absence
 /out
 /.cakeTools
+/.cakework
+/report.xml
