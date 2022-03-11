@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.DemoApp.Business.Features;
@@ -14,14 +13,6 @@ using Xunit.Abstractions;
 
 namespace StrongHeart.DemoApp.Business.Tests
 {
-    internal class DummyEventPublisher : IEventPublisher
-    {
-        public Task Publish<T>(T evt) where T : class, IEvent
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class DocumentationGenerator
     {
         private readonly ITestOutputHelper _helper;
