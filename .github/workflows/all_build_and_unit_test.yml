@@ -35,3 +35,6 @@ jobs:
     
     - name: Run CI Build via Cake
       run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target BuildStrongHeart
+
+    - name: Ensure solid metrics
+      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target CalculateMetrics
