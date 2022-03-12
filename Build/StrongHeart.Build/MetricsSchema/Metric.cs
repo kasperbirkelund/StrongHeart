@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace StrongHeart.Build.Metrics
+namespace StrongHeart.Build.MetricsSchema
 {
     public class Metric
     {
