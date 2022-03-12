@@ -40,7 +40,7 @@ public class CalculateMetrics : FrostingTask<StrongHeartBuildContext>
         context.StartProcess(metricsExe, @"/solution:.\StrongHeart.sln /out:report.xml");
         
         IEnumerable<MetricResult> metrics = GetMetrics(reportPath);
-        const int maxAllowedCyclomaticComplexity = 10;
+        const int maxAllowedCyclomaticComplexity = 15; //consider this number to be lower
 
         List<MetricResult> res = metrics
             .Where(x=> x.CyclomaticComplexity > maxAllowedCyclomaticComplexity)
