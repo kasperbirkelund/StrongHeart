@@ -13,7 +13,6 @@ using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.IO.Arguments;
 using Cake.Frosting;
-using Cake.Git;
 using StrongHeart.Build.Metrics;
 
 namespace StrongHeart.Build.Tasks;
@@ -31,7 +30,7 @@ public class CalculateMetrics : FrostingTask<StrongHeartBuildContext>
 
         if (restoreFile is null)
         {
-            context.StartProcess("git", "clone --depth=1 https://github.com/dotnet/roslyn-analyzers.git");
+            context.StartProcess("git", "clone --depth=1 https://github.com/dotnet/roslyn-analyzers.git roslyn");
             //context.GitClone("https://github.com/dotnet/roslyn-analyzers.git", roslynDir);
 
             FilePath restore = GetRestoreFile(roslynDir, context)!.Path;
