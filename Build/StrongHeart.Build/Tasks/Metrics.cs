@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Cake.Common;
@@ -101,6 +102,14 @@ public class CalculateMetrics : FrostingTask<StrongHeartBuildContext>
 
     private IFile? GetRestoreFile(DirectoryPath roslynDir, StrongHeartBuildContext context)
     {
-        return context.FileSystem.GetDirectory(roslynDir).GetFiles("Restore.cmd", SearchScope.Current).FirstOrDefault();
+        try
+        {
+            return context.FileSystem.GetDirectory(roslynDir).GetFiles("Restore.cmd", SearchScope.Current)
+                .FirstOrDefault();
+        }
+        catch(DirectoryNotFoundException)
+        {
+            return null;
+        }
     }
 }
