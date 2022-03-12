@@ -2,8 +2,8 @@ using Cake.Frosting;
 
 namespace StrongHeart.Build.Tasks
 {
-    [Dependency(typeof(UnitTests))]
-    [Dependency(typeof(UnitTestsDemoApp))]
+    [IsDependentOn(typeof(UnitTests))]
+    [IsDependentOn(typeof(UnitTestsDemoApp))]
     public class CiBuild : FrostingTask
     {
     }

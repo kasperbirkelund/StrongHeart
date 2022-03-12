@@ -1,11 +1,11 @@
 ﻿using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNet;
 using Cake.Frosting;
 using StrongHeart.Build.Tasks.Utilities;
 
 namespace StrongHeart.Build.Tasks
 {
-    [Dependency(typeof(CiBuild))]
+    [IsDependentOn(typeof(CiBuild))]
     public class PackNuget : FrostingTask<StrongHeartBuildContext>
     {
         public override void Run(StrongHeartBuildContext context)
@@ -27,7 +27,7 @@ namespace StrongHeart.Build.Tasks
 
             foreach (string project in projectsToNugetPack)
             {
-                context.DotNetCorePack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
+                context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
             }
         }
     }

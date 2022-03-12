@@ -20,7 +20,7 @@ namespace StrongHeart.Features.Test.Decorators.ExceptionLogger
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
                 Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-                func.Should().Throw<DivideByZeroException>();
+                func.Should().ThrowAsync<DivideByZeroException>();
 
                 ExceptionLoggerSpy spy = (ExceptionLoggerSpy) scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
                 spy!.Exceptions.Count.Should().Be(1);
