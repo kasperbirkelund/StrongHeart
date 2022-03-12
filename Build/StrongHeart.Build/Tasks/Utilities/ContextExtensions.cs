@@ -1,7 +1,7 @@
 using System;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Common.Tools.DotNetCore.MSBuild;
 using Cake.Common.Tools.DotNetCore.NuGet.Push;
@@ -15,7 +15,7 @@ namespace StrongHeart.Build.Tasks.Utilities
     public record NugetSourceInfo(string? ApiKey, string Source);
     public static class ContextExtensions
     {
-        private const DotNetCoreVerbosity Verbosity = DotNetCoreVerbosity.Quiet;
+        private static readonly DotNetVerbosity? CakeVerbosity = DotNetVerbosity.Quiet;
 
         public static DotNetCoreNuGetPushSettings GetDotNetCoreNuGetPushSettings(this FrostingContext context)
         {
@@ -49,7 +49,7 @@ namespace StrongHeart.Build.Tasks.Utilities
                 Configuration = context.BuildConfiguration,
                 NoLogo = true,
                 NoBuild = true,
-                Verbosity = Verbosity,
+                Verbosity = CakeVerbosity,
                 ArgumentCustomization = builder =>
                 {
                     builder.Append($"/p:Version={version.AssemblySemVer}");
@@ -66,7 +66,7 @@ namespace StrongHeart.Build.Tasks.Utilities
                 NoBuild = true,
                 NoRestore = true,
                 NoLogo = true,
-                Verbosity = Verbosity,
+                Verbosity = CakeVerbosity,
             };
         }
 
@@ -78,7 +78,7 @@ namespace StrongHeart.Build.Tasks.Utilities
                 Configuration = context.BuildConfiguration,
                 NoRestore = false,
                 NoLogo = true,
-                Verbosity = Verbosity,
+                Verbosity = CakeVerbosity,
                 MSBuildSettings = GetDotNetCoreMsBuildSettings(context)
             };
             overwrite?.Invoke(settings);

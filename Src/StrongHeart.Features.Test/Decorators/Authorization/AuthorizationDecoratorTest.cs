@@ -20,7 +20,7 @@ namespace StrongHeart.Features.Test.Decorators.Authorization
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
                 Func<Task> func = async () => await sut.Execute(new TestQueryRequest(new TestCustomCaller( /*no custom roles*/)));
-                func.Should().Throw<UnauthorizedAccessException>();
+                func.Should().ThrowAsync<UnauthorizedAccessException>();
             }
         }
 

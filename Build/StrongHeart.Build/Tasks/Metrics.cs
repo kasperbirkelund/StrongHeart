@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNetCore.Build;
 using Cake.Core;
 using Cake.Core.IO;
@@ -92,7 +92,7 @@ public class CalculateMetrics : FrostingTask<StrongHeartBuildContext>
 
         //Step 3
         var metricsFolder = roslynDir.Combine(new DirectoryPath(@"src\Tools\Metrics"));
-        context.DotNetCoreBuild(metricsFolder + "/Metrics.csproj", new DotNetCoreBuildSettings()
+        context.DotNetBuild(metricsFolder + "/Metrics.csproj", new DotNetCoreBuildSettings()
         {
             ArgumentCustomization = delegate(ProcessArgumentBuilder builder)
             {
