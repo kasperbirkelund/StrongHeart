@@ -1,3 +1,4 @@
+using System;
 using Cake.Common.Build;
 using Cake.Common.Tools.GitVersion;
 using Cake.Core;
@@ -33,10 +34,13 @@ namespace StrongHeart.Build.Tasks.Utilities
                 {
                     //OutputType = GitVersionOutput.Json
                 });
-                return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer,
-                    assertedVersions.Sha);
+                return new BuildVersion(assertedVersions.AssemblySemVer, assertedVersions.FullSemVer, assertedVersions.Sha);
             }
-            else return new BuildVersion("0.9.0.0", "0.9.0.0", "no-sha-available");
+            else if (context.BuildSystem().IsRunningOnGitHubActions)
+            {
+                return new BuildVersion("0.9.0.0", "0.9.0.0", context.BuildSystem().GitHubActions.Environment.Workflow.Sha);
+            }
+            throw new NotSupportedException();
         }
 
         public override string ToString()
