@@ -31,7 +31,8 @@ public class CalculateMetrics : FrostingTask<StrongHeartBuildContext>
 
         if (restoreFile is null)
         {
-            context.GitClone("https://github.com/dotnet/roslyn-analyzers.git", roslynDir);
+            context.StartProcess("git", "clone --depth=1 https://github.com/dotnet/roslyn-analyzers.git");
+            //context.GitClone("https://github.com/dotnet/roslyn-analyzers.git", roslynDir);
 
             FilePath restore = GetRestoreFile(roslynDir, context)!.Path;
             using (IProcess process = context.StartAndReturnProcess(restore))
