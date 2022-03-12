@@ -40,7 +40,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
                 result.IsFailure.Should().BeTrue();
                 result.Status.Should().Be(ResultType.ClientError);
                 result.Error.Should().Be(@"Validation messages: 
-- 'Model Age' skal være større end '0'.
+- 'Model Age' must be greater than '0'.
 - Only year after 2000 is allowed");
             }
         }
