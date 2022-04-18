@@ -11,10 +11,10 @@ dotnet addfeature "StrongHeart.DemoApp.Business" Commands DoStuff
 dotnet pack /p:Version=1.0.6
 
 
-dotnet addfeature "StrongHeart.DemoApp.Business" Commands DoStuff
-dotnet addfeature "StrongHeart.DemoApp.Business" Queries GetStuff1
-dotnet addfeature "StrongHeart.DemoApp.Business" Queries GetStuff2 true
-dotnet addfeature "StrongHeart.DemoApp.Business" Queries GetStuff3 false
+dotnet Addfeature "StrongHeart.DemoApp.Business" Commands DoStuff
+dotnet Addfeature "StrongHeart.DemoApp.Business" Queries GetStuff1
+dotnet Addfeature "StrongHeart.DemoApp.Business" Queries GetStuff2 true
+dotnet Addfeature "StrongHeart.DemoApp.Business" Queries GetStuff3 false
 
 
 dotnet run -- "StrongHeart.DemoApp.Business" Commands DoStuff
