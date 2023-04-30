@@ -26,7 +26,7 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
 
         public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
         {
-            return request => FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
+            return request => FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().ValidateAsync(request));
         }
 
         public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)

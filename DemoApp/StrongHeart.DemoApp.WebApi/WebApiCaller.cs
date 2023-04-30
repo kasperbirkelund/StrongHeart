@@ -15,7 +15,7 @@ namespace StrongHeart.DemoApp.WebApi
             _claims = claims;
         }
 
-        public Guid Id => Guid.Empty; //TODO: insert a unique proper static guid
+        public Guid Id => Guid.Parse("2BF5FDDF-E94F-429A-9888-76E1F282820A");
         public IReadOnlyList<Claim> Claims => _claims.ToList();
     }
 }
