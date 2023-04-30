@@ -21,7 +21,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Comman
 
         public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
         {
-            return request => FluentValidationMapper.Map(_validator.Validate(request));
+            return request => FluentValidationMapper.Map(_validator.ValidateAsync(request));
         }
     }
 }
