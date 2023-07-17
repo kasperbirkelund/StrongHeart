@@ -29,7 +29,7 @@ namespace StrongHeart.FeatureTool
             {
                 "Commands" => GetCommand(project, name),
                 "Queries" => GetQuery(project, name, isList),
-                _ => null
+                _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'");
             };
 
             File.WriteAllText(fullPath, content);
@@ -49,7 +49,7 @@ namespace {project}.Features.Commands.{commandName}
     public record {commandName}Dto() : IRequestDto;
     public record {commandName}Request(ICaller Caller, {commandName}Dto Model) : IRequest<{commandName}Dto>;
     
-    public class {commandName}Feature : ICommandFeature<{commandName}Request, {commandName}Dto>
+    public partial class {commandName}Feature : ICommandFeature<{commandName}Request, {commandName}Dto>
     {{
         public Task<Result> Execute({commandName}Request request)
         {{
@@ -74,7 +74,7 @@ namespace {project}.Features.Queries.{queryName}
     public record {queryName}();
     {GetResponseClass(queryName, isList)}
 
-    public class {queryName}Feature : IQueryFeature<{queryName}Request, {queryName}Response>
+    public partial class {queryName}Feature : IQueryFeature<{queryName}Request, {queryName}Response>
     {{
         public Task<Result<{queryName}Response>> Execute({queryName}Request request)
         {{
@@ -104,7 +104,7 @@ namespace {project}.Features.Queries.{queryName}
         {
             if (isList)
             {
-                return @$"public class {queryName}Response : IGetListResponse<{queryName}>
+                return @$"public partial class {queryName}Response : IGetListResponse<{queryName}>
     {{
         public {queryName}Response(ICollection<{queryName}> items)
         {{
