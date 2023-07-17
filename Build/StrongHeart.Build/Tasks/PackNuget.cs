@@ -22,7 +22,8 @@ namespace StrongHeart.Build.Tasks
                 "StrongHeart.EfCore",
                 "StrongHeart.Migrations",
                 "StrongHeart.TestTools.ComponentAnalysis",
-                "StrongHeart.TestTools.Xunit"
+                "StrongHeart.TestTools.Xunit",
+                "StrongHeart.FeatureTool"
             };
 
             foreach (string project in projectsToNugetPack)
