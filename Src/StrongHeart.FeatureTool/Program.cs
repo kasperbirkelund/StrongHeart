@@ -1,132 +1,63 @@
-﻿using System;
-using System.IO;
+﻿using Spectre.Console.Cli;
 
-namespace StrongHeart.FeatureTool
+namespace StrongHeart.FeatureTool;
+
+class Program
 {
-    class Program
+    static int Main(string[] args)
     {
-        static void Main(string[] args)
+        var app = new CommandApp();
+
+        app.Configure(config =>
         {
-            string project = args[0];
-            string type = args[1];
-            string name = args[2];
-            bool isList = false;
-            if (args.Length > 3)
             {
-                isList = Convert.ToBoolean(args[3]);
+                config
+                    .AddCommand<AddCommandFeature>("command")
+                    .WithDescription("Create a new Command feature");
+
+                config
+                    .AddCommand<AddQuerySingleFeature>("querySingle")
+                    .WithDescription("Create a new Query feature which returns a single result");
+
+                config
+                    .AddCommand<AddQueryListFeature>("queryList")
+                    .WithDescription("Create a new Query feature which returns a list of result objects");
+
+                config.AddExample(
+                    "dotnet AddFeature command --feature-name=CreateCar --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient",
+                    "dotnet AddFeature querySingle --feature-name=GetCar --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient",
+                    "dotnet AddFeature querylist --feature-name=GetCars --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient");
             }
-            string dir = Path.Combine(Environment.CurrentDirectory, project);
-            dir = Path.Combine(dir, "Features");
-            dir = Path.Combine(dir, type);
-            dir = Path.Combine(dir, name);
+        });
 
-            Directory.CreateDirectory(dir);
+        return app.Run(args);
+        ////dotnet AddFeature  Commands OpretHenvendelse
+        //string project = "DoktorGl.Features";//args[0];
+        //string type = "Commands";//args[1];
+        //string name = "OpretHenvendelse"; //args[2];
+        //bool isList = false;
+        //if (args.Length > 3)
+        //{
+        //    isList = Convert.ToBoolean(args[3]);
+        //}
+        //string dir = Path.Combine(Environment.CurrentDirectory, project);
+        //dir = Path.Combine(dir, "Features");
+        //dir = Path.Combine(dir, type);
+        //dir = Path.Combine(dir, name);
 
-            string file = name + "Feature.cs";
-            string fullPath = Path.Combine(dir, file);
+        //Directory.CreateDirectory(dir);
 
-            string content = type switch
-            {
-                "Commands" => GetCommand(project, name),
-                "Queries" => GetQuery(project, name, isList),
-                _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'");
-            };
+        //string file = name + "Feature.cs";
+        //string fullPath = Path.Combine(dir, file);
 
-            File.WriteAllText(fullPath, content);
-            Console.WriteLine("Done: " + fullPath);
-        }
+        //string content = type switch
+        //{
+        //    "Commands" => GetCommand(project, name),
+        //    "Queries" => GetQuery(project, name, isList),
+        //    _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'")
+        //};
 
-
-        private static string GetCommand(string project, string commandName)
-        {
-            string s =
-                $@"using System.Threading.Tasks;
-using StrongHeart.Core.Security;
-using StrongHeart.Features.Core;
-
-namespace {project}.Features.Commands.{commandName}
-{{
-    public record {commandName}Dto() : IRequestDto;
-    public record {commandName}Request(ICaller Caller, {commandName}Dto Model) : IRequest<{commandName}Dto>;
-    
-    public partial class {commandName}Feature : ICommandFeature<{commandName}Request, {commandName}Dto>
-    {{
-        public Task<Result> Execute({commandName}Request request)
-        {{
-            throw new System.NotImplementedException();
-        }}
-    }}
-}}";
-
-            return s;
-        }
-
-        private static string GetQuery(string project, string queryName, bool isList)
-        {
-            string s = $@"using System.Threading.Tasks;
-using System.Collections.Generic;
-using StrongHeart.Core.Security;
-using StrongHeart.Features.Core;
-
-namespace {project}.Features.Queries.{queryName}
-{{
-    public record {queryName}Request(ICaller Caller) : IRequest;
-    public record {queryName}();
-    {GetResponseClass(queryName, isList)}
-
-    public partial class {queryName}Feature : IQueryFeature<{queryName}Request, {queryName}Response>
-    {{
-        public Task<Result<{queryName}Response>> Execute({queryName}Request request)
-        {{
-            {GetResponseContent(queryName, isList)}
-            {queryName}Response response = new(item{(isList ? "s" : string.Empty)});
-            Result<{queryName}Response> result = Result<{queryName}Response>.Success(response);
-            return Task.FromResult(result);
-        }}
-    }}
-}}";
-            return s;
-        }
-
-        private static string GetResponseContent(string queryName, bool isList)
-        {
-            if (isList)
-            {
-                return $"List<{queryName}> items = new();";
-            }
-            else
-            {
-                return $"{queryName} item = new();";
-            }
-        }
-
-        private static string GetResponseClass(string queryName, bool isList)
-        {
-            if (isList)
-            {
-                return @$"public partial class {queryName}Response : IGetListResponse<{queryName}>
-    {{
-        public {queryName}Response(ICollection<{queryName}> items)
-        {{
-            Items = items;
-        }}
-
-
-        public ICollection<{queryName}> Items {{ get; }}
-    }}";
-            }
-            else
-            {
-                return $@"public class {queryName}Response : IGetSingleItemResponse<{queryName}> 
-    {{
-        public {queryName}Response({queryName}? item)
-        {{
-            Item = item;
-        }}
-
-        public {queryName}? Item {{ get; }}
-    }}";
-            }
-        }
+        //File.WriteAllText(fullPath, content);
+        //Console.WriteLine("Done: " + fullPath);
     }
 }

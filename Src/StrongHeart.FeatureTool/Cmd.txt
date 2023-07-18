@@ -7,6 +7,7 @@ eller
 dotnet tool install StrongHeart.FeatureTool
 
 dotnet tool update --add-source C:\development\NugetFeed StrongHeart.FeatureTool
+dotnet tool update StrongHeart.FeatureTool
  
  
 dotnet pack /p:Version=1.0.6
