@@ -1,44 +1,32 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Spectre.Console.Cli;
 
 namespace StrongHeart.FeatureTool;
 
 public class AddCommandFeature : AsyncCommand<AddFeatureSettings>
 {
-    //public class AddCommandSettings : AddFeatureSettings
-    //{
-    //    //[CommandArgument(0, "<PACKAGE_NAME>")]
-    //    //public string PackageName { get; set; }
-
-    //    //[CommandOption("-v|--version <VERSION>")]
-    //    //public string Version { get; set; }
-    //}
-
     public override async Task<int> ExecuteAsync(CommandContext context, AddFeatureSettings settings)
     {
-        await Console.Out.WriteLineAsync(GetCommand(settings.ProjectName, settings.FeatureName));
+        string content = GetCommand(settings);
+        await Helper.WriteFileAsync(settings, "Commands", content);
         return 0;
     }
 
-    private static string GetCommand(string project, string commandName)
+    private static string GetCommand(AddFeatureSettings settings)
     {
         string s =
             $@"using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
-namespace {project}.Features.Commands.{commandName}
+namespace {Helper.GetNamespace(settings)}.Commands.{settings.FeatureName}
 {{
-    {Helper.GetGeneratedCodeText()}
-    public record {commandName}Dto() : IRequestDto;
-    {Helper.GetGeneratedCodeText()}
-    public record {commandName}Request(ICaller Caller, {commandName}Dto Model) : IRequest<{commandName}Dto>;
+    public record {settings.FeatureName}Dto() : IRequestDto;
+    public record {settings.FeatureName}Request(ICaller Caller, {settings.FeatureName}Dto Model) : IRequest<{settings.FeatureName}Dto>;
     
-    {Helper.GetGeneratedCodeText()}
-    public partial class {commandName}Feature : ICommandFeature<{commandName}Request, {commandName}Dto>
+    public class {settings.FeatureName}Feature : ICommandFeature<{settings.FeatureName}Request, {settings.FeatureName}Dto>
     {{
-        public Task<Result> Execute({commandName}Request request)
+        public Task<Result> Execute({settings.FeatureName}Request request)
         {{
             throw new System.NotImplementedException();
         }}

@@ -1,27 +1,21 @@
 ﻿
 dotnet new tool-manifest
 
-dotnet tool uninstall StrongHeart.FeatureTool
 dotnet tool install --add-source C:\development\NugetFeed StrongHeart.FeatureTool
-eller 
 dotnet tool install StrongHeart.FeatureTool
 
 dotnet tool update --add-source C:\development\NugetFeed StrongHeart.FeatureTool
 dotnet tool update StrongHeart.FeatureTool
- 
+
+dotnet tool uninstall StrongHeart.FeatureTool
+
  
 dotnet pack /p:Version=1.0.6
 
 
-dotnet AddFeature "StrongHeart.DemoApp.Business" Commands DoStuff
-dotnet AddFeature "StrongHeart.DemoApp.Business" Queries GetStuff1
-dotnet AddFeature "StrongHeart.DemoApp.Business" Queries GetStuff2 true
-dotnet AddFeature "StrongHeart.DemoApp.Business" Queries GetStuff3 false
+dotnet AddFeature command --feature-name=DoStuff --project-name="StrongHeart.DemoApp.Business" 
+dotnet AddFeature querySingle --feature-name=GetStuff1 --project-name="StrongHeart.DemoApp.Business" --subfolder-name=MySubfolder
+dotnet AddFeature queryList --feature-name=GetStuff2 --project-name="StrongHeart.DemoApp.Business"
 
-
-dotnet run -- "StrongHeart.DemoApp.Business" Commands DoStuff
-dotnet run -- "StrongHeart.DemoApp.Business" Queries GetStuff
-dotnet run -- "StrongHeart.DemoApp.Business" Queries GetStuff true
-dotnet run -- "StrongHeart.DemoApp.Business" Queries GetMoreStuff false
 
 location: %USERPROFILE%\.nuget\packages\strongheart.featuretool

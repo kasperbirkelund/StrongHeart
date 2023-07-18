@@ -31,33 +31,5 @@ class Program
         });
 
         return app.Run(args);
-        ////dotnet AddFeature  Commands OpretHenvendelse
-        //string project = "DoktorGl.Features";//args[0];
-        //string type = "Commands";//args[1];
-        //string name = "OpretHenvendelse"; //args[2];
-        //bool isList = false;
-        //if (args.Length > 3)
-        //{
-        //    isList = Convert.ToBoolean(args[3]);
-        //}
-        //string dir = Path.Combine(Environment.CurrentDirectory, project);
-        //dir = Path.Combine(dir, "Features");
-        //dir = Path.Combine(dir, type);
-        //dir = Path.Combine(dir, name);
-
-        //Directory.CreateDirectory(dir);
-
-        //string file = name + "Feature.cs";
-        //string fullPath = Path.Combine(dir, file);
-
-        //string content = type switch
-        //{
-        //    "Commands" => GetCommand(project, name),
-        //    "Queries" => GetQuery(project, name, isList),
-        //    _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'")
-        //};
-
-        //File.WriteAllText(fullPath, content);
-        //Console.WriteLine("Done: " + fullPath);
     }
 }

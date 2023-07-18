@@ -4,29 +4,28 @@ namespace StrongHeart.FeatureTool;
 
 public abstract class AddQueryFeatureBase : AsyncCommand<AddFeatureSettings>
 {
-    protected static string GetQuery(string project, string queryName, bool isList)
+    protected static string GetQuery(AddFeatureSettings settings, bool isList)
     {
         string s = $@"using System.Threading.Tasks;
 using System.Collections.Generic;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
-namespace {project}.Features.Queries.{queryName}
+namespace {Helper.GetNamespace(settings)}.Queries.{settings.FeatureName}
 {{
-    {Helper.GetGeneratedCodeText()}
-    public record {queryName}Request(ICaller Caller) : IRequest;
-    {Helper.GetGeneratedCodeText()}
-    public record {queryName}();
-    {GetResponseClass(queryName, isList)}
+    public record {settings.FeatureName}Request(ICaller Caller) : IRequest;
+    
+    //TODO: Verify that the name of this record is good
+    public record {settings.FeatureName}();
+    {GetResponseClass(settings, isList)}
 
-    {Helper.GetGeneratedCodeText()}
-    public partial class {queryName}Feature : IQueryFeature<{queryName}Request, {queryName}Response>
+    public class {settings.FeatureName}Feature : IQueryFeature<{settings.FeatureName}Request, {settings.FeatureName}Response>
     {{
-        public Task<Result<{queryName}Response>> Execute({queryName}Request request)
+        public Task<Result<{settings.FeatureName}Response>> Execute({settings.FeatureName}Request request)
         {{
-            {GetResponseContent(queryName, isList)}
-            {queryName}Response response = new(item{(isList ? "s" : string.Empty)});
-            Result<{queryName}Response> result = Result<{queryName}Response>.Success(response);
+            {GetResponseContent(settings.FeatureName, isList)}
+            {settings.FeatureName}Response response = new(item{(isList ? "s" : string.Empty)});
+            Result<{settings.FeatureName}Response> result = Result<{settings.FeatureName}Response>.Success(response);
             return Task.FromResult(result);
         }}
     }}
@@ -34,45 +33,45 @@ namespace {project}.Features.Queries.{queryName}
         return s;
     }
 
-    private static string GetResponseContent(string queryName, bool isList)
+    private static string GetResponseContent(string featureName, bool isList)
     {
         if (isList)
         {
-            return $"List<{queryName}> items = new();";
+            return $"List<{featureName}> items = new();";
         }
         else
         {
-            return $"{queryName} item = new();";
+            return $"{featureName} item = new();";
         }
     }
 
-    private static string GetResponseClass(string queryName, bool isList)
+    private static string GetResponseClass(AddFeatureSettings settings, bool isList)
     {
         if (isList)
         {
-            return @$"{Helper.GetGeneratedCodeText()}
-public class {queryName}Response : IGetListResponse<{queryName}>
+            return @$"
+    public class {settings.FeatureName}Response : IGetListResponse<{settings.FeatureName}>
     {{
-        public {queryName}Response(ICollection<{queryName}> items)
+        public {settings.FeatureName}Response(ICollection<{settings.FeatureName}> items)
         {{
             Items = items;
         }}
 
 
-        public ICollection<{queryName}> Items {{ get; }}
+        public ICollection<{settings.FeatureName}> Items {{ get; }}
     }}";
         }
         else
         {
-            return $@"{Helper.GetGeneratedCodeText()}
-    public class {queryName}Response : IGetSingleItemResponse<{queryName}> 
+            return $@"
+    public class {settings.FeatureName}Response : IGetSingleItemResponse<{settings.FeatureName}> 
     {{
-        public {queryName}Response({queryName}? item)
+        public {settings.FeatureName}Response({settings.FeatureName}? item)
         {{
             Item = item;
         }}
 
-        public {queryName}? Item {{ get; }}
+        public {settings.FeatureName}? Item {{ get; }}
     }}";
         }
     }
