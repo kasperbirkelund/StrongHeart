@@ -11,7 +11,7 @@ namespace StrongHeart.Features.Decorators.RequestValidation
         protected ValidationConclusion Conclusion = null!;
         protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
         {
-            IRequestValidatable<TRequest> validator = GetValidator<TRequest>();
+            IRequestValidator<TRequest> validator = GetValidator<TRequest>();
             ICollection<ValidationMessage> errors = validator.Validate(request).ToList().AsReadOnly();
             Conclusion = new(errors);
             if (Conclusion.IsValid)
@@ -21,6 +21,6 @@ namespace StrongHeart.Features.Decorators.RequestValidation
             return default!;
         }
 
-        protected abstract IRequestValidatable<TRequest> GetValidator<TRequest>() where TRequest : IRequest;
+        protected abstract IRequestValidator<TRequest> GetValidator<TRequest>() where TRequest : IRequest;
     }
 }

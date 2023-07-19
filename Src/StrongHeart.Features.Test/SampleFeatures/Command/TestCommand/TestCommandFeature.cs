@@ -11,7 +11,7 @@ using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
 {
-    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidatable<TestCommandRequest>, IRetryable, ITimeAlert
+    public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidator<TestCommandRequest>, IRetryable, ITimeAlert
     {
         public Task<Result> Execute(TestCommandRequest request)
         {
