@@ -24,16 +24,15 @@ namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand
             yield break;
         }
 
-        public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
-        {
-            return request => FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
-        }
-
         public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)
         {
             return false;
         }
 
         public TimeSpan MaxAllowedExecutionTime => TimeSpan.FromSeconds(1);
+        public IEnumerable<ValidationMessage> Validate(TestCommandRequest request)
+        {
+            return FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
+        }
     }
 }

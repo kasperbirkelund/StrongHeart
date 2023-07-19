@@ -21,7 +21,7 @@ namespace {Helper.GetNamespace(settings)}.Queries.{settings.FeatureName}
 
     public class {settings.FeatureName}Feature : {settings.FeatureBaseType}<{settings.FeatureName}Request, {settings.FeatureName}Response>
     {{
-        public Task<Result<{settings.FeatureName}Response>> Execute({settings.FeatureName}Request request)
+        public override Task<Result<{settings.FeatureName}Response>> Execute({settings.FeatureName}Request request)
         {{
             {GetResponseContent(settings.FeatureName, isList)}
             {settings.FeatureName}Response response = new(item{(isList ? "s" : string.Empty)});

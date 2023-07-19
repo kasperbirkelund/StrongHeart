@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
@@ -19,9 +18,9 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Comman
             return Task.FromResult(Result.Success());
         }
 
-        public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
+        public IEnumerable<ValidationMessage> Validate(TestCommandRequest request)
         {
-            return request => FluentValidationMapper.Map(_validator.Validate(request));
+            return FluentValidationMapper.Map(_validator.Validate(request));
         }
     }
 }

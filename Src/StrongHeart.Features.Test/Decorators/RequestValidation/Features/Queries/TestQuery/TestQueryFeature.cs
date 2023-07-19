@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
@@ -13,9 +12,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Querie
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse("Hello")));
         }
 
-        public Func<TestQueryRequest, IEnumerable<ValidationMessage>> ValidationFunc() => ValidateRequest;
-
-        private IEnumerable<ValidationMessage> ValidateRequest(TestQueryRequest request)
+        public IEnumerable<ValidationMessage> Validate(TestQueryRequest request)
         {
             if (string.IsNullOrEmpty(request.ThisMustNotBeNull))
             {

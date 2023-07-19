@@ -26,7 +26,7 @@ namespace {Helper.GetNamespace(settings)}.Commands.{settings.FeatureName}
     
     public class {settings.FeatureName}Feature : {settings.FeatureBaseType}<{settings.FeatureName}Request, {settings.FeatureName}Dto>
     {{
-        public Task<Result> Execute({settings.FeatureName}Request request)
+        public override Task<Result> Execute({settings.FeatureName}Request request)
         {{
             throw new System.NotImplementedException();
         }}
