@@ -19,3 +19,6 @@ dotnet AddFeature queryList --feature-name=GetStuff2 --project-name="StrongHeart
 
 
 location: %USERPROFILE%\.nuget\packages\strongheart.featuretool
+
+
+dotnet run --project .\build\StrongHeart.Build --target PushNuget

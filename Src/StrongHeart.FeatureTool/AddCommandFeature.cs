@@ -24,7 +24,7 @@ namespace {Helper.GetNamespace(settings)}.Commands.{settings.FeatureName}
     public record {settings.FeatureName}Dto() : IRequestDto;
     public record {settings.FeatureName}Request(ICaller Caller, {settings.FeatureName}Dto Model) : IRequest<{settings.FeatureName}Dto>;
     
-    public class {settings.FeatureName}Feature : ICommandFeature<{settings.FeatureName}Request, {settings.FeatureName}Dto>
+    public class {settings.FeatureName}Feature : {settings.FeatureBaseType}<{settings.FeatureName}Request, {settings.FeatureName}Dto>
     {{
         public Task<Result> Execute({settings.FeatureName}Request request)
         {{

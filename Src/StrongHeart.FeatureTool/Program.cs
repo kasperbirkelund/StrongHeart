@@ -24,9 +24,9 @@ class Program
                     .WithDescription("Create a new Query feature which returns a list of result objects");
 
                 config.AddExample(
-                    "dotnet AddFeature command --feature-name=CreateCar --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient",
-                    "dotnet AddFeature querySingle --feature-name=GetCar --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient",
-                    "dotnet AddFeature querylist --feature-name=GetCars --project-name=\"DoktorGl.Features\" --generate-partial-file --subfolder-name=Patient");
+                    "dotnet AddFeature command --feature-name=CreateCar --project-name=\"DoktorGl.Features\" --subfolder-name=Patient",
+                    "dotnet AddFeature querySingle --feature-name=GetCar --project-name=\"DoktorGl.Features\" --subfolder-name=Patient",
+                    "dotnet AddFeature querylist --feature-name=GetCars --project-name=\"DoktorGl.Features\" --subfolder-name=Patient");
             }
         });
 

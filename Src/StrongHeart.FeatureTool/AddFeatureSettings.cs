@@ -15,4 +15,8 @@ public class AddFeatureSettings : CommandSettings
     [CommandOption("--feature-name")]
     [CommandArgument(0, "<FeatureName>")]
     public string FeatureName { get; set; }
+
+    [CommandOption("--feature-base-type")]
+    [CommandArgument(0, "<FeatureBaseType>")]
+    public string FeatureBaseType { get; set; }
 }

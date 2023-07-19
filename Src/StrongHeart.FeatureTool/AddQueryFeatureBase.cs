@@ -19,7 +19,7 @@ namespace {Helper.GetNamespace(settings)}.Queries.{settings.FeatureName}
     public record {settings.FeatureName}();
     {GetResponseClass(settings, isList)}
 
-    public class {settings.FeatureName}Feature : IQueryFeature<{settings.FeatureName}Request, {settings.FeatureName}Response>
+    public class {settings.FeatureName}Feature : {settings.FeatureBaseType}<{settings.FeatureName}Request, {settings.FeatureName}Response>
     {{
         public Task<Result<{settings.FeatureName}Response>> Execute({settings.FeatureName}Request request)
         {{
