@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -15,7 +14,6 @@ namespace StrongHeart.Features.Test.Helpers
         {
             _claims = claims;
         }
-        public Guid Id { get; } = new Guid("f6b7c41c-2587-46c1-8746-cd9148587216");
         public IReadOnlyList<Claim> Claims => new List<Claim>(_claims).AsReadOnly();
     }
 }

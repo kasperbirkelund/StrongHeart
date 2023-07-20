@@ -13,9 +13,11 @@ using StrongHeart.Features.Core;
 
 namespace {Helper.GetNamespace(settings)}.Queries.{settings.FeatureName}
 {{
+    [System.Diagnostics.DebuggerStepThrough]
     public record {settings.FeatureName}Request(ICaller Caller) : IRequest;
     
-    //TODO: Verify that the name of this record is good
+    [System.Diagnostics.DebuggerStepThrough]    
+    //TODO: Verify that the name of this record is good    
     public record {settings.FeatureName}();
     {GetResponseClass(settings, isList)}
 

@@ -21,7 +21,9 @@ using StrongHeart.Features.Core;
 
 namespace {Helper.GetNamespace(settings)}.Commands.{settings.FeatureName}
 {{
+    [System.Diagnostics.DebuggerStepThrough]
     public record {settings.FeatureName}Dto() : IRequestDto;
+    [System.Diagnostics.DebuggerStepThrough]
     public record {settings.FeatureName}Request(ICaller Caller, {settings.FeatureName}Dto Model) : IRequest<{settings.FeatureName}Dto>;
     
     public class {settings.FeatureName}Feature : {settings.FeatureBaseType}<{settings.FeatureName}Request, {settings.FeatureName}Dto>

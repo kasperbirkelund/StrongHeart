@@ -18,27 +18,29 @@ internal static class Helper
         string file = GetFileName(settings);
         string fullPath = Path.Combine(dir, file);
 
-        await File.WriteAllTextAsync(fullPath, content);
-
         TextPath renderablePath = new TextPath(fullPath)
             .RootColor(Color.Blue)
             .SeparatorColor(Color.Blue)
             .StemColor(Color.Blue)
             .LeafColor(Color.Green);
 
-        AnsiConsole.Write("Generated file: ");
-        AnsiConsole.Write(renderablePath);
+        if (File.Exists(fullPath))
+        {
+            AnsiConsole.Markup("[black on orange1]File already exists and will not be overwritten[/]");
+            AnsiConsole.Write(renderablePath);
+        }
+        else
+        {
+            await File.WriteAllTextAsync(fullPath, content);
+            AnsiConsole.Write("Generated file: ");
+            AnsiConsole.Write(renderablePath);
+        }
     }
 
     private static string GetFileName(AddFeatureSettings settings)
     {
         return settings.FeatureName + "Feature.cs";
     }
-
-    //public static string? GetGeneratedCodeText(bool generatePartialClasses)
-    //{
-    //    return generatePartialClasses ? $"[System.CodeDom.Compiler.GeneratedCode(\"StrongHeart.FeatureTool\", \"{typeof(Helper).Assembly.GetName().Version}\")]" + Environment.NewLine : null;
-    //}
 
     public static string GetNamespace(AddFeatureSettings settings)
     {
