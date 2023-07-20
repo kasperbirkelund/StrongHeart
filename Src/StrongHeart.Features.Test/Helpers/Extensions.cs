@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.DependencyInjection;
 
@@ -11,7 +12,10 @@ namespace StrongHeart.Features.Test.Helpers
         public static IServiceScope CreateScope(this IList<IPipelineExtension> extensions, Action<IServiceCollection>? servicesAction = null)
         {
             IServiceCollection services = new ServiceCollection();
-
+            services.AddLogging(x =>
+            {
+                x.AddConsole();
+            });
             services.AddStrongHeart(x =>
             {
                 x.AddPipelineExtensions(extensions);

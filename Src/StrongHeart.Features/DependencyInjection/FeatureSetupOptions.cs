@@ -37,24 +37,20 @@ namespace StrongHeart.Features.DependencyInjection
             return this;
         }
 
-        public FeatureSetupOptions AddDefaultPipeline<TExceptionLogger, TTimeAlertExceededLogger>()
-            where TExceptionLogger : class, IExceptionLogger
-            where TTimeAlertExceededLogger : class, ITimeAlertExceededLogger
+        public FeatureSetupOptions AddDefaultPipeline()
         {
-            AddPipelineExtensions(new DefaultPipelineExtensions<TExceptionLogger, TTimeAlertExceededLogger>());
+            AddPipelineExtensions(new DefaultPipelineExtensions());
             return this;
         }
 
-        private class DefaultPipelineExtensions<TExceptionLogger, TTimeAlertExceededLogger> : List<IPipelineExtension>
-            where TExceptionLogger : class, IExceptionLogger
-            where TTimeAlertExceededLogger : class, ITimeAlertExceededLogger
+        private class DefaultPipelineExtensions : List<IPipelineExtension>
         {
             public DefaultPipelineExtensions()
             {
                 //First = outermost
-                Add(new ExceptionLoggerExtension<TExceptionLogger>()); //1: we want to have exception handling outermost to ensure that everything gets logged
+                Add(new ExceptionLoggerExtension()); //1: we want to have exception handling outermost to ensure that everything gets logged
                 Add(new AuthorizationExtension()); //2: The user must be authorized before we expose any further 
-                Add(new TimeAlertExtension<TTimeAlertExceededLogger>()); //3: Ensure that time is monitored
+                Add(new TimeAlertExtension()); //3: Ensure that time is monitored
                 Add(new RequestValidatorExtension()); //4: Now it is time for input validation
                 Add(new FilterExtension()); //5: Filtering only applies to queries
                 Add(new RetryExtension()); //6: it makes sense to have retry closest to the real feature

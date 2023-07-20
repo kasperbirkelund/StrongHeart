@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.TimeAlert
@@ -10,7 +11,7 @@ namespace StrongHeart.Features.Decorators.TimeAlert
     {
         private readonly ICommandFeature<TRequest, TDto> _inner;
 
-        public TimeAlertCommandDecorator(ICommandFeature<TRequest, TDto> inner, ITimeAlertExceededLogger logger) : base(logger)
+        public TimeAlertCommandDecorator(ICommandFeature<TRequest, TDto> inner, ILogger<TimeAlertDecoratorBase> logger) : base(logger)
         {
             _inner = inner;
         }

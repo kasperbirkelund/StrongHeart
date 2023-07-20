@@ -55,9 +55,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{5E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{5C67EE32-3983-428B-A504-6F9420314486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DempApp.Migrations", "DemoApp\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj", "{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations", "DemoApp\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj", "{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DempApp.Migrations.Runner", "StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", "{4667DA6E-04EF-4386-B095-FA52AA23FB5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations.Runner", "DemoApp\StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", "{25714E49-2F2B-4267-B105-3C0BFF36F3E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -333,18 +333,18 @@ Global
 		{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}.Release|x64.Build.0 = Release|Any CPU
 		{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}.Release|x86.Build.0 = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|x64.Build.0 = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Debug|x86.Build.0 = Debug|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|x64.ActiveCfg = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|x64.Build.0 = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|x86.ActiveCfg = Release|Any CPU
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A}.Release|x86.Build.0 = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|x64.Build.0 = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Debug|x86.Build.0 = Debug|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|x64.ActiveCfg = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|x64.Build.0 = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|x86.ActiveCfg = Release|Any CPU
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -374,7 +374,7 @@ Global
 		{5E96C6E4-8A63-4769-989B-E91FF1B23F6A} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{5C67EE32-3983-428B-A504-6F9420314486} = {B395AA1C-29C4-4769-901F-EE16AB97D6A0}
 		{8DCDFB63-4CD9-4514-BD35-3D4799EDD775} = {5E96C6E4-8A63-4769-989B-E91FF1B23F6A}
-		{4667DA6E-04EF-4386-B095-FA52AA23FB5A} = {5E96C6E4-8A63-4769-989B-E91FF1B23F6A}
+		{25714E49-2F2B-4267-B105-3C0BFF36F3E3} = {5E96C6E4-8A63-4769-989B-E91FF1B23F6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {215278D2-4A2E-4724-9477-824B44D802AE}

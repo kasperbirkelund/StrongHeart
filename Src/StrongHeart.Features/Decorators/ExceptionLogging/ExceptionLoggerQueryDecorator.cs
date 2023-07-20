@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging
@@ -9,7 +10,7 @@ namespace StrongHeart.Features.Decorators.ExceptionLogging
     {
         private readonly IQueryFeature<TRequest, TResponse> _inner;
 
-        public ExceptionLoggerQueryDecorator(IQueryFeature<TRequest, TResponse> inner, IExceptionLogger logger) 
+        public ExceptionLoggerQueryDecorator(IQueryFeature<TRequest, TResponse> inner, ILogger<ExceptionLoggerDecoratorBase> logger) 
             : base(logger)
         {
             _inner = inner;

@@ -1,20 +1,30 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Decorators.ExceptionLogging;
 
 namespace StrongHeart.Features.Test.Helpers
 {
-    public class ExceptionLoggerSpy : IExceptionLogger
+    public class ExceptionLoggerSpy : ILogger<ExceptionLoggerDecoratorBase>
     {
         public IList<Exception> Exceptions = new List<Exception>();
-
-        public Func<Exception, Task> Handler => Handle;
-
-        private Task Handle(Exception ex)
+        
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
-            Exceptions.Add(ex);
-            return Task.CompletedTask;
+            if (exception is not null)
+            {
+                Exceptions.Add(exception);
+            }
+        }
+
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            throw new NotSupportedException();
+        }
+
+        public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+        {
+            throw new NotSupportedException();
         }
     }
 }

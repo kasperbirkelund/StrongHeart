@@ -46,7 +46,7 @@ namespace StrongHeart.DemoApp.WebApi
             //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
             services.AddStrongHeart(options =>
             {
-                options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
+                options.AddDefaultPipeline();
             }, typeof(CommandFeatureBase<,>).Assembly);
             //DOC-END
 

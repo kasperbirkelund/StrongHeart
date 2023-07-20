@@ -16,7 +16,7 @@ namespace StrongHeart.Features.Test.Helpers
         public PipelineExtensionsStub()
         {
             //Add(new AuditExtension(() => AuditRepoSpy));
-            Add(new ExceptionLoggerExtension<ExceptionLoggerSpy>());
+            Add(new ExceptionLoggerExtension());
             Add(new AuthorizationExtension());
             Add(new RequestValidatorExtension());
             Add(new FilterExtension());

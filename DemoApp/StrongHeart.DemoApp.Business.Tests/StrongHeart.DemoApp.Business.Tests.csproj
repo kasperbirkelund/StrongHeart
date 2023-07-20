@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj" />
+    <ProjectReference Include="..\..\Src\StrongHeart.Features\StrongHeart.Features.csproj" />
     <ProjectReference Include="..\..\Src\StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj" />
     <ProjectReference Include="..\StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj" />
   </ItemGroup>

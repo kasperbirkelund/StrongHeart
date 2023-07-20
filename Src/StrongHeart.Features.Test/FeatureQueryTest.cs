@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.ExceptionLogging;
@@ -23,14 +24,14 @@ namespace StrongHeart.Features.Test
         public async Task TestFullFeatureWithFullPipeline()
         {
             PipelineExtensionsStub extensions = new();
-            using (IServiceScope scope = extensions.CreateScope())
+            using (IServiceScope scope = extensions.CreateScope(x => { x.AddTransient<ILogger<ExceptionLoggerDecoratorBase>, ExceptionLoggerSpy>(); }))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
                 var result1 = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), true));
                 result1.Value.Items.Should().Contain("MyTest");
 
                 //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
-                ExceptionLoggerSpy spy = (ExceptionLoggerSpy)scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
+                ExceptionLoggerSpy spy = (ExceptionLoggerSpy)scope.ServiceProvider.GetRequiredService<ILogger<ExceptionLoggerDecoratorBase>>();
                 spy.Exceptions.Count.Should().Be(0);
             }
         }
@@ -54,9 +55,10 @@ namespace StrongHeart.Features.Test
         public void EnsureDefaultDecoratorChainOrder()
         {
             IServiceCollection services = new ServiceCollection();
+            services.AddLogging();
             services.AddStrongHeart(x =>
             {
-                x.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
+                x.AddDefaultPipeline();
             }, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
@@ -80,7 +82,7 @@ namespace StrongHeart.Features.Test
                 .ToArray();
 
             FeatureSetupOptions o = new(new ServiceCollection());
-            o.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
+            o.AddDefaultPipeline();
             o.Extensions.Count.Should().Be(extensions.Length);
         }
     }

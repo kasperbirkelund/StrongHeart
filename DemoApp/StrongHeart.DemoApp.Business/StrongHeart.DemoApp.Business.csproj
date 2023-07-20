@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <!--CS8785 = warn if the SourceCodeGenerator fails -->
     <WarningsAsErrors>CS8785</WarningsAsErrors>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <EmitCompilerGeneratedFiles>false</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 

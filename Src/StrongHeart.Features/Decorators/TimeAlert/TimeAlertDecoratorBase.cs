@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -6,9 +7,9 @@ namespace StrongHeart.Features.Decorators.TimeAlert
 {
     public abstract class TimeAlertDecoratorBase : DecoratorBase
     {
-        private readonly ITimeAlertExceededLogger _logger;
+        private readonly ILogger<TimeAlertDecoratorBase> _logger;
 
-        protected TimeAlertDecoratorBase(ITimeAlertExceededLogger logger)
+        protected TimeAlertDecoratorBase(ILogger<TimeAlertDecoratorBase> logger)
         {
             _logger = logger;
         }
@@ -24,9 +25,10 @@ namespace StrongHeart.Features.Decorators.TimeAlert
             }
             finally
             {
-                if (sw.Elapsed > GetMaxAllowedExecutionTime())
+                var max = GetMaxAllowedExecutionTime();
+                if (sw.Elapsed > max)
                 {
-                    await _logger.LogTimeExceeded(new TimeExceededData(sw.Elapsed, request));
+                    _logger.LogWarning("Max execution time exceeded {@Details}", new TimeExceededData(sw.Elapsed, request, max));
                 }
             }
         }

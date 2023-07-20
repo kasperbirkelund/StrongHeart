@@ -7,9 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-    <ProjectReference Include="..\DemoApp\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj" />
-    <ProjectReference Include="..\Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj" />
+  <ItemGroup>
+    <ProjectReference Include="..\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj" />
   </ItemGroup>
 
 </Project>

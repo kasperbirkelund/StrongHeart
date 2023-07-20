@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.Authorization;
@@ -25,14 +26,14 @@ namespace StrongHeart.Features.Test
         public async Task TestFullFeatureWithFullPipeline(bool shouldSucceed)
         {
             PipelineExtensionsStub extensions = new();
-            using (IServiceScope scope = extensions.CreateScope())
+            using (IServiceScope scope = extensions.CreateScope(x => { x.AddTransient<ILogger<ExceptionLoggerDecoratorBase>, ExceptionLoggerSpy>(); }))
             {
                 var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
                 IResult result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(shouldSucceed)));
                 result.IsSuccess.Should().Be(shouldSucceed);
 
                 //extensions.AuditRepoSpy.Audits.Count.Should().Be(1);
-                ExceptionLoggerSpy spy = (ExceptionLoggerSpy)scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
+                ExceptionLoggerSpy spy = (ExceptionLoggerSpy)scope.ServiceProvider.GetRequiredService<ILogger<ExceptionLoggerDecoratorBase>>();
                 spy.Exceptions.Count.Should().Be(0);
             }
         }
@@ -58,9 +59,10 @@ namespace StrongHeart.Features.Test
         public void EnsureDefaultDecoratorChainOrder()
         {
             IServiceCollection services = new ServiceCollection();
+            services.AddLogging();
             services.AddStrongHeart(x =>
             {
-                x.AddDefaultPipeline<ExceptionLoggerSpy, TimeAlertExceededLoggerSpy>();
+                x.AddDefaultPipeline();
             }, typeof(FeatureQueryTest).Assembly);
             var provider = services.BuildServiceProvider();
             using (var scope = provider.CreateScope())
