@@ -24,8 +24,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
                 var result = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
                 result.IsFailure.Should().BeTrue();
                 result.Status.Should().Be(ResultType.ClientError);
-                result.Error.Should().Be(@"Validation messages: 
-- ThisMustNotBeNull must not be null or empty");
+                result.Error.Should().Be(@"- ThisMustNotBeNull must not be null or empty");
             }
         }
 
@@ -55,8 +54,7 @@ namespace StrongHeart.Features.Test.Decorators.RequestValidation
                 var result = await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(20, BirthDay: 2.May(1990))));
                 result.IsFailure.Should().BeTrue();
                 result.Status.Should().Be(ResultType.ClientError);
-                result.Error.Should().Be(@"Validation messages: 
-- Only year after 2000 is allowed");
+                result.Error.Should().Be(@"- Only year after 2000 is allowed");
             }
         }
 
