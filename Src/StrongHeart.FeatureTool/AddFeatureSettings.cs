@@ -8,6 +8,10 @@ public class AddFeatureSettings : CommandSettings
     [CommandArgument(0, "<SubfolderName>")]
     public string? SubfolderName { get; set; }
 
+    [CommandOption("--features-folder")]
+    [CommandArgument(0, "<FeaturesFolder>")]
+    public string? FeaturesFolder { get; set; }
+
     [CommandOption("--project-name")]
     [CommandArgument(0, "<ProjectName>")]
     public string ProjectName { get; set; }

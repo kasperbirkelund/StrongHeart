@@ -19,7 +19,7 @@ public class AddCommandFeature : AsyncCommand<AddFeatureSettings>
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
-namespace {Helper.GetNamespace(settings)}.Commands.{settings.FeatureName}
+namespace {Helper.GetNamespace(settings, "Commands")}
 {{
     [System.Diagnostics.DebuggerStepThrough]
     public record {settings.FeatureName}Dto() : IRequestDto;

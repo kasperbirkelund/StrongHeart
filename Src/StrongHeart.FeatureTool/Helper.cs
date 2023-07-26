@@ -42,20 +42,21 @@ internal static class Helper
         return settings.FeatureName + "Feature.cs";
     }
 
-    public static string GetNamespace(AddFeatureSettings settings)
+    public static string GetNamespace(AddFeatureSettings settings, string? featureType)
     {
-        return settings.SubfolderName is null ? settings.ProjectName : $"{settings.ProjectName}.{settings.SubfolderName}";
+        string full = $"{settings.ProjectName}.{settings.FeaturesFolder}.{featureType}.{settings.SubfolderName}.{settings.FeatureName}";
+        return full.Replace("..", ".");
     }
 
     public static string GetRootDir(AddFeatureSettings settings)
     {
-        if (settings.SubfolderName is null)
+        if (settings.FeaturesFolder is null)
         {
             return Path.Combine(Environment.CurrentDirectory, settings.ProjectName);
         }
         else
         {
-            return Path.Combine(Environment.CurrentDirectory, $"{settings.ProjectName}/{settings.SubfolderName}");
+            return Path.Combine(Environment.CurrentDirectory, $"{settings.ProjectName}/{settings.FeaturesFolder}");
         }
     }
 }

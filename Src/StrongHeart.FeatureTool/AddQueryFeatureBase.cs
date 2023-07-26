@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
-namespace {Helper.GetNamespace(settings)}.Queries.{settings.FeatureName}
+namespace {Helper.GetNamespace(settings, "Queries")}
 {{
     [System.Diagnostics.DebuggerStepThrough]
     public record {settings.FeatureName}Request(ICaller Caller) : IRequest;
