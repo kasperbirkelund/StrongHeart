@@ -38,14 +38,14 @@ namespace StrongHeart.Features.Core
             return new(default, value, ResultType.QueuedForLaterExecution);
         }
 
-        public static Result<T> FromResult<T>(Result result, T args)
+        public static Result<TResult> FromResult<TResult>(Result result, TResult args)
         {
             return result.Status switch
             {
-                ResultType.ExecutedSuccessfully => Result<T>.Success(args),
-                ResultType.QueuedForLaterExecution => Result<T>.QueuedForLaterExecution(args),
-                ResultType.ClientError => Result<T>.ClientError(result.Error!),
-                ResultType.ServerError => Result<T>.ServerError(result.Error!),
+                ResultType.ExecutedSuccessfully => Result<TResult>.Success(args),
+                ResultType.QueuedForLaterExecution => Result<TResult>.QueuedForLaterExecution(args),
+                ResultType.ClientError => Result<TResult>.ClientError(result.Error!),
+                ResultType.ServerError => Result<TResult>.ServerError(result.Error!),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

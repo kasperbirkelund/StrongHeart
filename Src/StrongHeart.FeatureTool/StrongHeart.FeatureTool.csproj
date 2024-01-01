@@ -14,4 +14,8 @@
     <PackageReference Include="Spectre.Console.Cli" Version="0.47.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StrongHeart.Features\StrongHeart.Features.csproj" />
+  </ItemGroup>
+
 </Project>
