@@ -1,8 +1,7 @@
-﻿namespace StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery
+﻿namespace StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery;
+
+public enum DataType
 {
-    public enum DataType
-    {
-        A,
-        B
-    }
+    A,
+    B
 }

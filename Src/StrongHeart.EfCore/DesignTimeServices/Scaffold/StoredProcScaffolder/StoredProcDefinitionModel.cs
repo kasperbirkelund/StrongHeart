@@ -4,95 +4,95 @@ using System.Data;
 using System.Linq;
 using Microsoft.Data.SqlClient;
 
-namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder
-{
-    internal class StoredProcDefinitionModel
-    {
-        public string Name { get; }
-        public string Schema { get; }
-        public IEnumerable<StoredProcInputParameter> Input { get; }
-        public IEnumerable<StoredProcOutputParameter> Output { get; }
+namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder;
 
-        private StoredProcDefinitionModel(string name, string schema, IEnumerable<StoredProcInputParameter> input, IEnumerable<StoredProcOutputParameter> output)
+internal class StoredProcDefinitionModel
+{
+    public string Name { get; }
+    public string Schema { get; }
+    public IEnumerable<StoredProcInputParameter> Input { get; }
+    public IEnumerable<StoredProcOutputParameter> Output { get; }
+
+    private StoredProcDefinitionModel(string name, string schema, IEnumerable<StoredProcInputParameter> input, IEnumerable<StoredProcOutputParameter> output)
+    {
+        Name = name;
+        Schema = schema;
+        Input = input;
+        Output = output;
+    }
+
+    /// <summary>
+    /// Extract needed stored procedure information from the database.
+    /// </summary>
+    public static IEnumerable<StoredProcDefinitionModel> GetStoredProcModel(string connectionString, GenerateStoredProcedureOptions options)
+    {
+        using SqlConnection con = new SqlConnection(connectionString);
+        con.Open();
+        using var command = con.CreateCommand();
+        command.CommandText = GetInputParameterSql(options);
+
+        var tmpList = new List<(string? schema, string? procName, string? sqlType, string? paramName, bool? isNullable)>();
+        using (var reader = command.ExecuteReader(CommandBehavior.Default))
         {
-            Name = name;
-            Schema = schema;
-            Input = input;
-            Output = output;
+            while (reader.Read())
+            {
+                object isNullableObj = reader[4];
+                bool? isNullable = isNullableObj == DBNull.Value ? (bool?)null : Convert.ToBoolean(isNullableObj);
+                tmpList.Add((reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), isNullable));
+            }
         }
 
-        /// <summary>
-        /// Extract needed stored procedure information from the database.
-        /// </summary>
-        public static IEnumerable<StoredProcDefinitionModel> GetStoredProcModel(string connectionString, GenerateStoredProcedureOptions options)
+        var grp = tmpList.GroupBy(x => x.procName);
+        List<StoredProcDefinitionModel> modelDescriptions = new List<StoredProcDefinitionModel>();
+        foreach (var g in grp)
         {
-            using SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
-            using var command = con.CreateCommand();
-            command.CommandText = GetInputParameterSql(options);
+            IEnumerable<StoredProcInputParameter> inputs = Enumerable.Empty<StoredProcInputParameter>();
+            if (g.All(x => x.isNullable != null))
+            {
+                inputs = g.Select(x => new StoredProcInputParameter(x.paramName, x.sqlType, x.isNullable.Value));
+            }
 
-            var tmpList = new List<(string? schema, string? procName, string? sqlType, string? paramName, bool? isNullable)>();
-            using (var reader = command.ExecuteReader(CommandBehavior.Default))
+            List<StoredProcOutputParameter> outputs = new List<StoredProcOutputParameter>();
+
+            command.CommandText = $"SELECT name, system_type_name, is_nullable FROM sys.dm_exec_describe_first_result_set (N'[{g.First().schema}].[{g.First().procName}]', null, 0);";
+
+            using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.Default))
             {
                 while (reader.Read())
                 {
-                    object isNullableObj = reader[4];
-                    bool? isNullable = isNullableObj == DBNull.Value ? (bool?)null : Convert.ToBoolean(isNullableObj);
-                    tmpList.Add((reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), isNullable));
+                    outputs.Add(new StoredProcOutputParameter(reader.GetString("name"), reader.GetString("system_type_name"), reader.GetBoolean("is_nullable")));
                 }
             }
 
-            var grp = tmpList.GroupBy(x => x.procName);
-            List<StoredProcDefinitionModel> modelDescriptions = new List<StoredProcDefinitionModel>();
-            foreach (var g in grp)
-            {
-                IEnumerable<StoredProcInputParameter> inputs = Enumerable.Empty<StoredProcInputParameter>();
-                if (g.All(x => x.isNullable != null))
-                {
-                    inputs = g.Select(x => new StoredProcInputParameter(x.paramName, x.sqlType, x.isNullable.Value));
-                }
-
-                List<StoredProcOutputParameter> outputs = new List<StoredProcOutputParameter>();
-
-                command.CommandText = $"SELECT name, system_type_name, is_nullable FROM sys.dm_exec_describe_first_result_set (N'[{g.First().schema}].[{g.First().procName}]', null, 0);";
-
-                using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.Default))
-                {
-                    while (reader.Read())
-                    {
-                        outputs.Add(new StoredProcOutputParameter(reader.GetString("name"), reader.GetString("system_type_name"), reader.GetBoolean("is_nullable")));
-                    }
-                }
-
-                StoredProcDefinitionModel model = new StoredProcDefinitionModel(g.Key, g.First().schema, inputs, outputs);
-                modelDescriptions.Add(model);
-            }
-
-            return modelDescriptions;
+            StoredProcDefinitionModel model = new StoredProcDefinitionModel(g.Key, g.First().schema, inputs, outputs);
+            modelDescriptions.Add(model);
         }
 
-        private static string AsSqlString(IEnumerable<string> items)
+        return modelDescriptions;
+    }
+
+    private static string AsSqlString(IEnumerable<string> items)
+    {
+        return string.Join(", ", items.Select(x => $"'{x}'"));
+    }
+
+    private static string GetInputParameterSql(GenerateStoredProcedureOptions options)
+    {
+        Console.Out.WriteLine(options.ToDebugString());
+
+        string tableRestrictionString = string.Empty;
+        if (options.ApplicationSpecificOptions.ProceduresToOmit.Any())
         {
-            return string.Join(", ", items.Select(x => $"'{x}'"));
+            tableRestrictionString = $"WHERE FullName NOT IN({AsSqlString(options.ApplicationSpecificOptions.ProceduresToOmit)})";
+        }
+        string schemaClause = "WHERE sp.Name LIKE 'Read%'"; //only apply to procedures which have Read as prefix
+        if (options.ExplicitSchemasToInclude.Any())
+        {
+            string schemaString = AsSqlString(options.ApplicationSpecificOptions.ProceduresToOmit);
+            schemaClause = $"AND OBJECT_SCHEMA_NAME(sp.object_id) IN ({schemaString})";
         }
 
-        private static string GetInputParameterSql(GenerateStoredProcedureOptions options)
-        {
-            Console.Out.WriteLine(options.ToDebugString());
-
-            string tableRestrictionString = string.Empty;
-            if (options.ApplicationSpecificOptions.ProceduresToOmit.Any())
-            {
-                tableRestrictionString = $"WHERE FullName NOT IN({AsSqlString(options.ApplicationSpecificOptions.ProceduresToOmit)})";
-            }
-            string schemaClause = "WHERE sp.Name LIKE 'Read%'"; //only apply to procedures which have Read as prefix
-            if (options.ExplicitSchemasToInclude.Any())
-            {
-                string schemaString = AsSqlString(options.ApplicationSpecificOptions.ProceduresToOmit);
-                schemaClause = $"AND OBJECT_SCHEMA_NAME(sp.object_id) IN ({schemaString})";
-            }
-
-            return $@"
+        return $@"
 ;WITH tmp AS(
 	SELECT
 		OBJECT_SCHEMA_NAME(sp.object_id) AS SchemaName,
@@ -111,6 +111,5 @@ SELECT SchemaName, ProcedureName, SqlTypeName, ParameterName, IsNullable
 FROM tmp
 {tableRestrictionString}
 ORDER BY (SchemaName + ProcedureName), parameter_id";
-        }
     }
 }

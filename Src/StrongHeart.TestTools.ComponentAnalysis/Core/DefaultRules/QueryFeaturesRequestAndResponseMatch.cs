@@ -4,32 +4,31 @@ using StrongHeart.Features;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
+namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules;
+
+public class QueryFeaturesRequestAndResponseMatch : IRule<Type>
 {
-    public class QueryFeaturesRequestAndResponseMatch : IRule<Type>
+    public string CorrectiveAction => "Ensure that the query feature name is consistent with the request and response name. Correct naming is GetEmployeeFeature, GetEmployeeRequest, GetEmployeeResponse.";
+    public bool DoVerifyItem(Type type)
     {
-        public string CorrectiveAction => "Ensure that the query feature name is consistent with the request and response name. Correct naming is GetEmployeeFeature, GetEmployeeRequest, GetEmployeeResponse.";
-        public bool DoVerifyItem(Type type)
+        return
+            !type.IsAbstract && //this might be a QueryFeatureBase-class
+            type.DoesImplementInterface(typeof(IQueryFeature<,>)) &&
+            !type.DoesImplementInterface(typeof(IQueryDecorator<,>));
+    }
+
+    public bool IsValid(Type type, Action<string> output)
+    {
+        Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQueryFeature<,>));
+        if (featureInterface == null)
         {
-            return
-                !type.IsAbstract && //this might be a QueryFeatureBase-class
-                type.DoesImplementInterface(typeof(IQueryFeature<,>)) &&
-                !type.DoesImplementInterface(typeof(IQueryDecorator<,>));
+            return false;
         }
 
-        public bool IsValid(Type type, Action<string> output)
-        {
-            Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IQueryFeature<,>));
-            if (featureInterface == null)
-            {
-                return false;
-            }
+        string featureNameRaw = type.Name.Replace("Feature", string.Empty);
+        string featureRequestRaw = featureInterface.GetGenericArguments()[0].Name.Replace("Request", string.Empty);
+        string featureResponseRaw = featureInterface.GetGenericArguments()[1].Name.Replace("Response", string.Empty);
 
-            string featureNameRaw = type.Name.Replace("Feature", string.Empty);
-            string featureRequestRaw = featureInterface.GetGenericArguments()[0].Name.Replace("Request", string.Empty);
-            string featureResponseRaw = featureInterface.GetGenericArguments()[1].Name.Replace("Response", string.Empty);
-
-            return featureResponseRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
-        }
+        return featureResponseRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
     }
 }

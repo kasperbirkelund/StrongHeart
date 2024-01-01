@@ -5,90 +5,89 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core
+namespace StrongHeart.TestTools.ComponentAnalysis.Core;
+
+public static class VerifyThat
 {
-    public static class VerifyThat
+    //public static Component Component(Component component)
+    //{
+    //    return component;
+    //}
+
+    //public static IEnumerable<Component> Components(IEnumerable<Component> components)
+    //{
+    //    return components;
+    //}
+
+    public static IEnumerable<Assembly> AllReferencedAssemblies(Assembly mainAssembly, Func<AssemblyName, bool> predicate)
     {
-        //public static Component Component(Component component)
-        //{
-        //    return component;
-        //}
+        IEnumerable<Assembly> assemblies = mainAssembly
+            .GetReferencedAssemblies() //be aware that only USED referenced assemblies will be considered as 'referenced'
+            .Where(predicate)
+            .Select(Assembly.Load);
 
-        //public static IEnumerable<Component> Components(IEnumerable<Component> components)
-        //{
-        //    return components;
-        //}
+        return assemblies;
+    }
 
-        public static IEnumerable<Assembly> AllReferencedAssemblies(Assembly mainAssembly, Func<AssemblyName, bool> predicate)
-        {
-            IEnumerable<Assembly> assemblies = mainAssembly
-                .GetReferencedAssemblies() //be aware that only USED referenced assemblies will be considered as 'referenced'
-                .Where(predicate)
-                .Select(Assembly.Load);
-
-            return assemblies;
-        }
-
-        public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly, Func<AssemblyName, bool> predicate)
-        {
-            IEnumerable<Type> types =
-                AllReferencedAssemblies(mainAssembly, predicate)
+    public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly, Func<AssemblyName, bool> predicate)
+    {
+        IEnumerable<Type> types =
+            AllReferencedAssemblies(mainAssembly, predicate)
                 .SelectMany(x => x.GetTypes())
                 .Where(x => !IsAnonymousType(x))
                 .Where(x => !x.FullName.Contains("Test"));
 
-            return types;
-        }
+        return types;
+    }
 
-        public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly)
-        {
-            return AllTypesFromAllReferencedAssemblies(mainAssembly, _ => true);
-        }
+    public static IEnumerable<Type> AllTypesFromAllReferencedAssemblies(Assembly mainAssembly)
+    {
+        return AllTypesFromAllReferencedAssemblies(mainAssembly, _ => true);
+    }
 
-        private static bool IsAnonymousType(this Type type)
-        {
-            return type.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
-        }
+    private static bool IsAnonymousType(this Type type)
+    {
+        return type.GetCustomAttribute<CompilerGeneratedAttribute>() != null;
+    }
 
-        public static IEnumerable<Type> AllTypesFromAssemblies(IEnumerable<Assembly> assemblies)
-        {
-            IEnumerable<Type> types = assemblies.SelectMany(x => x.GetTypes());
-            return types;
-        }
+    public static IEnumerable<Type> AllTypesFromAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        IEnumerable<Type> types = assemblies.SelectMany(x => x.GetTypes());
+        return types;
+    }
 
-        public static IEnumerable<Type> AllTypesFromAssembly(Assembly assembly)
-        {
-            return AllTypesFromAssemblies(new[] {assembly});
-        }
+    public static IEnumerable<Type> AllTypesFromAssembly(Assembly assembly)
+    {
+        return AllTypesFromAssemblies(new[] {assembly});
+    }
 
-        public static IEnumerable<MethodInfo> AllMethodsFromTypes(this IEnumerable<Type> types)
-        {
-            return types.SelectMany(x => x.GetMethods());
-        }
+    public static IEnumerable<MethodInfo> AllMethodsFromTypes(this IEnumerable<Type> types)
+    {
+        return types.SelectMany(x => x.GetMethods());
+    }
 
-        public static IEnumerable<T> GetFromCustomSqlQuery<T>(Func<IDbConnection> connectionFactory, string sql, Func<IDataReader, T> readFunc)
+    public static IEnumerable<T> GetFromCustomSqlQuery<T>(Func<IDbConnection> connectionFactory, string sql, Func<IDataReader, T> readFunc)
+    {
+        using (var connection = connectionFactory())
         {
-            using (var connection = connectionFactory())
+            if (connection.State == ConnectionState.Closed)
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
+                connection.Open();
+            }
 
-                using (var command = connection.CreateCommand())
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = sql;
+                using (var reader = command.ExecuteReader())
                 {
-                    command.CommandText = sql;
-                    using (var reader = command.ExecuteReader())
+                    List<T> list = new();
+                    while (reader.Read())
                     {
-                        List<T> list = new();
-                        while (reader.Read())
-                        {
-                            list.Add(readFunc(reader));
-                        }
+                        list.Add(readFunc(reader));
+                    }
 
-                        return list;
-                    } 
-                }
+                    return list;
+                } 
             }
         }
     }

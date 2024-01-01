@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace StrongHeart.DemoApp.WebApi.Services
+namespace StrongHeart.DemoApp.WebApi.Services;
+
+public class ConfigurationReaderImpl : IConfigurationReader
 {
-    public class ConfigurationReaderImpl : IConfigurationReader
+    public bool GetValue()
     {
-        public bool GetValue()
-        {
-            return DateTime.Now.Second % 2 == 0;
-        }
+        return DateTime.Now.Second % 2 == 0;
     }
 }

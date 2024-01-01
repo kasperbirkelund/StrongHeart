@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace StrongHeart.Features.Decorators
+namespace StrongHeart.Features.Decorators;
+
+public interface IPipelineExtension
 {
-    public interface IPipelineExtension
-    {
-        Func<Type, bool> ShouldApplyPipelineExtension { get; }
-        Type QueryTypeDecorator { get; }
-        Type CommandTypeDecorator { get; }
-        void RegisterServices(IServiceCollection services);
-    }
+    Func<Type, bool> ShouldApplyPipelineExtension { get; }
+    Type QueryTypeDecorator { get; }
+    Type CommandTypeDecorator { get; }
+    void RegisterServices(IServiceCollection services);
 }

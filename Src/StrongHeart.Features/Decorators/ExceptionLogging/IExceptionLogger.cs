@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace StrongHeart.Features.Decorators.ExceptionLogging
+namespace StrongHeart.Features.Decorators.ExceptionLogging;
+
+public interface IExceptionLogger
 {
-    public interface IExceptionLogger
-    {
-        Func<Exception, Task> Handler { get; }
-    }
+    Func<Exception, Task> Handler { get; }
 }

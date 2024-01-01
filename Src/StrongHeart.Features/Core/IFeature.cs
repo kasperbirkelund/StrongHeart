@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace StrongHeart.Features.Core
+namespace StrongHeart.Features.Core;
+
+public interface IFeature<in TRequest, TResponse> : IFeatureMarker
+    where TRequest : IRequest
 {
-    public interface IFeature<in TRequest, TResponse> : IFeatureMarker
-        where TRequest : IRequest
-    {
-        Task<TResponse> Execute(TRequest request);
-    }
+    Task<TResponse> Execute(TRequest request);
 }

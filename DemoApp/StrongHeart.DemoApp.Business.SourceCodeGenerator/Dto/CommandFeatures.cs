@@ -1,8 +1,7 @@
-﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto
+﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
+
+public class CommandFeatures
 {
-    public class CommandFeatures
-    {
-        public string RootNamespace { get; set; }
-        public CommandFeature[] Items { get; set; }
-    }
+    public string RootNamespace { get; set; }
+    public CommandFeature[] Items { get; set; }
 }

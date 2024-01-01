@@ -2,110 +2,109 @@
 using System.Linq;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
-namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
+namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml;
+
+public class YamlCommandFeatureReader : IFeatureReader<CommandFeatures>
 {
-    public class YamlCommandFeatureReader : IFeatureReader<CommandFeatures>
+    private readonly IStringReader _stringReader;
+
+    public YamlCommandFeatureReader(IStringReader stringReader)
     {
-        private readonly IStringReader _stringReader;
+        _stringReader = stringReader;
+    }
+    public CommandFeatures GetFeatures()
+    {
+        string[] lines = _stringReader.ReadLines();
+        string ns = GetNameSpace(lines);
+        var q = GetCommands(lines);
 
-        public YamlCommandFeatureReader(IStringReader stringReader)
+        return new CommandFeatures()
         {
-            _stringReader = stringReader;
-        }
-        public CommandFeatures GetFeatures()
-        {
-            string[] lines = _stringReader.ReadLines();
-            string ns = GetNameSpace(lines);
-            var q = GetCommands(lines);
+            RootNamespace = ns,
+            Items = q.ToArray()
+        };
+    }
 
-            return new CommandFeatures()
+    private string GetNameSpace(string[] lines)
+    {
+        return lines.First().Replace("- rootNameSpace: ", string.Empty).Trim();
+    }
+
+    private IEnumerable<CommandFeature> GetCommands(IList<string> lines)
+    {
+        lines = lines.Skip(1).ToArray();
+
+        CommandFeature feature = null;
+        for (int i = 0; i < lines.Count; i++)
+        {
+            string line = lines[i];
+
+            if (line.Contains("- name:"))
             {
-                RootNamespace = ns,
-                Items = q.ToArray()
-            };
-        }
-
-        private string GetNameSpace(string[] lines)
-        {
-            return lines.First().Replace("- rootNameSpace: ", string.Empty).Trim();
-        }
-
-        private IEnumerable<CommandFeature> GetCommands(IList<string> lines)
-        {
-            lines = lines.Skip(1).ToArray();
-
-            CommandFeature feature = null;
-            for (int i = 0; i < lines.Count; i++)
+                feature = new CommandFeature()
+                {
+                    Request = new CommandRequest()
+                };
+                feature.Name = line.Replace("- name:", string.Empty).Trim();
+            }
+            else if (line.Contains("additionalRequestProperties"))
             {
-                string line = lines[i];
-
-                if (line.Contains("- name:"))
+                List<string> list = new();
+                for (++i; ; i++)
                 {
-                    feature = new CommandFeature()
+                    if (i < lines.Count)
                     {
-                        Request = new CommandRequest()
-                    };
-                    feature.Name = line.Replace("- name:", string.Empty).Trim();
-                }
-                else if (line.Contains("additionalRequestProperties"))
-                {
-                    List<string> list = new();
-                    for (++i; ; i++)
-                    {
-                        if (i < lines.Count)
+                        string innerLine = lines[i];
+                        if (innerLine.TrimStart().StartsWith("-"))
                         {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature.Request.AdditionalRequestProperties = list;
-                                line = innerLine;
-                                break;
-                            }
+                            list.Add(innerLine.Replace("-", string.Empty).Trim());
                         }
                         else
                         {
+                            feature.Request.AdditionalRequestProperties = list;
+                            line = innerLine;
                             break;
                         }
                     }
-                }
-                if (line.Contains("dtoProperties"))
-                {
-                    List<string> list = new();
-                    for (++i; ; i++)
+                    else
                     {
-                        if (i < lines.Count)
+                        break;
+                    }
+                }
+            }
+            if (line.Contains("dtoProperties"))
+            {
+                List<string> list = new();
+                for (++i; ; i++)
+                {
+                    if (i < lines.Count)
+                    {
+                        string innerLine = lines[i];
+                        if (innerLine.TrimStart().StartsWith("-"))
                         {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature.Request.DtoProperties = list;
-                                line = innerLine;
-                                break;
-                            }
+                            list.Add(innerLine.Replace("-", string.Empty).Trim());
                         }
                         else
                         {
                             feature.Request.DtoProperties = list;
-                            yield return feature;
+                            line = innerLine;
                             break;
                         }
                     }
-                }
-
-                if (line == string.Empty)
-                {
-                    yield return feature;
+                    else
+                    {
+                        feature.Request.DtoProperties = list;
+                        yield return feature;
+                        break;
+                    }
                 }
             }
-        }
 
+            if (line == string.Empty)
+            {
+                yield return feature;
+            }
+        }
     }
+
 }

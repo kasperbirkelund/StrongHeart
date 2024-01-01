@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace StrongHeart.Features.Decorators.TimeAlert
+namespace StrongHeart.Features.Decorators.TimeAlert;
+
+public interface ITimeAlert
 {
-    public interface ITimeAlert
-    {
-        TimeSpan MaxAllowedExecutionTime { get; }
-    }
+    TimeSpan MaxAllowedExecutionTime { get; }
 }

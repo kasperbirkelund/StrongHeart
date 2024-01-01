@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.Core.FeatureToggling
+﻿namespace StrongHeart.Core.FeatureToggling;
+
+public interface IFeatureToggle<T> where T : IFeatureToggle<T>
 {
-    public interface IFeatureToggle<T> where T : IFeatureToggle<T>
-    {
-        bool IsFeatureEnabled { get; }
-    }
+    bool IsFeatureEnabled { get; }
 }

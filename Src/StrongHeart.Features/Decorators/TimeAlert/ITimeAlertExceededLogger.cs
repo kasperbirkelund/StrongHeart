@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace StrongHeart.Features.Decorators.TimeAlert
+namespace StrongHeart.Features.Decorators.TimeAlert;
+
+public interface ITimeAlertExceededLogger
 {
-    public interface ITimeAlertExceededLogger
-    {
-        Task LogTimeExceeded(TimeExceededData data);
-    }
+    Task LogTimeExceeded(TimeExceededData data);
 }

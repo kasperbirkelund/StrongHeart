@@ -1,6 +1,5 @@
-﻿namespace StrongHeart.EfCore
+﻿namespace StrongHeart.EfCore;
+
+public interface IReadModel
 {
-    public interface IReadModel
-    {
-    }
 }

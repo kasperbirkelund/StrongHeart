@@ -1,9 +1,8 @@
 ﻿using StrongHeart.Features.Documentation.Visitors;
 
-namespace StrongHeart.Features.Documentation.Sections
+namespace StrongHeart.Features.Documentation.Sections;
+
+public interface ISection
 {
-    public interface ISection
-    {
-        void Accept(ISectionVisitor visitor);
-    }
+    void Accept(ISectionVisitor visitor);
 }

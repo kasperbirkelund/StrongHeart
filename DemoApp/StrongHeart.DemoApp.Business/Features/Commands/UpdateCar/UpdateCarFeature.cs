@@ -6,32 +6,31 @@ using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.DemoApp.Business.Features.Commands.UpdateCar
+namespace StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
+
+public partial class UpdateCarFeature
 {
-    public partial class UpdateCarFeature
+    private readonly string[] _validModelNames = new[] {"Skoda"};
+
+    public override Task<Result> Execute(UpdateCarRequest request)
     {
-        private readonly string[] _validModelNames = new[] {"Skoda"};
+        //Do work
 
-        public override Task<Result> Execute(UpdateCarRequest request)
+        //Put the request on a queue and return "QueuedForLaterExecution" -
+        //OR do the job immediately and return Result.Success()
+        return Task.FromResult(Result.QueuedForLaterExecution());
+    }
+
+    protected override IEnumerable<ValidationMessage> ValidateRequest(UpdateCarRequest request)
+    {
+        if (!_validModelNames.Contains(request.Model.Model))
         {
-            //Do work
-
-            //Put the request on a queue and return "QueuedForLaterExecution" -
-            //OR do the job immediately and return Result.Success()
-            return Task.FromResult(Result.QueuedForLaterExecution());
+            yield return "Model must be " + string.Join(", ", _validModelNames);
         }
+    }
 
-        protected override IEnumerable<ValidationMessage> ValidateRequest(UpdateCarRequest request)
-        {
-            if (!_validModelNames.Contains(request.Model.Model))
-            {
-                yield return "Model must be " + string.Join(", ", _validModelNames);
-            }
-        }
-
-        protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
-        {
-            yield return new TextSection("Valid request values: " + string.Join(", ", _validModelNames));
-        }
+    protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
+    {
+        yield return new TextSection("Valid request values: " + string.Join(", ", _validModelNames));
     }
 }

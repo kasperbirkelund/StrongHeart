@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.Core.Security
+﻿namespace StrongHeart.Core.Security;
+
+public interface ICallerProvider
 {
-    public interface ICallerProvider
-    {
-        ICaller GetCurrentCaller();
-    }
+    ICaller GetCurrentCaller();
 }

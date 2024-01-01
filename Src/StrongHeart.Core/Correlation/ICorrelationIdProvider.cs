@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace StrongHeart.Core.Correlation
+namespace StrongHeart.Core.Correlation;
+
+public interface ICorrelationIdProvider
 {
-    public interface ICorrelationIdProvider
-    {
-        Guid CorrelationId { get; }
-        void Initialize(Guid? newId = null);
-    }
+    Guid CorrelationId { get; }
+    void Initialize(Guid? newId = null);
 }

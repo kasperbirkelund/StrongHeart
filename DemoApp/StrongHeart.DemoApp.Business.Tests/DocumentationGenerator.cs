@@ -11,35 +11,34 @@ using StrongHeart.Features.Documentation.Visitors;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace StrongHeart.DemoApp.Business.Tests
+namespace StrongHeart.DemoApp.Business.Tests;
+
+public class DocumentationGenerator
 {
-    public class DocumentationGenerator
+    private readonly ITestOutputHelper _helper;
+
+    public DocumentationGenerator(ITestOutputHelper helper)
     {
-        private readonly ITestOutputHelper _helper;
+        _helper = helper;
+    }
 
-        public DocumentationGenerator(ITestOutputHelper helper)
-        {
-            _helper = helper;
-        }
+    [Fact]
+    public void GenerateDocumentation()
+    {
+        Assembly assembly = typeof(FeatureBase).Assembly;
+        IServiceCollection services = new ServiceCollection();
+        services.AddStrongHeart(_ => { }, assembly);
+        services.AddTransient<IFoo, Foo>();
+        services.AddSingleton<IEventPublisher, DummyEventPublisher>();
+        Type[] features = typeof(FeatureBase).Assembly.GetExportedTypes()
+            .Where(x => typeof(IDocumentationDescriber).IsAssignableFrom(x) && !x.IsAbstract && x.IsClass)
+            .ToArray();
+        Array.ForEach(features, type => services.AddTransient(type));
 
-        [Fact]
-        public void GenerateDocumentation()
-        {
-            Assembly assembly = typeof(FeatureBase).Assembly;
-            IServiceCollection services = new ServiceCollection();
-            services.AddStrongHeart(_ => { }, assembly);
-            services.AddTransient<IFoo, Foo>();
-            services.AddSingleton<IEventPublisher, DummyEventPublisher>();
-            Type[] features = typeof(FeatureBase).Assembly.GetExportedTypes()
-                .Where(x => typeof(IDocumentationDescriber).IsAssignableFrom(x) && !x.IsAbstract && x.IsClass)
-                .ToArray();
-            Array.ForEach(features, type => services.AddTransient(type));
+        string sourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<GetCarFeature>(@"\DemoApp\");
 
-            string sourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<GetCarFeature>(@"\DemoApp\");
-
-            MarkDownVisitor visitor = new MarkDownVisitor();
-            DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor);
-            _helper.WriteLine(visitor.AsString());
-        }
+        MarkDownVisitor visitor = new MarkDownVisitor();
+        DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor);
+        _helper.WriteLine(visitor.AsString());
     }
 }

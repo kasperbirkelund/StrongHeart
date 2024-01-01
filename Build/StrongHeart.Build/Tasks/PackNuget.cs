@@ -3,15 +3,15 @@ using Cake.Common.Tools.DotNet;
 using Cake.Frosting;
 using StrongHeart.Build.Tasks.Utilities;
 
-namespace StrongHeart.Build.Tasks
+namespace StrongHeart.Build.Tasks;
+
+[IsDependentOn(typeof(CiBuild))]
+public class PackNuget : FrostingTask<StrongHeartBuildContext>
 {
-    [IsDependentOn(typeof(CiBuild))]
-    public class PackNuget : FrostingTask<StrongHeartBuildContext>
+    public override void Run(StrongHeartBuildContext context)
     {
-        public override void Run(StrongHeartBuildContext context)
-        {
-            context.DeleteFiles("**/*.nupkg");
-            context.DeleteFiles("**/*.nuspec");
+        context.DeleteFiles("**/*.nupkg");
+        context.DeleteFiles("**/*.nuspec");
 
             string[] projectsToNugetPack =
             {
@@ -26,10 +26,9 @@ namespace StrongHeart.Build.Tasks
                 "StrongHeart.FeatureTool"
             };
 
-            foreach (string project in projectsToNugetPack)
-            {
-                context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
-            }
+        foreach (string project in projectsToNugetPack)
+        {
+            context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
         }
     }
 }

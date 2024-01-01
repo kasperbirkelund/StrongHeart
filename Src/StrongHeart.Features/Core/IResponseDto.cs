@@ -1,6 +1,5 @@
-﻿namespace StrongHeart.Features.Core
+﻿namespace StrongHeart.Features.Core;
+
+public interface IResponseDto
 {
-    public interface IResponseDto
-    {
-    }
 }

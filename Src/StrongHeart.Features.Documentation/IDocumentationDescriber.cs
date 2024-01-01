@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.Features.Documentation
+namespace StrongHeart.Features.Documentation;
+
+public interface IDocumentationDescriber
 {
-    public interface IDocumentationDescriber
-    {
-        string? DocName { get; }
-        int? Order { get; }
-        IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context);
-    }
+    string? DocName { get; }
+    int? Order { get; }
+    IEnumerable<ISection> GetDocumentationSections(DocumentationGenerationContext context);
 }

@@ -3,62 +3,61 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.DemoApp.Business.Tests
+namespace StrongHeart.DemoApp.Business.Tests;
+
+public class TestExecutorFactory
 {
-    public class TestExecutorFactory
+    public static ITestExecutor Create(IServiceCollection services)
     {
-        public static ITestExecutor Create(IServiceCollection services)
+        return new TestExecutor(services, true);
+    }
+
+    private class TestExecutor : ITestExecutor
+    {
+        private readonly bool _checkForSuccessExecutionResult;
+
+        internal TestExecutor(IServiceCollection services, bool checkForSuccessExecutionResult)
         {
-            return new TestExecutor(services, true);
+            _checkForSuccessExecutionResult = checkForSuccessExecutionResult;
+            var provider = services.BuildServiceProvider();
+            Scope = provider.CreateScope();
         }
 
-        private class TestExecutor : ITestExecutor
+        public IServiceScope Scope { get; }
+
+        public void Dispose()
         {
-            private readonly bool _checkForSuccessExecutionResult;
+            Scope.Dispose();
+        }
 
-            internal TestExecutor(IServiceCollection services, bool checkForSuccessExecutionResult)
+        public async Task<Result<TResponse>> RunQuery<TRequest, TResponse>(TRequest request)
+            where TRequest : IRequest
+            where TResponse : class, IResponseDto
+        {
+            var feature = Scope.ServiceProvider.GetRequiredService<IQueryFeature<TRequest, TResponse>>();
+            Result<TResponse> result = await feature.Execute(request);
+            CheckStatus<TRequest>(result);
+
+            return result;
+        }
+
+        public async Task<Result> RunCommand<TRequest, TRequestDto>(TRequest request)
+            where TRequestDto : IRequestDto
+            where TRequest : IRequest<TRequestDto>
+        {
+            var feature = Scope.ServiceProvider.GetRequiredService<ICommandFeature<TRequest, TRequestDto>>();
+            Result result = await feature.Execute(request);
+            CheckStatus<TRequest>(result);
+
+            return result;
+        }
+
+        private void CheckStatus<TRequest>(IResult result)
+        {
+            if (_checkForSuccessExecutionResult && !result.IsSuccess)
             {
-                _checkForSuccessExecutionResult = checkForSuccessExecutionResult;
-                var provider = services.BuildServiceProvider();
-                Scope = provider.CreateScope();
-            }
-
-            public IServiceScope Scope { get; }
-
-            public void Dispose()
-            {
-                Scope.Dispose();
-            }
-
-            public async Task<Result<TResponse>> RunQuery<TRequest, TResponse>(TRequest request)
-                where TRequest : IRequest
-                where TResponse : class, IResponseDto
-            {
-                var feature = Scope.ServiceProvider.GetRequiredService<IQueryFeature<TRequest, TResponse>>();
-                Result<TResponse> result = await feature.Execute(request);
-                CheckStatus<TRequest>(result);
-
-                return result;
-            }
-
-            public async Task<Result> RunCommand<TRequest, TRequestDto>(TRequest request)
-                where TRequestDto : IRequestDto
-                where TRequest : IRequest<TRequestDto>
-            {
-                var feature = Scope.ServiceProvider.GetRequiredService<ICommandFeature<TRequest, TRequestDto>>();
-                Result result = await feature.Execute(request);
-                CheckStatus<TRequest>(result);
-
-                return result;
-            }
-
-            private void CheckStatus<TRequest>(IResult result)
-            {
-                if (_checkForSuccessExecutionResult && !result.IsSuccess)
-                {
-                    throw new InvalidOperationException(
-                        $"Execution failed on request {typeof(TRequest).Name}: {result.Error}");
-                }
+                throw new InvalidOperationException(
+                    $"Execution failed on request {typeof(TRequest).Name}: {result.Error}");
             }
         }
     }

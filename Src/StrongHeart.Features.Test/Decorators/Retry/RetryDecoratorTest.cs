@@ -8,36 +8,35 @@ using StrongHeart.Features.Test.Decorators.Retry.Features.Queries.TestQuery;
 using StrongHeart.Features.Test.Helpers;
 using Xunit;
 
-namespace StrongHeart.Features.Test.Decorators.Retry
+namespace StrongHeart.Features.Test.Decorators.Retry;
+
+public class RetryDecoratorTest
 {
-    public class RetryDecoratorTest
+    [Fact]
+    public async Task RetryCommandEnsuresProperRetry()
     {
-        [Fact]
-        public async Task RetryCommandEnsuresProperRetry()
+        RetryExtension extension = new();
+        using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
         {
-            RetryExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
-                await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(2)));
+            var sut = scope.ServiceProvider.GetRequiredService<ICommandFeature<TestCommandRequest, TestCommandDto>>();
+            await sut.Execute(new TestCommandRequest(new TestAdminCaller(), new TestCommandDto(2)));
 
-                var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
-                messenger.Counter.Should().Be(2);
-            }
+            var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
+            messenger.Counter.Should().Be(2);
         }
+    }
 
-        [Fact]
-        public async Task RetryQueryEnsuresProperRetry()
+    [Fact]
+    public async Task RetryQueryEnsuresProperRetry()
+    {
+        RetryExtension extension = new();
+        using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
         {
-            RetryExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope(collection => collection.AddScoped<Messenger>()))
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+            await sut.Execute(new TestQueryRequest(new TestAdminCaller()));
 
-                var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
-                messenger.Counter.Should().Be(2);
-            }
+            var messenger = scope.ServiceProvider.GetRequiredService<Messenger>();
+            messenger.Counter.Should().Be(2);
         }
     }
 }

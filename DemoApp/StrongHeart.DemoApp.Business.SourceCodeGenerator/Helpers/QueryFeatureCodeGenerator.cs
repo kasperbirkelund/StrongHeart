@@ -1,26 +1,26 @@
 ﻿using System.Text;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
-namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
-{
-    internal class QueryFeatureCodeGenerator
-    {
-        public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader)
-        {
-            QueryFeatures features = reader.GetFeatures();
-            StringBuilder sb = new();
-            sb.AppendLine($"/* Queries (count={features.Items.Length})*/");
-            foreach (QueryFeature feature in features.Items)
-            {
-                sb.AppendLine(CreateCodeSnippet(feature, features.RootNamespace));
-            }
+namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers;
 
-            return sb.ToString();
+internal class QueryFeatureCodeGenerator
+{
+    public static string GetGeneratedCode(IFeatureReader<QueryFeatures> reader)
+    {
+        QueryFeatures features = reader.GetFeatures();
+        StringBuilder sb = new();
+        sb.AppendLine($"/* Queries (count={features.Items.Length})*/");
+        foreach (QueryFeature feature in features.Items)
+        {
+            sb.AppendLine(CreateCodeSnippet(feature, features.RootNamespace));
         }
 
-        private static string CreateCodeSnippet(QueryFeature feature, string rootNamespace)
-        {
-            string template = $@"namespace {rootNamespace}.Queries.{feature.Name}
+        return sb.ToString();
+    }
+
+    private static string CreateCodeSnippet(QueryFeature feature, string rootNamespace)
+    {
+        string template = $@"namespace {rootNamespace}.Queries.{feature.Name}
 {{
 {GetUsings(feature.Response.IsListResponse)}
 
@@ -33,41 +33,40 @@ namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
     public record {feature.Response.ResponseTypeName}({string.Join(", ", feature.Response.Properties)});
 }}
 ";
-            return template;
-        }
+        return template;
+    }
 
-        private static string GetUsings(bool isListResponse)
+    private static string GetUsings(bool isListResponse)
+    {
+        StringBuilder sb = new();
+        if (isListResponse)
         {
-            StringBuilder sb = new();
-            if (isListResponse)
-            {
-                sb.AppendLine("\tusing System.Collections.Generic;");
-            }
-            sb.AppendLine("\tusing StrongHeart.Core.Security;");
-            sb.AppendLine("\tusing StrongHeart.DemoApp.Business.Features;");
-            sb.Append("\tusing StrongHeart.Features.Core;");
-
-            return sb.ToString();
+            sb.AppendLine("\tusing System.Collections.Generic;");
         }
+        sb.AppendLine("\tusing StrongHeart.Core.Security;");
+        sb.AppendLine("\tusing StrongHeart.DemoApp.Business.Features;");
+        sb.Append("\tusing StrongHeart.Features.Core;");
 
-        private static string GetResponseParameters(QueryResponse response)
-        {
-            return response.IsListResponse ?
-                $"ICollection<{response.ResponseTypeName}> Items" :
-                $"{response.ResponseTypeName}? Item";
-        }
+        return sb.ToString();
+    }
 
-        private static string GetRequestParameters(QueryRequest request)
-        {
-            request.Properties.Add("ICaller Caller");
-            return string.Join(", ", request.Properties);
-        }
+    private static string GetResponseParameters(QueryResponse response)
+    {
+        return response.IsListResponse ?
+            $"ICollection<{response.ResponseTypeName}> Items" :
+            $"{response.ResponseTypeName}? Item";
+    }
 
-        private static string GetResponseInterface(QueryResponse response)
-        {
-            return response.IsListResponse ?
-                $"IGetListResponse<{response.ResponseTypeName}>" :
-                $"IGetSingleItemResponse<{response.ResponseTypeName}>";
-        }
+    private static string GetRequestParameters(QueryRequest request)
+    {
+        request.Properties.Add("ICaller Caller");
+        return string.Join(", ", request.Properties);
+    }
+
+    private static string GetResponseInterface(QueryResponse response)
+    {
+        return response.IsListResponse ?
+            $"IGetListResponse<{response.ResponseTypeName}>" :
+            $"IGetSingleItemResponse<{response.ResponseTypeName}>";
     }
 }

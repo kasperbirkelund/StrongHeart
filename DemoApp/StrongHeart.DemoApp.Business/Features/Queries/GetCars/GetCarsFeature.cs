@@ -8,42 +8,41 @@ using StrongHeart.Features.Decorators.Retry;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
-namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars
+namespace StrongHeart.DemoApp.Business.Features.Queries.GetCars;
+
+public partial class GetCarsFeature : IFilterable<GetCarsResponse>, IRetryable
 {
-    public partial class GetCarsFeature : IFilterable<GetCarsResponse>, IRetryable
+    public override Task<Result<GetCarsResponse>> Execute(GetCarsRequest request)
     {
-        public override Task<Result<GetCarsResponse>> Execute(GetCarsRequest request)
+        List<Car> items = new()
         {
-            List<Car> items = new()
+            new Car("Toyota", 2016),
+            new Car("Fiat", 2018)
+        };
+        items = items.Where(x => request.Model == null || x.Model == request.Model).ToList();
+        return Task.FromResult(Result<GetCarsResponse>.Success(new GetCarsResponse(items)));
+    }
+
+    public GetCarsResponse GetFilteredItem(IFilterDecisionContext context, GetCarsResponse response)
+    {
+        if (context.Caller.Claims.Any(x => x.Value == "dark-knight"))
+        {
+            return response with
             {
-                new Car("Toyota", 2016),
-                new Car("Fiat", 2018)
+                Items = new List<Car>()
             };
-            items = items.Where(x => request.Model == null || x.Model == request.Model).ToList();
-            return Task.FromResult(Result<GetCarsResponse>.Success(new GetCarsResponse(items)));
         }
+        return response;
+    }
 
-        public GetCarsResponse GetFilteredItem(IFilterDecisionContext context, GetCarsResponse response)
-        {
-            if (context.Caller.Claims.Any(x => x.Value == "dark-knight"))
-            {
-                return response with
-                {
-                    Items = new List<Car>()
-                };
-            }
-            return response;
-        }
+    public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)
+    {
+        //Some fancy algorithm...
+        return false;
+    }
 
-        public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)
-        {
-            //Some fancy algorithm...
-            return false;
-        }
-
-        protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
-        {
-            yield break;
-        }
+    protected override IEnumerable<ISection> OnGetDocumentationSections(DocumentationGenerationContext context)
+    {
+        yield break;
     }
 }

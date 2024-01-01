@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace StrongHeart.Features.Decorators.ExceptionLogging
+namespace StrongHeart.Features.Decorators.ExceptionLogging;
+
+public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
 {
-    public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
+    private readonly IExceptionLogger _logger;
+
+    protected ExceptionLoggerDecoratorBase(IExceptionLogger logger)
     {
-        private readonly IExceptionLogger _logger;
+        _logger = logger;
+    }
 
-        protected ExceptionLoggerDecoratorBase(IExceptionLogger logger)
+    protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
+    {
+        try
         {
-            _logger = logger;
+            return await func(request);
         }
-
-        protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
+        catch (Exception e)
         {
-            try
-            {
-                return await func(request);
-            }
-            catch (Exception e)
-            {
-                await _logger.Handler(e);
-                throw;
-            }
+            await _logger.Handler(e);
+            throw;
         }
     }
 }
