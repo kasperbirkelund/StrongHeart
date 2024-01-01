@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.DemoApp.WebApi
+﻿namespace StrongHeart.DemoApp.WebApi;
+
+public static class DocumentationConstants
 {
-    public static class DocumentationConstants
-    {
-        public const string Setup = "Setup";
-    }
+    public const string Setup = "Setup";
 }

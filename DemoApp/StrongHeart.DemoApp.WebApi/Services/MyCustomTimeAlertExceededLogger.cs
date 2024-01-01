@@ -1,13 +1,12 @@
 ﻿using System.Threading.Tasks;
 using StrongHeart.Features.Decorators.TimeAlert;
 
-namespace StrongHeart.DemoApp.WebApi.Services
+namespace StrongHeart.DemoApp.WebApi.Services;
+
+public class MyCustomTimeAlertExceededLogger : ITimeAlertExceededLogger
 {
-    public class MyCustomTimeAlertExceededLogger : ITimeAlertExceededLogger
+    public Task LogTimeExceeded(TimeExceededData data)
     {
-        public Task LogTimeExceeded(TimeExceededData data)
-        {
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

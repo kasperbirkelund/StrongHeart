@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
+﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers;
+
+public interface IFeatureReader<out T>
 {
-    public interface IFeatureReader<out T>
-    {
-        T GetFeatures();
-    }
+    T GetFeatures();
 }

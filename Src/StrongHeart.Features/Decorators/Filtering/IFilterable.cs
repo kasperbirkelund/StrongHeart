@@ -1,9 +1,8 @@
 ﻿using StrongHeart.Features.Core;
 
-namespace StrongHeart.Features.Decorators.Filtering
+namespace StrongHeart.Features.Decorators.Filtering;
+
+public interface IFilterable<TResponse> where TResponse : IResponseDto
 {
-    public interface IFilterable<TResponse> where TResponse : IResponseDto
-    {
-        TResponse GetFilteredItem(IFilterDecisionContext context, TResponse response);
-    }
+    TResponse GetFilteredItem(IFilterDecisionContext context, TResponse response);
 }

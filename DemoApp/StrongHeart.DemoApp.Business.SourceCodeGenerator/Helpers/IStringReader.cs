@@ -1,9 +1,8 @@
 ﻿using System.Resources;
 
-namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers
+namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers;
+
+public interface IStringReader
 {
-    public interface IStringReader
-    {
-        string[] ReadLines();
-    }
+    string[] ReadLines();
 }

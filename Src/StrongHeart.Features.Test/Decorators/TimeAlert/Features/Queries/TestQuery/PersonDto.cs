@@ -1,12 +1,11 @@
-﻿namespace StrongHeart.Features.Test.Decorators.TimeAlert.Features.Queries.TestQuery
-{
-    public class PersonDto
-    {
-        public string Name { get; }
+﻿namespace StrongHeart.Features.Test.Decorators.TimeAlert.Features.Queries.TestQuery;
 
-        public PersonDto(string name)
-        {
-            Name = name;
-        }
+public class PersonDto
+{
+    public string Name { get; }
+
+    public PersonDto(string name)
+    {
+        Name = name;
     }
 }

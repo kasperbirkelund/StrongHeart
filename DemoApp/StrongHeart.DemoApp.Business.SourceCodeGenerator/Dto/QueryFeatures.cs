@@ -1,8 +1,7 @@
-﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto
+﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
+
+public class QueryFeatures
 {
-    public class QueryFeatures
-    {
-        public string RootNamespace { get; set; }
-        public QueryFeature[] Items { get; set; }
-    }
+    public string RootNamespace { get; set; }
+    public QueryFeature[] Items { get; set; }
 }

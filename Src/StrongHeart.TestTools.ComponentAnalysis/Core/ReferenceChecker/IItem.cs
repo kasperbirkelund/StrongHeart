@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.TestTools.ComponentAnalysis.Core.ReferenceChecker
+﻿namespace StrongHeart.TestTools.ComponentAnalysis.Core.ReferenceChecker;
+
+public interface IItem
 {
-    public interface IItem
-    {
-        string Name { get; }
-    }
+    string Name { get; }
 }

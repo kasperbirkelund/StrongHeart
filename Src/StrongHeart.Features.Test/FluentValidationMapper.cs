@@ -4,14 +4,13 @@ using System.Linq;
 using FluentValidation.Results;
 using StrongHeart.Features.Decorators.RequestValidation;
 
-namespace StrongHeart.Features.Test
+namespace StrongHeart.Features.Test;
+
+public static class FluentValidationMapper
 {
-    public static class FluentValidationMapper
+    public static ICollection<ValidationMessage> Map(ValidationResult result)
     {
-        public static ICollection<ValidationMessage> Map(ValidationResult result)
-        {
-            var errors = result.Errors.Select(x => new ValidationMessage(x.ToString())).ToImmutableArray();
-            return errors;
-        }
+        var errors = result.Errors.Select(x => new ValidationMessage(x.ToString())).ToImmutableArray();
+        return errors;
     }
 }

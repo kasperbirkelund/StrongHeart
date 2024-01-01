@@ -8,32 +8,31 @@ using StrongHeart.Features.Test.Decorators.Authorization.Features.Queries.TestQu
 using StrongHeart.Features.Test.Helpers;
 using Xunit;
 
-namespace StrongHeart.Features.Test.Decorators.Authorization
-{
-    public class AuthorizationDecoratorTest
-    {
-        [Fact]
-        public void GivenAnFeatureWithRoleRestriction_WhenInvokedWithInsufficientClaims_ExceptionThrown()
-        {
-            AuthorizationExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope())
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                Func<Task> func = async () => await sut.Execute(new TestQueryRequest(new TestCustomCaller( /*no custom roles*/)));
-                func.Should().ThrowAsync<UnauthorizedAccessException>();
-            }
-        }
+namespace StrongHeart.Features.Test.Decorators.Authorization;
 
-        [Fact]
-        public async Task GivenAnFeatureWithRoleRestriction_WhenInvokedWithSufficientClaims_NoExceptions()
+public class AuthorizationDecoratorTest
+{
+    [Fact]
+    public void GivenAnFeatureWithRoleRestriction_WhenInvokedWithInsufficientClaims_ExceptionThrown()
+    {
+        AuthorizationExtension extension = new();
+        using (IServiceScope scope = extension.CreateScope())
         {
-            AuthorizationExtension extension = new();
-            using (IServiceScope scope = extension.CreateScope())
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                var response = await sut.Execute(new TestQueryRequest(new TestCustomCaller(TestClaim.Instance)));
-                response.IsSuccess.Should().BeTrue();
-            }
+            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+            Func<Task> func = async () => await sut.Execute(new TestQueryRequest(new TestCustomCaller( /*no custom roles*/)));
+            func.Should().ThrowAsync<UnauthorizedAccessException>();
+        }
+    }
+
+    [Fact]
+    public async Task GivenAnFeatureWithRoleRestriction_WhenInvokedWithSufficientClaims_NoExceptions()
+    {
+        AuthorizationExtension extension = new();
+        using (IServiceScope scope = extension.CreateScope())
+        {
+            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+            var response = await sut.Execute(new TestQueryRequest(new TestCustomCaller(TestClaim.Instance)));
+            response.IsSuccess.Should().BeTrue();
         }
     }
 }

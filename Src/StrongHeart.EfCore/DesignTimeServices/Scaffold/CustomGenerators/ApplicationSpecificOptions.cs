@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 
-namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
+namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators;
+
+public class ApplicationSpecificOptions
 {
-    public class ApplicationSpecificOptions
+    public ICollection<string> ProceduresToOmit { get; }
+
+    public ApplicationSpecificOptions(ICollection<string> proceduresToOmit)
     {
-        public ICollection<string> ProceduresToOmit { get; }
+        ProceduresToOmit = proceduresToOmit;
+    }
 
-        public ApplicationSpecificOptions(ICollection<string> proceduresToOmit)
-        {
-            ProceduresToOmit = proceduresToOmit;
-        }
-
-        public string ToDebugString()
-        {
-            return $"Excluding these stored procs: { string.Join(", ", ProceduresToOmit)}";
-        }
+    public string ToDebugString()
+    {
+        return $"Excluding these stored procs: { string.Join(", ", ProceduresToOmit)}";
     }
 }

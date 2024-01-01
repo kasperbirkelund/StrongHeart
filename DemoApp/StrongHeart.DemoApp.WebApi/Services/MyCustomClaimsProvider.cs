@@ -5,24 +5,23 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using StrongHeart.Core.Security;
 
-namespace StrongHeart.DemoApp.WebApi.Services
+namespace StrongHeart.DemoApp.WebApi.Services;
+
+public class MyCustomClaimsProvider : IClaimsProvider
 {
-    public class MyCustomClaimsProvider : IClaimsProvider
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public MyCustomClaimsProvider(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public MyCustomClaimsProvider(IHttpContextAccessor httpContextAccessor)
+    public ICollection<Claim> ExtractClaims()
+    {
+        if (_httpContextAccessor.HttpContext?.User != null)
         {
-            _httpContextAccessor = httpContextAccessor;
+            return _httpContextAccessor.HttpContext.User.Claims.ToArray();
         }
-
-        public ICollection<Claim> ExtractClaims()
-        {
-            if (_httpContextAccessor.HttpContext?.User != null)
-            {
-                return _httpContextAccessor.HttpContext.User.Claims.ToArray();
-            }
-            return Array.Empty<Claim>();
-        }
+        return Array.Empty<Claim>();
     }
 }

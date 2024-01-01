@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core
+namespace StrongHeart.TestTools.ComponentAnalysis.Core;
+
+public class RuleNotCompliedException : Exception
 {
-    public class RuleNotCompliedException : Exception
+    //Consider take VerificationResult<T> as constructor argument
+    public RuleNotCompliedException(string message) 
+        : base(message)
     {
-        //Consider take VerificationResult<T> as constructor argument
-        public RuleNotCompliedException(string message) 
-            : base(message)
-        {
-        }
     }
 }

@@ -4,27 +4,26 @@ using System.Reflection;
 using StrongHeart.Features;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
+namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules;
+
+public class ListResponseResponseShouldBeImmutable : IRule<Type>
 {
-    public class ListResponseResponseShouldBeImmutable : IRule<Type>
+    public string CorrectiveAction => "Ensure that the generic type of IGetListResponse<> only contains immutable properties";
+
+    public bool DoVerifyItem(Type item)
     {
-        public string CorrectiveAction => "Ensure that the generic type of IGetListResponse<> only contains immutable properties";
+        return item.IsClass && item.DoesImplementInterface(typeof(IGetListResponse<>));
+    }
 
-        public bool DoVerifyItem(Type item)
+    public bool IsValid(Type item, Action<string> output)
+    {
+        Type type = item.GetInterface(typeof(IGetListResponse<>).Name)!.GetGenericArguments().Single();
+
+        PropertyInfo[] invalidItems = type.GetProperties().Where(x => !x.IsImmutable()).ToArray();
+        foreach (PropertyInfo info in invalidItems)
         {
-            return item.IsClass && item.DoesImplementInterface(typeof(IGetListResponse<>));
+            output(info.Name);
         }
-
-        public bool IsValid(Type item, Action<string> output)
-        {
-            Type type = item.GetInterface(typeof(IGetListResponse<>).Name)!.GetGenericArguments().Single();
-
-            PropertyInfo[] invalidItems = type.GetProperties().Where(x => !x.IsImmutable()).ToArray();
-            foreach (PropertyInfo info in invalidItems)
-            {
-                output(info.Name);
-            }
-            return !invalidItems.Any();
-        }
+        return !invalidItems.Any();
     }
 }

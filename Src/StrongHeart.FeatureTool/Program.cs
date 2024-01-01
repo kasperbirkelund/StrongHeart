@@ -1,46 +1,46 @@
 ﻿using System;
 using System.IO;
 
-namespace StrongHeart.FeatureTool
+namespace StrongHeart.FeatureTool;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        string project = args[0];
+        string type = args[1];
+        string name = args[2];
+        bool isList = false;
+        if (args.Length > 3)
         {
-            string project = args[0];
-            string type = args[1];
-            string name = args[2];
-            bool isList = false;
-            if (args.Length > 3)
-            {
-                isList = Convert.ToBoolean(args[3]);
-            }
-            string dir = Path.Combine(Environment.CurrentDirectory, project);
-            dir = Path.Combine(dir, "Features");
-            dir = Path.Combine(dir, type);
-            dir = Path.Combine(dir, name);
-
-            Directory.CreateDirectory(dir);
-
-            string file = name + "Feature.cs";
-            string fullPath = Path.Combine(dir, file);
-
-            string content = type switch
-            {
-                "Commands" => GetCommand(project, name),
-                "Queries" => GetQuery(project, name, isList),
-                _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'");
-            };
-
-            File.WriteAllText(fullPath, content);
-            Console.WriteLine("Done: " + fullPath);
+            isList = Convert.ToBoolean(args[3]);
         }
+        string dir = Path.Combine(Environment.CurrentDirectory, project);
+        dir = Path.Combine(dir, "Features");
+        dir = Path.Combine(dir, type);
+        dir = Path.Combine(dir, name);
 
+        Directory.CreateDirectory(dir);
 
-        private static string GetCommand(string project, string commandName)
+        string file = name + "Feature.cs";
+        string fullPath = Path.Combine(dir, file);
+
+        string content = type switch
         {
-            string s =
-                $@"using System.Threading.Tasks;
+            "Commands" => GetCommand(project, name),
+            "Queries" => GetQuery(project, name, isList),
+            _ => throw new ArgumentException("Unknown type. Use 'Commands' or 'Queries'")
+        };
+
+        File.WriteAllText(fullPath, content);
+        Console.WriteLine("Done: " + fullPath);
+    }
+
+
+    private static string GetCommand(string project, string commandName)
+    {
+        string s =
+            $@"using System.Threading.Tasks;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 
@@ -58,12 +58,12 @@ namespace {project}.Features.Commands.{commandName}
     }}
 }}";
 
-            return s;
-        }
+        return s;
+    }
 
-        private static string GetQuery(string project, string queryName, bool isList)
-        {
-            string s = $@"using System.Threading.Tasks;
+    private static string GetQuery(string project, string queryName, bool isList)
+    {
+        string s = $@"using System.Threading.Tasks;
 using System.Collections.Generic;
 using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
@@ -85,26 +85,26 @@ namespace {project}.Features.Queries.{queryName}
         }}
     }}
 }}";
-            return s;
-        }
+        return s;
+    }
 
-        private static string GetResponseContent(string queryName, bool isList)
+    private static string GetResponseContent(string queryName, bool isList)
+    {
+        if (isList)
         {
-            if (isList)
-            {
-                return $"List<{queryName}> items = new();";
-            }
-            else
-            {
-                return $"{queryName} item = new();";
-            }
+            return $"List<{queryName}> items = new();";
         }
-
-        private static string GetResponseClass(string queryName, bool isList)
+        else
         {
-            if (isList)
-            {
-                return @$"public partial class {queryName}Response : IGetListResponse<{queryName}>
+            return $"{queryName} item = new();";
+        }
+    }
+
+    private static string GetResponseClass(string queryName, bool isList)
+    {
+        if (isList)
+        {
+            return @$"public partial class {queryName}Response : IGetListResponse<{queryName}>
     {{
         public {queryName}Response(ICollection<{queryName}> items)
         {{
@@ -114,10 +114,10 @@ namespace {project}.Features.Queries.{queryName}
 
         public ICollection<{queryName}> Items {{ get; }}
     }}";
-            }
-            else
-            {
-                return $@"public class {queryName}Response : IGetSingleItemResponse<{queryName}> 
+        }
+        else
+        {
+            return $@"public class {queryName}Response : IGetSingleItemResponse<{queryName}> 
     {{
         public {queryName}Response({queryName}? item)
         {{
@@ -126,7 +126,6 @@ namespace {project}.Features.Queries.{queryName}
 
         public {queryName}? Item {{ get; }}
     }}";
-            }
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace StrongHeart.Features.Decorators.Retry
+namespace StrongHeart.Features.Decorators.Retry;
+
+public interface IRetryable
 {
-    public interface IRetryable
-    {
-        bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt);
-    }
+    bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt);
 }

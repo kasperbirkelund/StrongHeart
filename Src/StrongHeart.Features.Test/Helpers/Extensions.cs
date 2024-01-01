@@ -4,26 +4,25 @@ using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.Features.Decorators;
 using StrongHeart.Features.DependencyInjection;
 
-namespace StrongHeart.Features.Test.Helpers
+namespace StrongHeart.Features.Test.Helpers;
+
+public static class Extensions
 {
-    public static class Extensions
+    public static IServiceScope CreateScope(this IList<IPipelineExtension> extensions, Action<IServiceCollection>? servicesAction = null)
     {
-        public static IServiceScope CreateScope(this IList<IPipelineExtension> extensions, Action<IServiceCollection>? servicesAction = null)
-        {
-            IServiceCollection services = new ServiceCollection();
+        IServiceCollection services = new ServiceCollection();
 
-            services.AddStrongHeart(x =>
-            {
-                x.AddPipelineExtensions(extensions);
-            }, typeof(FeatureQueryTest).Assembly);
-            servicesAction?.Invoke(services);
-            var provider = services.BuildServiceProvider();
-            return provider.CreateScope();
-        }
-
-        public static IServiceScope CreateScope(this IPipelineExtension extension, Action<IServiceCollection>? servicesAction = null)
+        services.AddStrongHeart(x =>
         {
-            return CreateScope(new[] {extension}, servicesAction);
-        }
+            x.AddPipelineExtensions(extensions);
+        }, typeof(FeatureQueryTest).Assembly);
+        servicesAction?.Invoke(services);
+        var provider = services.BuildServiceProvider();
+        return provider.CreateScope();
+    }
+
+    public static IServiceScope CreateScope(this IPipelineExtension extension, Action<IServiceCollection>? servicesAction = null)
+    {
+        return CreateScope(new[] {extension}, servicesAction);
     }
 }

@@ -6,40 +6,40 @@ using StrongHeart.Features.Documentation.Test.Features.Queries.TestQuery;
 using StrongHeart.Features.Documentation.Visitors;
 using Xunit;
 
-namespace StrongHeart.Features.Documentation.Test
+namespace StrongHeart.Features.Documentation.Test;
+
+public class VisitorTest
 {
-    public class VisitorTest
+    public VisitorTest()
     {
-        public VisitorTest()
-        {
-            CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<TestQueryFeature>(@"\Src\");
-        }
+        CodeCommentSection.SourceCodeDir = CodeCommentSection.GetSourceCodeDirFromFeature<TestQueryFeature>(@"\Src\");
+    }
 
-        [Fact(Skip = "Fails while running from Cake")]
-        public void HtmlVisitorTest()
-        {
-            VisitorTestRunner(new HtmlVisitor(), x => x.AsString(includeLeadingHtmlTags: true), ExpectedHtml);
-        }
+    [Fact(Skip = "Fails while running from Cake")]
+    public void HtmlVisitorTest()
+    {
+        VisitorTestRunner(new HtmlVisitor(), x => x.AsString(includeLeadingHtmlTags: true), ExpectedHtml);
+    }
 
-        [Fact(Skip = "Fails while running from Cake")]
-        public void MarkDownVisitorTest()
-        {
-            VisitorTestRunner(new MarkDownVisitor(), x => x.AsString(), ExpectedMarkDown);
-        }
+    [Fact(Skip = "Fails while running from Cake")]
+    public void MarkDownVisitorTest()
+    {
+        VisitorTestRunner(new MarkDownVisitor(), x => x.AsString(), ExpectedMarkDown);
+    }
 
-        private static void VisitorTestRunner<T>(T visitor, Func<T, string> getActual, string expected) where T : ISectionVisitor
-        {
-            IDocumentationDescriber sut = new TestQueryFeature();
-            IEnumerable<ISection> sections = sut.GetDocumentationSections(new DocumentationGenerationContext());
+    private static void VisitorTestRunner<T>(T visitor, Func<T, string> getActual, string expected) where T : ISectionVisitor
+    {
+        IDocumentationDescriber sut = new TestQueryFeature();
+        IEnumerable<ISection> sections = sut.GetDocumentationSections(new DocumentationGenerationContext());
 
-            visitor.Accept(sections);
+        visitor.Accept(sections);
 
-            string actual = getActual(visitor);
-            actual.Should().Be(expected);
-        }
+        string actual = getActual(visitor);
+        actual.Should().Be(expected);
+    }
 
-        private const string ExpectedHtml =
-@"<html>
+    private const string ExpectedHtml =
+        @"<html>
   <p>Rules</p>
   <table>
     <thead>
@@ -66,7 +66,7 @@ namespace StrongHeart.Features.Documentation.Test
   <code>            return Task.FromResult(Result&lt;TestQueryResponse&gt;.Success(new TestQueryResponse(new PersonDto(""PersonA""))));</code>
 </html>";
 
-        private const string ExpectedMarkDown = @"Rules
+    private const string ExpectedMarkDown = @"Rules
 |Kode|Rule name|Description|
 |-|-|-|
 |A|RuleA|Any description|
@@ -75,5 +75,4 @@ TestQueryFeature.cs: This is the only line
 ```
             return Task.FromResult(Result<TestQueryResponse>.Success(new TestQueryResponse(new PersonDto(""PersonA""))));
 ```";
-    }
 }
