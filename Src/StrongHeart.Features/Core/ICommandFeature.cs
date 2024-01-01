@@ -1,8 +1,7 @@
-﻿namespace StrongHeart.Features.Core
+﻿namespace StrongHeart.Features.Core;
+
+public interface ICommandFeature<in TRequest, in TRequestDto> : IFeature<TRequest, Result>
+    where TRequest : IRequest<TRequestDto>
+    where TRequestDto : IRequestDto
 {
-    public interface ICommandFeature<in TRequest, in TRequestDto> : IFeature<TRequest, Result>
-        where TRequest : IRequest<TRequestDto>
-        where TRequestDto : IRequestDto
-    {
-    }
 }

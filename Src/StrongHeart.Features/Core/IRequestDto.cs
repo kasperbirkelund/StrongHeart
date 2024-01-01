@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.Features.Core
-{
-    public interface IRequestDto
-    {
+﻿namespace StrongHeart.Features.Core;
 
-    }
+public interface IRequestDto
+{
+
 }

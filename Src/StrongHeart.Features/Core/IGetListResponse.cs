@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace StrongHeart.Features.Core
+namespace StrongHeart.Features.Core;
+
+public interface IGetListResponse<T> : IResponseDto
 {
-    public interface IGetListResponse<T> : IResponseDto
-    {
-        ICollection<T> Items { get; }
-    }
+    ICollection<T> Items { get; }
 }

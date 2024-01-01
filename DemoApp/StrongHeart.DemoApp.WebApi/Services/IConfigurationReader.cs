@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.DemoApp.WebApi.Services
+﻿namespace StrongHeart.DemoApp.WebApi.Services;
+
+public interface IConfigurationReader
 {
-    public interface IConfigurationReader
-    {
-        public bool GetValue();
-    }
+    public bool GetValue();
 }

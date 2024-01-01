@@ -1,9 +1,8 @@
-﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto
+﻿namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
+
+public class QueryFeature
 {
-    public class QueryFeature
-    {
-        public string Name { get; set; }
-        public QueryRequest Request { get; set; }
-        public QueryResponse Response { get; set; }
-    }
+    public string Name { get; set; }
+    public QueryRequest Request { get; set; }
+    public QueryResponse Response { get; set; }
 }

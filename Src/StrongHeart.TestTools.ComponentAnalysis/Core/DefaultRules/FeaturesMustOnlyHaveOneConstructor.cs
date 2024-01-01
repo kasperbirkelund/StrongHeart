@@ -1,20 +1,19 @@
 ﻿using System;
 using StrongHeart.Features;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
+namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules;
+
+public class FeaturesMustOnlyHaveOneConstructor : IRule<Type>
 {
-    public class FeaturesMustOnlyHaveOneConstructor : IRule<Type>
+    public string CorrectiveAction => "Ensure that a feature has exactly one public constructor";
+
+    public bool DoVerifyItem(Type item)
     {
-        public string CorrectiveAction => "Ensure that a feature has exactly one public constructor";
+        return item.IsFeatureClass() && !item.IsFeatureDecorator();
+    }
 
-        public bool DoVerifyItem(Type item)
-        {
-            return item.IsFeatureClass() && !item.IsFeatureDecorator();
-        }
-
-        public bool IsValid(Type item, Action<string> output)
-        {
-            return item.GetConstructors().Length <= 1;
-        }
+    public bool IsValid(Type item, Action<string> output)
+    {
+        return item.GetConstructors().Length <= 1;
     }
 }

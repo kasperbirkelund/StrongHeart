@@ -4,33 +4,32 @@ using StrongHeart.Features;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators;
 
-namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules
+namespace StrongHeart.TestTools.ComponentAnalysis.Core.DefaultRules;
+
+public class CommandFeaturesRequestAndResponseMatch : IRule<Type>
 {
-    public class CommandFeaturesRequestAndResponseMatch : IRule<Type>
+    public string CorrectiveAction => "Ensure that the command feature name is consistent with the request and dto name. Correct naming is CreateEmployeeFeature, CreateEmployeeRequest and CreateEmployeeDto.";
+
+    public bool DoVerifyItem(Type type)
     {
-        public string CorrectiveAction => "Ensure that the command feature name is consistent with the request and dto name. Correct naming is CreateEmployeeFeature, CreateEmployeeRequest and CreateEmployeeDto.";
+        return
+            !type.IsAbstract && //this might be a CommandFeatureBase-class
+            type.DoesImplementInterface(typeof(ICommandFeature<,>)) &&
+            !type.DoesImplementInterface(typeof(ICommandDecorator<,>));
+    }
 
-        public bool DoVerifyItem(Type type)
+    public bool IsValid(Type type, Action<string> output)
+    {
+        Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommandFeature<,>));
+        if (featureInterface == null)
         {
-            return
-                !type.IsAbstract && //this might be a CommandFeatureBase-class
-                type.DoesImplementInterface(typeof(ICommandFeature<,>)) &&
-                !type.DoesImplementInterface(typeof(ICommandDecorator<,>));
+            return false;
         }
 
-        public bool IsValid(Type type, Action<string> output)
-        {
-            Type? featureInterface = type.GetInterfaces().SingleOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICommandFeature<,>));
-            if (featureInterface == null)
-            {
-                return false;
-            }
+        string featureNameRaw = type.Name.Replace("Feature", string.Empty);
+        string featureRequestRaw = featureInterface.GetGenericArguments()[0].Name.Replace("Request", string.Empty);
+        string featureDtoRaw = featureInterface.GetGenericArguments()[1].Name.Replace("Dto", string.Empty);
 
-            string featureNameRaw = type.Name.Replace("Feature", string.Empty);
-            string featureRequestRaw = featureInterface.GetGenericArguments()[0].Name.Replace("Request", string.Empty);
-            string featureDtoRaw = featureInterface.GetGenericArguments()[1].Name.Replace("Dto", string.Empty);
-
-            return featureDtoRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
-        }
+        return featureDtoRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
     }
 }

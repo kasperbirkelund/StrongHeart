@@ -1,10 +1,9 @@
-﻿namespace StrongHeart.Features.Core
-{
-    public interface IResult
-    {
-        ResultType Status { get; }
-        string? Error { get; }
+﻿namespace StrongHeart.Features.Core;
 
-        bool IsSuccess { get; }
-    }
+public interface IResult
+{
+    ResultType Status { get; }
+    string? Error { get; }
+
+    bool IsSuccess { get; }
 }

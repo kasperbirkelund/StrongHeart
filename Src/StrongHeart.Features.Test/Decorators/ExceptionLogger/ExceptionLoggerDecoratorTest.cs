@@ -8,23 +8,22 @@ using StrongHeart.Features.Test.Decorators.ExceptionLogger.Features.Queries.Test
 using StrongHeart.Features.Test.Helpers;
 using Xunit;
 
-namespace StrongHeart.Features.Test.Decorators.ExceptionLogger
-{
-    public class ExceptionLoggerDecoratorTest
-    {
-        [Fact]
-        public void GivenAnExceptionThrowingFeature_WhenInvoked_ExceptionIsLogged()
-        {
-            ExceptionLoggerExtension<ExceptionLoggerSpy> extension = new();
-            using (IServiceScope scope = extension.CreateScope())
-            {
-                var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
-                Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
-                func.Should().ThrowAsync<DivideByZeroException>();
+namespace StrongHeart.Features.Test.Decorators.ExceptionLogger;
 
-                ExceptionLoggerSpy spy = (ExceptionLoggerSpy) scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
-                spy!.Exceptions.Count.Should().Be(1);
-            }
+public class ExceptionLoggerDecoratorTest
+{
+    [Fact]
+    public void GivenAnExceptionThrowingFeature_WhenInvoked_ExceptionIsLogged()
+    {
+        ExceptionLoggerExtension<ExceptionLoggerSpy> extension = new();
+        using (IServiceScope scope = extension.CreateScope())
+        {
+            var sut = scope.ServiceProvider.GetRequiredService<IQueryFeature<TestQueryRequest, TestQueryResponse>>();
+            Func<Task> func = () => sut.Execute(new TestQueryRequest(new TestAdminCaller()));
+            func.Should().ThrowAsync<DivideByZeroException>();
+
+            ExceptionLoggerSpy spy = (ExceptionLoggerSpy) scope.ServiceProvider.GetRequiredService<IExceptionLogger>();
+            spy!.Exceptions.Count.Should().Be(1);
         }
     }
 }

@@ -12,111 +12,110 @@ using StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCars;
 using Xunit;
 
-namespace StrongHeart.DemoApp.WebApi.Tests
+namespace StrongHeart.DemoApp.WebApi.Tests;
+
+public class CarsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
 {
-    public class CarsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
+    private readonly WebApplicationFactory<Startup> _factory;
+
+    public CarsControllerTests(WebApplicationFactory<Startup> factory)
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        _factory = factory;
+    }
 
-        public CarsControllerTests(WebApplicationFactory<Startup> factory)
+    [Fact]
+    public async Task GetCar_Found()
+    {
+        using (HttpClient client = _factory.CreateClient())
         {
-            _factory = factory;
+            Car result = await client.GetFromJsonAsync<Car>("/Cars/242"); //any positive number returns a result
+            Assert.NotNull(result);
+            Assert.Equal("Renault", result.Model);
         }
+    }
 
-        [Fact]
-        public async Task GetCar_Found()
+    [Fact]
+    public async Task GetCar_NotFound()
+    {
+        using (HttpClient client = _factory.CreateClient())
         {
-            using (HttpClient client = _factory.CreateClient())
+            Task<HttpResponseMessage> taskResponse = client.GetAsync("/Cars/-1", HttpCompletionOption.ResponseHeadersRead);
+            using (HttpResponseMessage response = await taskResponse.ConfigureAwait(false))
             {
-                Car result = await client.GetFromJsonAsync<Car>("/Cars/242"); //any positive number returns a result
-                Assert.NotNull(result);
-                Assert.Equal("Renault", result.Model);
+                Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
             }
         }
+    }
 
-        [Fact]
-        public async Task GetCar_NotFound()
+    [Fact]
+    public async Task GetCars()
+    {
+        using (HttpClient client = _factory.CreateClient())
         {
-            using (HttpClient client = _factory.CreateClient())
-            {
-                Task<HttpResponseMessage> taskResponse = client.GetAsync("/Cars/-1", HttpCompletionOption.ResponseHeadersRead);
-                using (HttpResponseMessage response = await taskResponse.ConfigureAwait(false))
-                {
-                    Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-                }
-            }
+            List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars/Fiat");
+            Assert.NotNull(result);
+            Assert.Equal("Fiat", result.Single().Model);
         }
+    }
 
-        [Fact]
-        public async Task GetCars()
+    [Fact]
+    public async Task CreateCar_NoValidationError()
+    {
+        CreateCarDto dto = new("Skoda");
+        using (HttpClient client = _factory.CreateClient())
         {
-            using (HttpClient client = _factory.CreateClient())
-            {
-                List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars/Fiat");
-                Assert.NotNull(result);
-                Assert.Equal("Fiat", result.Single().Model);
-            }
+            HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.OK, actual);
         }
+    }
 
-        [Fact]
-        public async Task CreateCar_NoValidationError()
+    [Fact]
+    public async Task CreateCar_WithValidationError()
+    {
+        CreateCarDto dto = new("Not Skoda"); //"Skoda" is the only valid model name in this demo
+        using (HttpClient client = _factory.CreateClient())
         {
-            CreateCarDto dto = new("Skoda");
-            using (HttpClient client = _factory.CreateClient())
-            {
-                HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
-                HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.OK, actual);
-            }
-        }
-
-        [Fact]
-        public async Task CreateCar_WithValidationError()
-        {
-            CreateCarDto dto = new("Not Skoda"); //"Skoda" is the only valid model name in this demo
-            using (HttpClient client = _factory.CreateClient())
-            {
-                HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
-                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-                string content = await response.Content.ReadAsStringAsync();
-                Assert.Equal(@"Validation messages: 
+            HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            string content = await response.Content.ReadAsStringAsync();
+            Assert.Equal(@"Validation messages: 
 - Model must be Skoda", content);
-            }
         }
+    }
 
-        [Fact]
-        public async Task UpdateCar_NoValidationError()
+    [Fact]
+    public async Task UpdateCar_NoValidationError()
+    {
+        UpdateCarDto dto = new(Guid.NewGuid(), "Skoda");
+        using (HttpClient client = _factory.CreateClient())
         {
-            UpdateCarDto dto = new(Guid.NewGuid(), "Skoda");
-            using (HttpClient client = _factory.CreateClient())
-            {
-                HttpResponseMessage response = await client.PutAsJsonAsync("/Cars", dto);
-                HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.Accepted, actual);
-            }
+            HttpResponseMessage response = await client.PutAsJsonAsync("/Cars", dto);
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.Accepted, actual);
         }
+    }
 
-        [Fact]
-        public async Task DeleteCar()
+    [Fact]
+    public async Task DeleteCar()
+    {
+        DeleteCarDto dto = new(Guid.NewGuid());
+        using (HttpClient client = _factory.CreateClient())
         {
-            DeleteCarDto dto = new(Guid.NewGuid());
-            using (HttpClient client = _factory.CreateClient())
-            {
-                HttpResponseMessage response = await client.DeleteAsync($"/Cars/{dto.Id}");
-                HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.OK, actual);
-            }
+            HttpResponseMessage response = await client.DeleteAsync($"/Cars/{dto.Id}");
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.OK, actual);
         }
+    }
 
-        [Fact]
-        public async Task LoadSwagger()
+    [Fact]
+    public async Task LoadSwagger()
+    {
+        using (HttpClient client = _factory.CreateClient())
         {
-            using (HttpClient client = _factory.CreateClient())
-            {
-                HttpResponseMessage response = await client.GetAsync("/swagger/v1/swagger.json");
-                HttpStatusCode actual = response.StatusCode;
-                Assert.Equal(HttpStatusCode.OK, actual);
-            }
+            HttpResponseMessage response = await client.GetAsync("/swagger/v1/swagger.json");
+            HttpStatusCode actual = response.StatusCode;
+            Assert.Equal(HttpStatusCode.OK, actual);
         }
     }
 }

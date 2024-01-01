@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace StrongHeart.Core.Security
+namespace StrongHeart.Core.Security;
+
+public interface ICaller
 {
-    public interface ICaller
-    {
-        Guid Id { get; }
-        IReadOnlyList<Claim> Claims { get; }
-    }
+    Guid Id { get; }
+    IReadOnlyList<Claim> Claims { get; }
 }

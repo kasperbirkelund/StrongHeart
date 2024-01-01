@@ -2,48 +2,47 @@
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.Features.Decorators.Filtering
+namespace StrongHeart.Features.Decorators.Filtering;
+
+public sealed class FilteringQueryDecorator<TRequest, TResponse> : IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
+    where TRequest : IRequest
+    where TResponse : class, IResponseDto
 {
-    public sealed class FilteringQueryDecorator<TRequest, TResponse> : IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
-        where TRequest : IRequest
-        where TResponse : class, IResponseDto
+    private readonly IQueryFeature<TRequest, TResponse> _inner;
+
+    public FilteringQueryDecorator(IQueryFeature<TRequest, TResponse> inner)
     {
-        private readonly IQueryFeature<TRequest, TResponse> _inner;
+        _inner = inner;
+    }
 
-        public FilteringQueryDecorator(IQueryFeature<TRequest, TResponse> inner)
+    public async Task<Result<TResponse>> Execute(TRequest request)
+    {
+        Result<TResponse> unfilteredResponse = await _inner.Execute(request);
+
+        if (unfilteredResponse.Status != ResultType.ExecutedSuccessfully)
         {
-            _inner = inner;
+            return unfilteredResponse;
         }
 
-        public async Task<Result<TResponse>> Execute(TRequest request)
+        IFilterDecisionContext context = new FilterDecisionContext(request.Caller);
+        IFilterable<TResponse> filter = GetFilter();
+        TResponse filteredResponse = filter.GetFilteredItem(context, unfilteredResponse.Value);
+        return Result<TResponse>.Success(filteredResponse);
+    }
+
+    private IFilterable<TResponse> GetFilter()
+    {
+        IFilterable<TResponse>? filter = this.GetInnerMostFeature() as IFilterable<TResponse>;
+        if (filter == null)
         {
-            Result<TResponse> unfilteredResponse = await _inner.Execute(request);
-
-            if (unfilteredResponse.Status != ResultType.ExecutedSuccessfully)
-            {
-                return unfilteredResponse;
-            }
-
-            IFilterDecisionContext context = new FilterDecisionContext(request.Caller);
-            IFilterable<TResponse> filter = GetFilter();
-            TResponse filteredResponse = filter.GetFilteredItem(context, unfilteredResponse.Value);
-            return Result<TResponse>.Success(filteredResponse);
+            throw new ArgumentException("IFilterable<> has not been implemented on the feature");
         }
 
-        private IFilterable<TResponse> GetFilter()
-        {
-            IFilterable<TResponse>? filter = this.GetInnerMostFeature() as IFilterable<TResponse>;
-            if (filter == null)
-            {
-                throw new ArgumentException("IFilterable<> has not been implemented on the feature");
-            }
+        return filter;
+    }
 
-            return filter;
-        }
-
-        public IQueryFeature<TRequest, TResponse> GetInnerFeature()
-        {
-            return _inner;
-        }
+    public IQueryFeature<TRequest, TResponse> GetInnerFeature()
+    {
+        return _inner;
     }
 }

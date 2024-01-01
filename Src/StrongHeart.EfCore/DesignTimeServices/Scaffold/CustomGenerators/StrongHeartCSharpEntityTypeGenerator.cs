@@ -4,17 +4,16 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 
-namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators
+namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.CustomGenerators;
+
+/// <summary>
+/// This class makes modifications to the generated entities (write models).
+/// </summary>
+public class StrongHeartCSharpEntityTypeGenerator : CSharpEntityTypeGenerator
 {
-    /// <summary>
-    /// This class makes modifications to the generated entities (write models).
-    /// </summary>
-    public class StrongHeartCSharpEntityTypeGenerator : CSharpEntityTypeGenerator
+    public StrongHeartCSharpEntityTypeGenerator(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper) 
+        : base(annotationCodeGenerator, cSharpHelper)
     {
-        public StrongHeartCSharpEntityTypeGenerator(IAnnotationCodeGenerator annotationCodeGenerator, ICSharpHelper cSharpHelper) 
-            : base(annotationCodeGenerator, cSharpHelper)
-        {
-        }
     }
 }
 

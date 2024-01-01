@@ -2,20 +2,19 @@
 using System.Linq;
 using StrongHeart.Features.Documentation.Visitors;
 
-namespace StrongHeart.Features.Documentation.Sections
+namespace StrongHeart.Features.Documentation.Sections;
+
+public class TableSection<T> : ISection
 {
-    public class TableSection<T> : ISection
+    public IList<TableRow<T>> Items { get; }
+
+    public TableSection(IEnumerable<TableRow<T>> items)
     {
-        public IList<TableRow<T>> Items { get; }
+        Items = items.ToArray();
+    }
 
-        public TableSection(IEnumerable<TableRow<T>> items)
-        {
-            Items = items.ToArray();
-        }
-
-        public void Accept(ISectionVisitor visitor)
-        {
-            visitor.VisitTable(this);
-        }
+    public void Accept(ISectionVisitor visitor)
+    {
+        visitor.VisitTable(this);
     }
 }

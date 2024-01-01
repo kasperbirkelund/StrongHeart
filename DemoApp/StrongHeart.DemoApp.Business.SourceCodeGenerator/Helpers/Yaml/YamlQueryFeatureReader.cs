@@ -2,115 +2,114 @@
 using System.Linq;
 using StrongHeart.DemoApp.Business.SourceCodeGenerator.Dto;
 
-namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml
+namespace StrongHeart.DemoApp.Business.SourceCodeGenerator.Helpers.Yaml;
+
+public class YamlQueryFeatureReader : IFeatureReader<QueryFeatures>
 {
-    public class YamlQueryFeatureReader : IFeatureReader<QueryFeatures>
+    private readonly IStringReader _stringReader;
+
+    public YamlQueryFeatureReader(IStringReader stringReader)
     {
-        private readonly IStringReader _stringReader;
+        _stringReader = stringReader;
+    }
 
-        public YamlQueryFeatureReader(IStringReader stringReader)
+    public QueryFeatures GetFeatures()
+    {
+        string[] lines = _stringReader.ReadLines();
+        string ns = GetNameSpace(lines);
+        var q = GetQueries(lines);
+
+        return new QueryFeatures()
         {
-            _stringReader = stringReader;
-        }
+            RootNamespace = ns,
+            Items = q.ToArray()
+        };
+    }
 
-        public QueryFeatures GetFeatures()
+    private string GetNameSpace(string[] lines)
+    {
+        return lines.First().Replace("- rootNameSpace: ", string.Empty).Trim();
+    }
+
+    private IEnumerable<QueryFeature> GetQueries(IList<string> lines)
+    {
+        lines = lines.Skip(1).ToArray();
+
+        QueryFeature feature = null;
+        for (int i = 0; i < lines.Count; i++)
         {
-            string[] lines = _stringReader.ReadLines();
-            string ns = GetNameSpace(lines);
-            var q = GetQueries(lines);
+            string line = lines[i];
 
-            return new QueryFeatures()
+            if (line.Contains("- name:"))
             {
-                RootNamespace = ns,
-                Items = q.ToArray()
-            };
-        }
-
-        private string GetNameSpace(string[] lines)
-        {
-            return lines.First().Replace("- rootNameSpace: ", string.Empty).Trim();
-        }
-
-        private IEnumerable<QueryFeature> GetQueries(IList<string> lines)
-        {
-            lines = lines.Skip(1).ToArray();
-
-            QueryFeature feature = null;
-            for (int i = 0; i < lines.Count; i++)
+                feature = new QueryFeature()
+                {
+                    Response = new QueryResponse(),
+                    Request = new QueryRequest()
+                };
+                feature.Name = line.Replace("- name:", string.Empty).Trim();
+            }
+            else if (line.Contains("requestProperties"))
             {
-                string line = lines[i];
-
-                if (line.Contains("- name:"))
+                List<string> list = new();
+                for (++i; ; i++)
                 {
-                    feature = new QueryFeature()
+                    if (i < lines.Count)
                     {
-                        Response = new QueryResponse(),
-                        Request = new QueryRequest()
-                    };
-                    feature.Name = line.Replace("- name:", string.Empty).Trim();
-                }
-                else if (line.Contains("requestProperties"))
-                {
-                    List<string> list = new();
-                    for (++i; ; i++)
-                    {
-                        if (i < lines.Count)
+                        string innerLine = lines[i];
+                        if (innerLine.TrimStart().StartsWith("-"))
                         {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature!.Request.Properties = list;
-                                line = innerLine;
-                                break;
-                            }
+                            list.Add(innerLine.Replace("-", string.Empty).Trim());
                         }
-                        else { break; }
-                    }
-                }
-                else if (line.Contains("isListResponse: "))
-                {
-                    feature!.Response.IsListResponse = bool.Parse(line.Replace("isListResponse: ", string.Empty).Trim());
-                }
-                if (line.Contains("responseTypeName:"))
-                {
-                    feature!.Response.ResponseTypeName = line.Replace("responseTypeName:", string.Empty).Trim();
-                }
-                else if (line.Contains("responseProperties"))
-                {
-                    List<string> list = new();
-                    for (++i; ; i++)
-                    {
-                        if (i < lines.Count)
+                        else
                         {
-                            string innerLine = lines[i];
-                            if (innerLine.TrimStart().StartsWith("-"))
-                            {
-                                list.Add(innerLine.Replace("-", string.Empty).Trim());
-                            }
-                            else
-                            {
-                                feature!.Response.Properties = list;
-                                line = innerLine;
-                                break;
-                            }
+                            feature!.Request.Properties = list;
+                            line = innerLine;
+                            break;
+                        }
+                    }
+                    else { break; }
+                }
+            }
+            else if (line.Contains("isListResponse: "))
+            {
+                feature!.Response.IsListResponse = bool.Parse(line.Replace("isListResponse: ", string.Empty).Trim());
+            }
+            if (line.Contains("responseTypeName:"))
+            {
+                feature!.Response.ResponseTypeName = line.Replace("responseTypeName:", string.Empty).Trim();
+            }
+            else if (line.Contains("responseProperties"))
+            {
+                List<string> list = new();
+                for (++i; ; i++)
+                {
+                    if (i < lines.Count)
+                    {
+                        string innerLine = lines[i];
+                        if (innerLine.TrimStart().StartsWith("-"))
+                        {
+                            list.Add(innerLine.Replace("-", string.Empty).Trim());
                         }
                         else
                         {
                             feature!.Response.Properties = list;
-                            yield return feature;
+                            line = innerLine;
                             break;
                         }
                     }
+                    else
+                    {
+                        feature!.Response.Properties = list;
+                        yield return feature;
+                        break;
+                    }
                 }
+            }
 
-                if (line == string.Empty)
-                {
-                    yield return feature!;
-                }
+            if (line == string.Empty)
+            {
+                yield return feature!;
             }
         }
     }

@@ -1,7 +1,6 @@
-﻿namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog
+﻿namespace StrongHeart.Features.Test.SampleDecorator.SimpleLog;
+
+public interface ISimpleLog
 {
-    public interface ISimpleLog
-    {
-        void Log(string message);
-    }
+    void Log(string message);
 }

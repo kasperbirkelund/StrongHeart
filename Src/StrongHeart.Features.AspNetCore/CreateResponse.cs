@@ -1,6 +1,5 @@
 ﻿using System;
 
-namespace StrongHeart.Features.AspNetCore
-{
-    public record CreateResponse(Guid CreatedId);
-}
+namespace StrongHeart.Features.AspNetCore;
+
+public record CreateResponse(Guid CreatedId);

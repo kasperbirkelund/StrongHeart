@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace StrongHeart.Features.Decorators.Authorization
+namespace StrongHeart.Features.Decorators.Authorization;
+
+public interface IAuthorizable
 {
-    public interface IAuthorizable
-    {
-        IEnumerable<Claim> GetRequiredClaims();
-    }
+    IEnumerable<Claim> GetRequiredClaims();
 }

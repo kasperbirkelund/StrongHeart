@@ -1,11 +1,10 @@
-﻿namespace StrongHeart.Features.Test.Decorators.Retry
+﻿namespace StrongHeart.Features.Test.Decorators.Retry;
+
+public class Messenger
 {
-    public class Messenger
+    public int Counter = 0;
+    public void MethodIsExecuting()
     {
-        public int Counter = 0;
-        public void MethodIsExecuting()
-        {
-            Counter++;
-        }
+        Counter++;
     }
 }

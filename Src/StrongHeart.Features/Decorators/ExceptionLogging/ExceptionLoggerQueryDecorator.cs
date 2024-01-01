@@ -1,29 +1,28 @@
 ﻿using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 
-namespace StrongHeart.Features.Decorators.ExceptionLogging
+namespace StrongHeart.Features.Decorators.ExceptionLogging;
+
+public sealed class ExceptionLoggerQueryDecorator<TRequest, TResponse> : ExceptionLoggerDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
+    where TRequest : IRequest
+    where TResponse : class, IResponseDto
 {
-    public sealed class ExceptionLoggerQueryDecorator<TRequest, TResponse> : ExceptionLoggerDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
-        where TRequest : IRequest
-        where TResponse : class, IResponseDto
+    private readonly IQueryFeature<TRequest, TResponse> _inner;
+
+    public ExceptionLoggerQueryDecorator(IQueryFeature<TRequest, TResponse> inner, IExceptionLogger logger) 
+        : base(logger)
     {
-        private readonly IQueryFeature<TRequest, TResponse> _inner;
+        _inner = inner;
+    }
 
-        public ExceptionLoggerQueryDecorator(IQueryFeature<TRequest, TResponse> inner, IExceptionLogger logger) 
-            : base(logger)
-        {
-            _inner = inner;
-        }
-
-        public Task<Result<TResponse>> Execute(TRequest request)
-        {
-            return Invoke(_inner.Execute, request);
-        }
+    public Task<Result<TResponse>> Execute(TRequest request)
+    {
+        return Invoke(_inner.Execute, request);
+    }
 
 
-        public IQueryFeature<TRequest, TResponse> GetInnerFeature()
-        {
-            return _inner;
-        }
+    public IQueryFeature<TRequest, TResponse> GetInnerFeature()
+    {
+        return _inner;
     }
 }

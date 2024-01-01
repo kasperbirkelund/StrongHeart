@@ -1,10 +1,9 @@
 ﻿using System.Xml.Serialization;
 
-namespace StrongHeart.Build.MetricsSchema
+namespace StrongHeart.Build.MetricsSchema;
+
+public class Metric
 {
-    public class Metric
-    {
-        [XmlAttribute("Name")] public string? Name { get; set; }
-        [XmlAttribute("Value")] public string? Value { get; set; }
-    }
+    [XmlAttribute("Name")] public string? Name { get; set; }
+    [XmlAttribute("Value")] public string? Value { get; set; }
 }

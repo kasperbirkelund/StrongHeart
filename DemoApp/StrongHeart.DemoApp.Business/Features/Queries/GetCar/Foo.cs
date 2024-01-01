@@ -1,13 +1,12 @@
 ﻿using System;
 using StrongHeart.Core.Security;
 
-namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar
+namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar;
+
+public class Foo : IFoo
 {
-    public class Foo : IFoo
+    public void DoWork(ICaller caller)
     {
-        public void DoWork(ICaller caller)
-        {
-            Console.WriteLine("Whatever...");
-        }
+        Console.WriteLine("Whatever...");
     }
 }

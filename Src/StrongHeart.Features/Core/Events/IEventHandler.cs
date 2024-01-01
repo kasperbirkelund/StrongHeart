@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
 
-namespace StrongHeart.Features.Core.Events
+namespace StrongHeart.Features.Core.Events;
+
+public interface IEventHandler<TEvent, TMetadata>
+    where TEvent : class, IEvent
+    where TMetadata : class, IMetadata
 {
-    public interface IEventHandler<TEvent, TMetadata>
-        where TEvent : class, IEvent
-        where TMetadata : class, IMetadata
-    {
-        Task Execute(EventMessage<TEvent, TMetadata> evt);
-    }
+    Task Execute(EventMessage<TEvent, TMetadata> evt);
 }

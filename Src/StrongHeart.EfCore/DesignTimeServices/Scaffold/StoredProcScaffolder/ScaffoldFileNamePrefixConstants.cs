@@ -1,10 +1,9 @@
-﻿namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder
+﻿namespace StrongHeart.EfCore.DesignTimeServices.Scaffold.StoredProcScaffolder;
+
+internal class ScaffoldFileNamePrefixConstants
 {
-    internal class ScaffoldFileNamePrefixConstants
-    {
-        public const string
-            DbContextPartial = "DBCONTEXT_",
-            ReadModels = "RMODEL_",
-            StoredProcedure = "SPROC_";
-    }
+    public const string
+        DbContextPartial = "DBCONTEXT_",
+        ReadModels = "RMODEL_",
+        StoredProcedure = "SPROC_";
 }
