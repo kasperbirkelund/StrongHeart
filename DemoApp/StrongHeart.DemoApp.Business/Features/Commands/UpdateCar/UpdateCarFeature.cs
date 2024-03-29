@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 using StrongHeart.Features.Documentation;
@@ -8,9 +10,9 @@ using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Commands.UpdateCar;
 
-public partial class UpdateCarFeature
+public class UpdateCarFeature : CommandFeatureBase<UpdateCarRequest, UpdateCarDto>
 {
-    private readonly string[] _validModelNames = new[] {"Skoda"};
+    private readonly string[] _validModelNames = { "Skoda" };
 
     public override Task<Result> Execute(UpdateCarRequest request)
     {
@@ -23,7 +25,7 @@ public partial class UpdateCarFeature
 
     protected override IEnumerable<ValidationMessage> ValidateRequest(UpdateCarRequest request)
     {
-        if (!_validModelNames.Contains(request.Model.Model))
+        if (!_validModelNames.Contains(request.Model.Brand))
         {
             yield return "Model must be " + string.Join(", ", _validModelNames);
         }
@@ -33,4 +35,28 @@ public partial class UpdateCarFeature
     {
         yield return new TextSection("Valid request values: " + string.Join(", ", _validModelNames));
     }
+}
+
+public class UpdateCarDto : IRequestDto
+{
+    public UpdateCarDto(Guid id, string? brand)
+    {
+        Id = id;
+        Brand = brand;
+    }
+
+    public Guid Id { get; }
+    public string? Brand { get; }
+}
+
+public class UpdateCarRequest : IRequest<UpdateCarDto>
+{
+    public UpdateCarRequest(UpdateCarDto model, ICaller caller)
+    {
+        Caller = caller;
+        Model = model;
+    }
+
+    public ICaller Caller { get; }
+    public UpdateCarDto Model { get; }
 }

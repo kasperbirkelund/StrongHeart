@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Core.Events;
@@ -9,7 +11,7 @@ using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Commands.CreateCar;
 
-public partial class CreateCarFeature
+public class CreateCarFeature : CommandFeatureBase<CreateCarRequest, CreateCarDto>
 {
     private readonly IEventPublisher _eventPublisher;
 
@@ -45,7 +47,7 @@ public partial class CreateCarFeature
         //Just any insane validation
 
         //DOC-START Validation rule
-        if (request.Model.Model != "Skoda")
+        if (request.Model.Brand != "Skoda")
         {
             yield return "Model must be Skoda";
         }
@@ -56,4 +58,28 @@ public partial class CreateCarFeature
     {
         yield return new CodeCommentSection(GetType());
     }
+}
+
+public class CreateCarDto : IRequestDto
+{
+    public CreateCarDto(string brand)
+    {
+        Brand = brand;
+    }
+
+    public string Brand { get; }
+}
+
+public class CreateCarRequest : IRequest<CreateCarDto>
+{
+    public CreateCarRequest(Guid id, CreateCarDto model, ICaller caller)
+    {
+        Id = id;
+        Caller = caller;
+        Model = model;
+    }
+
+    public Guid Id { get; }
+    public ICaller Caller { get; }
+    public CreateCarDto Model { get; }
 }

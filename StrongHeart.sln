@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoApp", "DemoApp", "{B395
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business", "DemoApp\StrongHeart.DemoApp.Business\StrongHeart.DemoApp.Business.csproj", "{84B06174-F65F-49ED-A16B-3AF6D42322C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.SourceCodeGenerator", "DemoApp\StrongHeart.DemoApp.Business.SourceCodeGenerator\StrongHeart.DemoApp.Business.SourceCodeGenerator.csproj", "{1940E7DF-017A-4687-9BE8-133C8BD842E1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.Tests", "DemoApp\StrongHeart.DemoApp.Business.Tests\StrongHeart.DemoApp.Business.Tests.csproj", "{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.WebApi", "DemoApp\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", "{D04A0C08-79C4-4545-A45C-C3F819E94264}"
@@ -55,9 +53,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{5E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Features", "Features", "{5C67EE32-3983-428B-A504-6F9420314486}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DempApp.Migrations", "DemoApp\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj", "{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations", "DemoApp\StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj", "{8DCDFB63-4CD9-4514-BD35-3D4799EDD775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DempApp.Migrations.Runner", "StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", "{4667DA6E-04EF-4386-B095-FA52AA23FB5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations.Runner", "StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", "{4667DA6E-04EF-4386-B095-FA52AA23FB5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,18 +91,6 @@ Global
 		{84B06174-F65F-49ED-A16B-3AF6D42322C6}.Release|x64.Build.0 = Release|Any CPU
 		{84B06174-F65F-49ED-A16B-3AF6D42322C6}.Release|x86.ActiveCfg = Release|Any CPU
 		{84B06174-F65F-49ED-A16B-3AF6D42322C6}.Release|x86.Build.0 = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|x64.Build.0 = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Debug|x86.Build.0 = Debug|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|x64.ActiveCfg = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|x64.Build.0 = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|x86.ActiveCfg = Release|Any CPU
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1}.Release|x86.Build.0 = Release|Any CPU
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -352,7 +338,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4721FF3A-93EF-4E84-9992-2A920AD6D0D4} = {489DC3A2-C8DE-4819-A187-9168EC2B75BF}
 		{84B06174-F65F-49ED-A16B-3AF6D42322C6} = {5C67EE32-3983-428B-A504-6F9420314486}
-		{1940E7DF-017A-4687-9BE8-133C8BD842E1} = {5C67EE32-3983-428B-A504-6F9420314486}
 		{EB6EBAFF-5AFC-4EB0-B0C1-400557C1558C} = {5C67EE32-3983-428B-A504-6F9420314486}
 		{D04A0C08-79C4-4545-A45C-C3F819E94264} = {5C67EE32-3983-428B-A504-6F9420314486}
 		{7BEA817E-2983-45BA-B788-1D8A930BFDEC} = {5C67EE32-3983-428B-A504-6F9420314486}

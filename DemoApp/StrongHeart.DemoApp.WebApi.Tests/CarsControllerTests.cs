@@ -30,7 +30,7 @@ public class CarsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
         {
             Car result = await client.GetFromJsonAsync<Car>("/Cars/242"); //any positive number returns a result
             Assert.NotNull(result);
-            Assert.Equal("Renault", result.Model);
+            Assert.Equal("Renault", result.Brand);
         }
     }
 
@@ -54,7 +54,7 @@ public class CarsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
         {
             List<Car> result = await client.GetFromJsonAsync<List<Car>>("/Cars/Fiat");
             Assert.NotNull(result);
-            Assert.Equal("Fiat", result.Single().Model);
+            Assert.Equal("Fiat", result.Single().Brand);
         }
     }
 
