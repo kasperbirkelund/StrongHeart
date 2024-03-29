@@ -97,4 +97,3 @@ There are many candidates for custom pipeline extension. Just to name a few:
 ## (Feature toggle/idprovider)
 # StrongHeart.TestTools.ComponentAnalysis
 # StrongHeart.Migrations
-# StrongHeart.EfCore

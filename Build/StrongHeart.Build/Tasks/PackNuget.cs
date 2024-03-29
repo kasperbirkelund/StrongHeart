@@ -1,6 +1,5 @@
 ﻿using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
-using Cake.Common.Tools.DotNet.Pack;
 using Cake.Frosting;
 using StrongHeart.Build.Tasks.Utilities;
 
@@ -20,7 +19,6 @@ public class PackNuget : FrostingTask<StrongHeartBuildContext>
                 "StrongHeart.Features.AspNetCore",
                 "StrongHeart.Features.Documentation",
                 "StrongHeart.Core",
-                "StrongHeart.EfCore",
                 "StrongHeart.Migrations",
                 "StrongHeart.TestTools.ComponentAnalysis",
                 "StrongHeart.TestTools.Xunit",

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Compo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Migrations", "StrongHeart.Migrations\StrongHeart.Migrations.csproj", "{3B593E20-47CA-4303-8200-D031A61700D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.EfCore", "StrongHeart.EfCore\StrongHeart.EfCore.csproj", "{6847B306-66C1-47C3-8C84-C2F0C04AA56E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core", "StrongHeart.Core\StrongHeart.Core.csproj", "{BC4576CD-0DB0-413F-B8F0-AB3BACEE55FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis.Test", "StrongHeart.TestTools.ComponentAnalysis.Test\StrongHeart.TestTools.ComponentAnalysis.Test.csproj", "{0E060B18-8634-467D-994E-E330F74BD0B9}"

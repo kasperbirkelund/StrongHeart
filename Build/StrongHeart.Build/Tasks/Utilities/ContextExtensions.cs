@@ -7,6 +7,7 @@ using Cake.Common.Tools.DotNet.MSBuild;
 using Cake.Common.Tools.DotNet.NuGet.Push;
 using Cake.Common.Tools.DotNet.Pack;
 using Cake.Common.Tools.DotNet.Test;
+using Cake.Core.IO.Arguments;
 using Cake.Frosting;
 
 namespace StrongHeart.Build.Tasks.Utilities;
@@ -51,7 +52,7 @@ public static class ContextExtensions
             Verbosity = CakeVerbosity,
             ArgumentCustomization = builder =>
             {
-                builder.Append($"/p:Version={version.AssemblySemVer}");
+                builder.Append(new TextArgument($"/p:Version={version.AssemblySemVer}"));
                 return builder;
             }
         };
