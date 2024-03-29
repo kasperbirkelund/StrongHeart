@@ -1,5 +1,6 @@
 ﻿using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Pack;
 using Cake.Frosting;
 using StrongHeart.Build.Tasks.Utilities;
 
@@ -28,7 +29,7 @@ public class PackNuget : FrostingTask<StrongHeartBuildContext>
 
         foreach (string project in projectsToNugetPack)
         {
-            context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
+            context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetPackSettings());
         }
     }
 }

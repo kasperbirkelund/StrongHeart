@@ -9,6 +9,6 @@ public class UnitTestsDemoApp : FrostingTask<StrongHeartBuildContext>
 {
     public override void Run(StrongHeartBuildContext context)
     {
-        context.DotNetTest("./DemoApp/", context.GetDotNetCoreTestSettings());
+        context.DotNetTest("./DemoApp/", context.GetDotNetTestSettings());
     }
 }

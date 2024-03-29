@@ -7,7 +7,7 @@ namespace StrongHeart.Build;
 
 public class Lifetime : FrostingLifetime<StrongHeartBuildContext>
 {
-    public override void Setup(StrongHeartBuildContext context)
+    public override void Setup(StrongHeartBuildContext context, ISetupContext info)
     {
         context.BuildConfiguration = context.Argument<string>("configuration", "Release");
         context.Information("Configuration: {0}", context.BuildConfiguration);

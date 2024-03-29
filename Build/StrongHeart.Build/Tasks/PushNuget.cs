@@ -12,7 +12,7 @@ public class PushNuget : FrostingTask<StrongHeartBuildContext>
     {
         foreach (string nugetPackage in Directory.EnumerateFiles(@".\Src\", "*.nupkg", SearchOption.AllDirectories))
         {
-            context.DotNetNuGetPush(nugetPackage, context.GetDotNetCoreNuGetPushSettings());
+            context.DotNetNuGetPush(nugetPackage, context.GetDotNetNuGetPushSettings());
         }
     }
 }
