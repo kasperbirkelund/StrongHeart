@@ -9,21 +9,17 @@ namespace StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated;
 
 public class CarCreatedHandler : EventHandlerBase<CarCreatedEvent>
 {
-    //private readonly ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> _feature;
-    //private readonly ICallerProvider _callerProvider;
+    private readonly ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> _feature;
+    private readonly ICallerProvider _callerProvider;
 
-    public CarCreatedHandler(/*ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> feature, ICallerProvider callerProvider*/)
+    public CarCreatedHandler(ICommandFeature<NewCarCustomerNotificationRequest, NewCarCustomerNotificationDto> feature, ICallerProvider callerProvider)
     {
-        //_feature = feature;
-        //_callerProvider = callerProvider;
+        _feature = feature;
+        _callerProvider = callerProvider;
     }
 
     public override async Task Execute(EventMessage<CarCreatedEvent, DemoAppSpecificMetadata> evt)
     {
-        //await _feature.Execute(new NewCarCustomerNotificationRequest(_callerProvider.GetCurrentCaller(), new NewCarCustomerNotificationRequestDto()));
+        await _feature.Execute(new NewCarCustomerNotificationRequest(_callerProvider.GetCurrentCaller(), new NewCarCustomerNotificationDto()));
     }
-}
-
-public class NewCarCustomerNotificationDto : IRequestDto
-{
 }

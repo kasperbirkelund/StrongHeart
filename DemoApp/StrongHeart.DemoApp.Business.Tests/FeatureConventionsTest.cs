@@ -6,14 +6,10 @@ using Xunit.Abstractions;
 
 namespace StrongHeart.DemoApp.Business.Tests;
 
-public class FeatureConventionsTest : FeatureConventionsTestBase
+public class FeatureConventionsTest(ITestOutputHelper helper) : ConventionsTestBase(helper)
 {
     //all tests (Facts) are inherited from the base class so any future
     //additional tests in the StrongHeart base class will automatically be executed  
-
-    public FeatureConventionsTest(ITestOutputHelper helper) : base(helper)
-    {
-    }
 
     protected override IEnumerable<Assembly> GetFeatureAssemblies()
     {
