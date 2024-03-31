@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -24,13 +22,6 @@ namespace StrongHeart.DemoApp.WebApi;
 
 public class Startup : IDocumentationDescriber
 {
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddTransient<IFoo, Foo>();
@@ -57,9 +48,9 @@ public class Startup : IDocumentationDescriber
         });
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(WebApplication app)
     {
-        if (env.IsDevelopment())
+        if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
@@ -68,10 +59,7 @@ public class Startup : IDocumentationDescriber
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthorization();
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        app.MapControllers();
     }
 
     public string? DocName => DocumentationConstants.Setup;
