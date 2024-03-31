@@ -27,12 +27,9 @@ public class DocumentationGenerator
     [Fact]
     public void GenerateDocumentation()
     {
-        Mock<IConfiguration> configMock = new Mock<IConfiguration>();
-        var config = configMock.Object;
         Assembly assembly = typeof(CarsController).Assembly;
         IServiceCollection services = new ServiceCollection();
-        services.AddTransient<IConfiguration>(_ => config);
-        new Startup(config).ConfigureServices(services);
+        new Startup().ConfigureServices(services);
 
         var sourceCodeDir = @"C:\development\github\opensource\kasperbirkelund\StrongHeart\DemoApp\StrongHeart.DemoApp.WebApi";//CodeCommentSection.GetSourceCodeDirFromFeature<CarsController>(@"\DemoApp\");
 

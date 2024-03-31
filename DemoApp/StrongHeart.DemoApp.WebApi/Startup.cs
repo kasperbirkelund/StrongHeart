@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using StrongHeart.Core.FeatureToggling;
 using StrongHeart.Core.Security;
 using StrongHeart.DemoApp.Business.Events;
 using StrongHeart.DemoApp.Business.Features.Commands;
@@ -11,7 +10,6 @@ using StrongHeart.DemoApp.Business.Features.EventHandlers.CarCreated;
 using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 using StrongHeart.DemoApp.WebApi.Controllers;
 using StrongHeart.DemoApp.WebApi.Services;
-using StrongHeart.DemoApp.WebApi.Toggles;
 using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
@@ -30,7 +28,6 @@ public class Startup : IDocumentationDescriber
         services.AddScoped<ICallerProvider, WebApiCallerProvider>();
         services.AddHttpContextAccessor();
         services.AddControllers();
-        services.AddSingleton<IFeatureToggle<MyToggle>, MyToggle>();
         services.AddSingleton<IEventPublisher, SimpleEventPublisher>();
         services.AddTransient<IEventHandler<CarCreatedEvent, DemoAppSpecificMetadata>, CarCreatedHandler>();
 
