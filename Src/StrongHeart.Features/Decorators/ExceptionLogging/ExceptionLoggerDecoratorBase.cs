@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging;
 
 public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
 {
-    private readonly IExceptionLogger _logger;
+    private readonly ILogger<ExceptionLoggerDecoratorBase> _logger;
 
-    protected ExceptionLoggerDecoratorBase(IExceptionLogger logger)
+    protected ExceptionLoggerDecoratorBase(ILogger<ExceptionLoggerDecoratorBase> logger)
     {
         _logger = logger;
     }
@@ -20,7 +21,7 @@ public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
         }
         catch (Exception e)
         {
-            await _logger.Handler(e);
+            _logger.LogError(e, "Exception caught from StrongHeart while executing request {@request}", request);
             throw;
         }
     }

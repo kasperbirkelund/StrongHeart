@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using StrongHeart.Features.Core;
 
 namespace StrongHeart.Features.Decorators.ExceptionLogging;
@@ -9,7 +10,7 @@ public sealed class ExceptionLoggerCommandDecorator<TRequest, TDto> : ExceptionL
 {
     private readonly ICommandFeature<TRequest, TDto> _inner;
 
-    public ExceptionLoggerCommandDecorator(ICommandFeature<TRequest, TDto> inner, IExceptionLogger logger) : base(logger)
+    public ExceptionLoggerCommandDecorator(ICommandFeature<TRequest, TDto> inner, ILogger<ExceptionLoggerDecoratorBase> logger) : base(logger)
     {
         _inner = inner;
     }

@@ -24,8 +24,7 @@ public class RequestValidationDecoratorTest
             var result = await sut.Execute(new TestQueryRequest(new TestAdminCaller(), ThisMustNotBeNull: null));
             result.IsFailure.Should().BeTrue();
             result.Status.Should().Be(ResultType.ClientError);
-            result.Error.Should().Be(@"Validation messages: 
-- ThisMustNotBeNull must not be null or empty");
+            result.Error.Should().Be(@"- ThisMustNotBeNull must not be null or empty");
         }
     }
 

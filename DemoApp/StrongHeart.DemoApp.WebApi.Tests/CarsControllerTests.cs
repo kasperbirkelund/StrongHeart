@@ -79,8 +79,7 @@ public class CarsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
             HttpResponseMessage response = await client.PostAsJsonAsync("/Cars", dto);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             string content = await response.Content.ReadAsStringAsync();
-            Assert.Equal(@"Validation messages: 
-- Model must be Skoda", content);
+            Assert.Equal("- Model must be Skoda", content);
         }
     }
 

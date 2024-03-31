@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +18,7 @@ using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
+using System.Collections.Generic;
 
 namespace StrongHeart.DemoApp.WebApi;
 
@@ -46,7 +46,7 @@ public class Startup : IDocumentationDescriber
         //DOC-START Add StrongHeart to your IServiceCollection. Here the default pipeline is used.
         services.AddStrongHeart(options =>
         {
-            options.AddDefaultPipeline<MyCustomExceptionLogger, MyCustomTimeAlertExceededLogger>();
+            options.AddDefaultPipeline();
         }, typeof(CommandFeatureBase<,>).Assembly);
         //DOC-END
 

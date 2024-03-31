@@ -38,6 +38,6 @@ public sealed class RequestValidationCommandDecorator<TRequest, TDto> : RequestV
     }
         
 #pragma warning disable 693
-    protected override IRequestValidatable<TRequest> GetValidator<TRequest>() => (this.GetInnerMostFeature() as IRequestValidatable<TRequest>)!;
+    protected override IRequestValidator<TRequest> GetValidator<TRequest>() => (this.GetInnerMostFeature() as IRequestValidator<TRequest>)!;
 #pragma warning restore 693
 }
