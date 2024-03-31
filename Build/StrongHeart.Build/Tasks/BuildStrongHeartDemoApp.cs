@@ -9,7 +9,9 @@ public class BuildStrongHeartDemoApp : FrostingTask<StrongHeartBuildContext>
 {
     public override void Run(StrongHeartBuildContext context)
     {
-        context.DotNetBuild(@".\StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", context.GetDotNetBuildSettings());
-        context.DotNetBuild(@".\DemoApp\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", context.GetDotNetBuildSettings());
+        context.DotNetBuild("./DemoApp/StrongHeart.DemoApp.sln", context.GetDotNetBuildSettings());
+
+        //context.DotNetBuild(@".\StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", context.GetDotNetBuildSettings());
+        //context.DotNetBuild(@".\DemoApp\StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", context.GetDotNetBuildSettings());
     }
 }

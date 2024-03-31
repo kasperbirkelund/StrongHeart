@@ -10,7 +10,6 @@ namespace StrongHeart.Build.Tasks
         public override void Run(StrongHeartBuildContext context)
         {
             context.DotNetBuild("./Src/StrongHeart.sln", context.GetDotNetBuildSettings());
-            context.DotNetBuild("./DemoApp/StrongHeart.DemoApp.sln", context.GetDotNetBuildSettings());
 
             //for some reason below tool is not build with the solution
             context.DotNetBuild("./Src/StrongHeart.FeatureTool/StrongHeart.FeatureTool.csproj", context.GetDotNetBuildSettings());
