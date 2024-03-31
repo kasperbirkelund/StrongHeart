@@ -7,6 +7,5 @@ public class Foo : IFoo
 {
     public void DoWork(ICaller caller)
     {
-        Console.WriteLine("Whatever...");
     }
 }
