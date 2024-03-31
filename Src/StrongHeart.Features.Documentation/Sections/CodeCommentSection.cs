@@ -81,7 +81,7 @@ public class CodeCommentSection : ISection
 
     private static bool IsMatchingClass(ClassDeclarationSyntax arg, Type type)
     {
-        var ns = arg.Parent as NamespaceDeclarationSyntax;
+        var ns = arg.Parent as BaseNamespaceDeclarationSyntax;
         return arg.Identifier.ValueText == type.Name && ns.Name.ToString() == type.Namespace;
     }
 

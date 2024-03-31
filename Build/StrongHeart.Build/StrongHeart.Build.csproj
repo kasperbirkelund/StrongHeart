@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RunWorkingDirectory>$(MSBuildProjectDirectory)</RunWorkingDirectory>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="2.1.0" />
-    <PackageReference Include="Cake.Frosting" Version="2.1.0" />
+    <PackageReference Include="Cake.Core" Version="4.0.0" />
+    <PackageReference Include="Cake.Frosting" Version="4.0.0" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Queries.GetCar;
 
-public partial class GetCarFeature
+public class GetCarFeature : QueryFeatureBase<GetCarRequest, GetCarResponse>
 {
     private readonly IFoo _foo;
 
@@ -30,4 +31,30 @@ public partial class GetCarFeature
     {
         yield break;
     }
+}
+
+public record CarDetails(string Brand, int Age, string Whatever, string Whatever2)
+{
+}
+
+public class GetCarResponse : IGetSingleItemResponse<CarDetails>
+{
+    public GetCarResponse(CarDetails? item)
+    {
+        Item = item;
+    }
+
+    public CarDetails? Item { get; }
+}
+
+public class GetCarRequest : IRequest
+{
+    public GetCarRequest(int id, ICaller caller)
+    {
+        Caller = caller;
+        Id = id;
+    }
+
+    public ICaller Caller { get; }
+    public int Id { get; }
 }

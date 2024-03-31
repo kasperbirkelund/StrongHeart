@@ -3,9 +3,8 @@ using StrongHeart.Build.Tasks;
 
 namespace StrongHeart.Build.EntryPoints;
 
-//[Dependency(typeof(PushNuget))]
-[IsDependentOn(typeof(CiBuild))]
-[IsDependentOn(typeof(CalculateMetrics))]
+[IsDependentOn(typeof(PushNuget))]
+//[IsDependentOn(typeof(CiBuild))]
 public class Default : FrostingTask
 {
 }

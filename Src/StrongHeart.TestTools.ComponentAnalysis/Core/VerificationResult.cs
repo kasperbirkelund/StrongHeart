@@ -23,7 +23,7 @@ public class VerificationResult<T>
 
     internal static VerificationResult<T> NoItemsToVerify(bool throwOnException)
     {
-        VerificationResult<T> result = new(new T[0], new T[0], "No items found for verification. Check your selection.", null);
+        VerificationResult<T> result = new(Array.Empty<T>(), Array.Empty<T>(), "No items found for verification. Check your selection.", null);
         if (throwOnException)
         {
             throw new RuleNotCompliedException(result.ToString());
@@ -33,7 +33,7 @@ public class VerificationResult<T>
 
     internal static VerificationResult<T> NoErrors(IList<T> allVerifiedItems)
     {
-        return new(allVerifiedItems, new T[0], "All verified items comply to rule", null);
+        return new(allVerifiedItems, Array.Empty<T>(), "All verified items comply to rule", null);
     }
 
     internal static VerificationResult<T> ErrorsFound(IList<T> allVerifiedItems, IList<T> itemsWithError, string correctiveAction, bool throwOnException, string output)

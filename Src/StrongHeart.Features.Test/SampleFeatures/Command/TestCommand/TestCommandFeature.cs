@@ -11,7 +11,7 @@ using StrongHeart.Features.Decorators.TimeAlert;
 
 namespace StrongHeart.Features.Test.SampleFeatures.Command.TestCommand;
 
-public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidatable<TestCommandRequest>, IRetryable, ITimeAlert
+public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IAuthorizable, IRequestValidator<TestCommandRequest>, IRetryable, ITimeAlert
 {
     public Task<Result> Execute(TestCommandRequest request)
     {
@@ -24,9 +24,9 @@ public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestComman
         yield break;
     }
 
-    public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
+    public IEnumerable<ValidationMessage> ValidateRequest(TestCommandRequest request)
     {
-        return request => FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
+        return FluentValidationMapper.Map(new InlineValidator<TestCommandRequest>().Validate(request));
     }
 
     public bool WhenExceptionIsThrownShouldIRetry(Exception exception, int currentAttempt)

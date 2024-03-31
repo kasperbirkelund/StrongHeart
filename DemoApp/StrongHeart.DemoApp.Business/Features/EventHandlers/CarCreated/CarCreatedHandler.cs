@@ -20,6 +20,6 @@ public class CarCreatedHandler : EventHandlerBase<CarCreatedEvent>
 
     public override async Task Execute(EventMessage<CarCreatedEvent, DemoAppSpecificMetadata> evt)
     {
-        await _feature.Execute(new NewCarCustomerNotificationRequest(new NewCarCustomerNotificationDto(), _callerProvider.GetCurrentCaller()));
+        await _feature.Execute(new NewCarCustomerNotificationRequest(_callerProvider.GetCurrentCaller(), new NewCarCustomerNotificationDto()));
     }
 }

@@ -10,9 +10,9 @@ public class PushNuget : FrostingTask<StrongHeartBuildContext>
 {
     public override void Run(StrongHeartBuildContext context)
     {
-        foreach (string nugetPackage in Directory.EnumerateFiles(@".\Src\", "*.nupkg", SearchOption.AllDirectories))
+        foreach (string nugetPackage in Directory.EnumerateFiles(@"./Src/", "*.nupkg", SearchOption.AllDirectories))
         {
-            context.DotNetNuGetPush(nugetPackage, context.GetDotNetCoreNuGetPushSettings());
+            context.DotNetNuGetPush(nugetPackage, context.GetDotNetNuGetPushSettings());
         }
     }
 }

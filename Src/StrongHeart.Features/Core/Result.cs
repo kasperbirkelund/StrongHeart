@@ -4,7 +4,7 @@ namespace StrongHeart.Features.Core;
 
 public class Result<T> : IResult
 {
-    public bool IsFailure => Status == ResultType.ClientError || Status == ResultType.ServerError;
+    public bool IsFailure => Status is ResultType.ClientError or ResultType.ServerError;
     public bool IsSuccess => !IsFailure;
     public ResultType Status { get; }
     public string? Error { get; }

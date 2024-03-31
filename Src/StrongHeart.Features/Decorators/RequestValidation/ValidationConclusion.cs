@@ -17,7 +17,6 @@ public class ValidationConclusion
     public override string ToString()
     {
         string text = string.Join(Environment.NewLine, Messages.Select(x => $"- {x}"));
-        return @"Validation messages: 
-" + text;
+        return text;
     }
 }

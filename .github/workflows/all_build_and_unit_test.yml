@@ -23,7 +23,7 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v2
@@ -31,10 +31,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.x'    
+        dotnet-version: '8.0.x'
     
     - name: Run CI Build via Cake
-      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target CiBuild
-
-    - name: Ensure solid metrics
-      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target CalculateMetrics
+      run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target PackNuget

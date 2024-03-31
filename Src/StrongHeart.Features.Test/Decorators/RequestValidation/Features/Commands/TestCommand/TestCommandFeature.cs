@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
 
 namespace StrongHeart.Features.Test.Decorators.RequestValidation.Features.Commands.TestCommand;
 
-public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IRequestValidatable<TestCommandRequest>
+public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestCommandDto>, IRequestValidator<TestCommandRequest>
 {
     private readonly TestCommandRequestValidator _validator;
 
@@ -19,8 +18,8 @@ public class TestCommandFeature : ICommandFeature<TestCommandRequest, TestComman
         return Task.FromResult(Result.Success());
     }
 
-    public Func<TestCommandRequest, IEnumerable<ValidationMessage>> ValidationFunc()
+    public IEnumerable<ValidationMessage> ValidateRequest(TestCommandRequest request)
     {
-        return request => FluentValidationMapper.Map(_validator.Validate(request));
+        return FluentValidationMapper.Map(_validator.Validate(request));
     }
 }

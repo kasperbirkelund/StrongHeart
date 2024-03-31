@@ -12,7 +12,7 @@ public class Program
             .UseLifetime<Lifetime>()
             .UseWorkingDirectory(@"..\..")
             .SetToolPath(@".\.cakeTools")
-            .InstallTool(new Uri("nuget:?package=GitVersion.CommandLine&version=5.6.9"))
+            .InstallTool(new Uri("nuget:?package=GitVersion.CommandLine&version=5.12.0"))
             .Run(args);
     }
 }

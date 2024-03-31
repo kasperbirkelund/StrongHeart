@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using StrongHeart.Core.Security;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.Decorators.ExtensionAlgorithms;
@@ -21,43 +22,10 @@ public static class Extensions
         return @interface.IsAssignableFrom(type);
     }
 
-    //public static bool DoesImplementInterface(this Type type, Type genericType)
-    //{
-    //    if (genericType.IsGenericType)
-    //    {
-    //        return type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == genericType);
-    //    }
-
-    //    if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
-    //    {
-    //        return true;
-    //    }
-
-    //    Type? baseType = type.BaseType;
-    //    if (baseType == null)
-    //    {
-    //        return false;
-    //    }
-
-    //    return DoesImplementInterface(baseType, genericType);
-
-    //    //return @interface.IsAssignableFrom(type);
-    //}
-
     public static bool IsFeatureInterface(this Type type)
     {
         return type.IsCommandFeatureInterface() || type.IsQueryFeatureInterface();
     }
-
-    ///// <summary>
-    ///// Returns false is the type is a decorator or an abstract class
-    ///// </summary>
-    //public static bool IsDecorator(this Type type)
-    //{
-    //    return
-    //        type.DoesImplementInterface(typeof(ICommandDecorator<,>)) ||
-    //        type.DoesImplementInterface(typeof(IQueryDecorator<,>));
-    //}
 
     /// <summary>
     /// Returns false is the type is a decorator or an abstract class
@@ -77,7 +45,11 @@ public static class Extensions
 
     public static bool IsEventHandlerInterface(this Type type)
     {
-        return IsInterface(type, typeof(IEventHandler<,>));
+        return type is
+        {
+            IsClass: true,
+            IsAbstract: false
+        } && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEventHandler<,>));
     }
 
     public static bool IsFeatureClass(this Type type)

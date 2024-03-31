@@ -19,16 +19,14 @@ public class PackNuget : FrostingTask<StrongHeartBuildContext>
                 "StrongHeart.Features.AspNetCore",
                 "StrongHeart.Features.Documentation",
                 "StrongHeart.Core",
-                "StrongHeart.EfCore",
                 "StrongHeart.Migrations",
                 "StrongHeart.TestTools.ComponentAnalysis",
-                "StrongHeart.TestTools.Xunit",
                 "StrongHeart.FeatureTool"
             };
 
         foreach (string project in projectsToNugetPack)
         {
-            context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetCorePackSettings());
+            context.DotNetPack(@$"./Src/{project}/{project}.csproj", context.GetDotNetPackSettings());
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31321.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.WebApi", "StrongHeart.DemoApp.WebApi\StrongHeart.DemoApp.WebApi.csproj", "{2526D800-5632-4F11-A5E2-D1201DED2D1F}"
 EndProject
@@ -21,9 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core", "..\Src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.ComponentAnalysis", "..\Src\StrongHeart.TestTools.ComponentAnalysis\StrongHeart.TestTools.ComponentAnalysis.csproj", "{F3907E1C-B192-4FA0-BE25-F1C309EB1568}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Xunit", "..\Src\StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{6A1444BF-4B7E-48C4-B42C-66C498645439}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations.Runner", "StrongHeart.DempApp.Migrations.Runner\StrongHeart.DempApp.Migrations.Runner.csproj", "{D5F2CFF5-A78E-4EDE-8E26-EB34D8AA1B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrongHeart.DemoApp.Business.SourceCodeGenerator", "StrongHeart.DemoApp.Business.SourceCodeGenerator\StrongHeart.DemoApp.Business.SourceCodeGenerator.csproj", "{1660E4D3-B459-4A65-A241-2ACF5A53B3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Migrations", "..\Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj", "{FC646EC2-3A7B-45CE-87DB-88B5D966E90D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DempApp.Migrations", "StrongHeart.DempApp.Migrations\StrongHeart.DempApp.Migrations.csproj", "{230403C9-5B0D-4A58-B9DA-C037307D9524}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.DemoApp.Business.Events", "StrongHeart.DemoApp.Business.Events\StrongHeart.DemoApp.Business.Events.csproj", "{BEEA92D1-2CF8-48A0-912D-E442500EAE47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,14 +67,22 @@ Global
 		{F3907E1C-B192-4FA0-BE25-F1C309EB1568}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3907E1C-B192-4FA0-BE25-F1C309EB1568}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3907E1C-B192-4FA0-BE25-F1C309EB1568}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A1444BF-4B7E-48C4-B42C-66C498645439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A1444BF-4B7E-48C4-B42C-66C498645439}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A1444BF-4B7E-48C4-B42C-66C498645439}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A1444BF-4B7E-48C4-B42C-66C498645439}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1660E4D3-B459-4A65-A241-2ACF5A53B3FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1660E4D3-B459-4A65-A241-2ACF5A53B3FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1660E4D3-B459-4A65-A241-2ACF5A53B3FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1660E4D3-B459-4A65-A241-2ACF5A53B3FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F2CFF5-A78E-4EDE-8E26-EB34D8AA1B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F2CFF5-A78E-4EDE-8E26-EB34D8AA1B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F2CFF5-A78E-4EDE-8E26-EB34D8AA1B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F2CFF5-A78E-4EDE-8E26-EB34D8AA1B75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC646EC2-3A7B-45CE-87DB-88B5D966E90D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC646EC2-3A7B-45CE-87DB-88B5D966E90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC646EC2-3A7B-45CE-87DB-88B5D966E90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC646EC2-3A7B-45CE-87DB-88B5D966E90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230403C9-5B0D-4A58-B9DA-C037307D9524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230403C9-5B0D-4A58-B9DA-C037307D9524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230403C9-5B0D-4A58-B9DA-C037307D9524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230403C9-5B0D-4A58-B9DA-C037307D9524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEA92D1-2CF8-48A0-912D-E442500EAE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEA92D1-2CF8-48A0-912D-E442500EAE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEA92D1-2CF8-48A0-912D-E442500EAE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEA92D1-2CF8-48A0-912D-E442500EAE47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,7 +92,7 @@ Global
 		{E334BD99-83D7-4B61-AB49-89E02D8401CF} = {95451C16-D476-4D91-AA4F-960416D8830B}
 		{4956D9A6-64E5-4B83-9A4E-D19ED243E604} = {95451C16-D476-4D91-AA4F-960416D8830B}
 		{F3907E1C-B192-4FA0-BE25-F1C309EB1568} = {95451C16-D476-4D91-AA4F-960416D8830B}
-		{6A1444BF-4B7E-48C4-B42C-66C498645439} = {95451C16-D476-4D91-AA4F-960416D8830B}
+		{FC646EC2-3A7B-45CE-87DB-88B5D966E90D} = {95451C16-D476-4D91-AA4F-960416D8830B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1BCA554-B13E-45EC-BF52-8B23373420FA}

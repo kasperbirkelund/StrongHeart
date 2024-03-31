@@ -2,12 +2,12 @@ using System;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNet;
-using Cake.Common.Tools.DotNetCore.Build;
-using Cake.Common.Tools.DotNetCore.MSBuild;
-using Cake.Common.Tools.DotNetCore.NuGet.Push;
-using Cake.Common.Tools.DotNetCore.Pack;
-using Cake.Common.Tools.DotNetCore.Test;
-using Cake.Core;
+using Cake.Common.Tools.DotNet.Build;
+using Cake.Common.Tools.DotNet.MSBuild;
+using Cake.Common.Tools.DotNet.NuGet.Push;
+using Cake.Common.Tools.DotNet.Pack;
+using Cake.Common.Tools.DotNet.Test;
+using Cake.Core.IO.Arguments;
 using Cake.Frosting;
 
 namespace StrongHeart.Build.Tasks.Utilities;
@@ -17,11 +17,11 @@ public static class ContextExtensions
 {
     private static readonly DotNetVerbosity? CakeVerbosity = DotNetVerbosity.Quiet;
 
-    public static DotNetCoreNuGetPushSettings GetDotNetCoreNuGetPushSettings(this FrostingContext context)
+    public static DotNetNuGetPushSettings GetDotNetNuGetPushSettings(this FrostingContext context)
     {
         NugetSourceInfo sourceInfo = GetNugetSourceInfo(context.GitHubActions().IsRunningOnGitHubActions);
             
-        return new DotNetCoreNuGetPushSettings
+        return new DotNetNuGetPushSettings
         {
             Source = sourceInfo.Source,
             ApiKey = sourceInfo.ApiKey,
@@ -41,7 +41,7 @@ public static class ContextExtensions
         //return new NugetSourceInfo(null, "https://api.nuget.org/v3/index.json");
     }
 
-    public static DotNetCorePackSettings GetDotNetCorePackSettings(this StrongHeartBuildContext context)
+    public static DotNetPackSettings GetDotNetPackSettings(this StrongHeartBuildContext context)
     {
         BuildVersion version = BuildVersion.Calculate(context);
         return new()
@@ -52,13 +52,13 @@ public static class ContextExtensions
             Verbosity = CakeVerbosity,
             ArgumentCustomization = builder =>
             {
-                builder.Append($"/p:Version={version.AssemblySemVer}");
+                builder.Append(new TextArgument($"/p:Version={version.AssemblySemVer}"));
                 return builder;
             }
         };
     }
 
-    public static DotNetCoreTestSettings GetDotNetCoreTestSettings(this StrongHeartBuildContext context)
+    public static DotNetTestSettings GetDotNetTestSettings(this StrongHeartBuildContext context)
     {
         return new()
         {
@@ -70,9 +70,9 @@ public static class ContextExtensions
         };
     }
 
-    public static DotNetCoreBuildSettings GetDotNetCoreBuildSettings(this StrongHeartBuildContext context, Action<DotNetCoreBuildSettings>? overwrite = null)
+    public static DotNetBuildSettings GetDotNetBuildSettings(this StrongHeartBuildContext context, Action<DotNetBuildSettings>? overwrite = null)
     {
-        DotNetCoreBuildSettings settings = new()
+        DotNetBuildSettings settings = new()
         {
             //Framework = Framework,
             Configuration = context.BuildConfiguration,
@@ -85,11 +85,11 @@ public static class ContextExtensions
         return settings;
     }
 
-    private static DotNetCoreMSBuildSettings GetDotNetCoreMsBuildSettings(FrostingContext context)
+    private static DotNetMSBuildSettings GetDotNetCoreMsBuildSettings(FrostingContext context)
     {
         BuildVersion version = BuildVersion.Calculate(context);
         context.Information(version.ToString());
-        DotNetCoreMSBuildSettings settings = new DotNetCoreMSBuildSettings()
+        DotNetMSBuildSettings settings = new DotNetMSBuildSettings()
             .WithProperty("WarningLevel", "0")
             .WithProperty("Version", version.AssemblySemVer)
             .WithProperty("AssemblyVersion", version.AssemblySemVer)
