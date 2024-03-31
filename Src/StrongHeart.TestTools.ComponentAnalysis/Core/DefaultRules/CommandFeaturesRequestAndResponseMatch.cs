@@ -30,6 +30,17 @@ public class CommandFeaturesRequestAndResponseMatch : IRule<Type>
         string featureRequestRaw = featureInterface.GetGenericArguments()[0].Name.Replace("Request", string.Empty);
         string featureDtoRaw = featureInterface.GetGenericArguments()[1].Name.Replace("Dto", string.Empty);
 
-        return featureDtoRaw == featureNameRaw && featureRequestRaw == featureNameRaw;
+        if (featureDtoRaw != featureNameRaw)
+        {
+            output($"The feature name {featureNameRaw} does not match the Dto name {featureDtoRaw}");
+            return false;
+        }
+        if (featureRequestRaw != featureNameRaw)
+        {
+            output($"The feature name {featureNameRaw} does not match the Request name {featureRequestRaw}");
+            return false;
+        }
+
+        return true;
     }
 }
