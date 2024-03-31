@@ -11,7 +11,7 @@ class Program
         {
             args = new[]
             {
-                @"Server=.\sqlexpress;Database=Doktor;Trusted_Connection=True;"
+                @"Server=.\sqlexpress;Database=xxx;Trusted_Connection=True;"
             };
             using (IServiceScope scope = GetServiceScope(args))
             {
