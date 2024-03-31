@@ -26,7 +26,7 @@ public class PackNuget : FrostingTask<StrongHeartBuildContext>
 
         foreach (string project in projectsToNugetPack)
         {
-            context.DotNetPack(@$".\Src\{project}\{project}.csproj", context.GetDotNetPackSettings());
+            context.DotNetPack(@$"./Src/{project}/{project}.csproj", context.GetDotNetPackSettings());
         }
     }
 }

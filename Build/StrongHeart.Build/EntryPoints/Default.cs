@@ -5,7 +5,6 @@ namespace StrongHeart.Build.EntryPoints;
 
 [IsDependentOn(typeof(PushNuget))]
 //[IsDependentOn(typeof(CiBuild))]
-//[IsDependentOn(typeof(CalculateMetrics))]
 public class Default : FrostingTask
 {
 }
