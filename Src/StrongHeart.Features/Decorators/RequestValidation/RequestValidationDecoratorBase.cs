@@ -12,7 +12,7 @@ public abstract class RequestValidationDecoratorBase : DecoratorBase
     protected override async Task<TResponse> Invoke<TRequest, TResponse>(Func<TRequest, Task<TResponse>> func, TRequest request)
     {
         IRequestValidatable<TRequest> validator = GetValidator<TRequest>();
-        ICollection<ValidationMessage> errors = validator.ValidationFunc()(request).ToList().AsReadOnly();
+        ICollection<ValidationMessage> errors = validator.ValidateRequest(request).ToList().AsReadOnly();
         Conclusion = new(errors);
         if (Conclusion.IsValid)
         {

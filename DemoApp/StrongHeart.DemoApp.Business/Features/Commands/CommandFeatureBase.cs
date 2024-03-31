@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using StrongHeart.Features.Core;
 using StrongHeart.Features.Decorators.RequestValidation;
@@ -15,6 +14,5 @@ public abstract class CommandFeatureBase<TRequest, TRequestDto> : FeatureBase, I
     where TRequestDto : IRequestDto
 {
     public abstract Task<Result> Execute(TRequest request);
-    public Func<TRequest, IEnumerable<ValidationMessage>> ValidationFunc() => ValidateRequest;
-    protected abstract IEnumerable<ValidationMessage> ValidateRequest(TRequest request);
+    public abstract IEnumerable<ValidationMessage> ValidateRequest(TRequest request);
 }

@@ -21,7 +21,7 @@ public class NewCarCustomerNotificationFeature : CommandFeatureBase<NewCarCustom
         return Task.FromResult(Result.QueuedForLaterExecution());
     }
 
-    protected override IEnumerable<ValidationMessage> ValidateRequest(NewCarCustomerNotificationRequest request)
+    public override IEnumerable<ValidationMessage> ValidateRequest(NewCarCustomerNotificationRequest request)
     {
         yield break;
     }

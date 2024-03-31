@@ -23,7 +23,7 @@ public class UpdateCarFeature : CommandFeatureBase<UpdateCarRequest, UpdateCarDt
         return Task.FromResult(Result.QueuedForLaterExecution());
     }
 
-    protected override IEnumerable<ValidationMessage> ValidateRequest(UpdateCarRequest request)
+    public override IEnumerable<ValidationMessage> ValidateRequest(UpdateCarRequest request)
     {
         if (!_validModelNames.Contains(request.Model.Brand))
         {

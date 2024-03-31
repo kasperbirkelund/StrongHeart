@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Core.Test", "St
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.AspNetCore", "StrongHeart.Features.AspNetCore\StrongHeart.Features.AspNetCore.csproj", "{B2807B50-64A5-462E-8AB9-F4F263869198}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.TestTools.Xunit", "StrongHeart.TestTools.Xunit\StrongHeart.TestTools.Xunit.csproj", "{E7517B29-93BA-4923-82F0-721BD2405212}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Documentation", "StrongHeart.Features.Documentation\StrongHeart.Features.Documentation.csproj", "{2B44B5ED-7892-413F-B4FC-91D88D542B68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrongHeart.Features.Documentation.Test", "StrongHeart.Features.Documentation.Test\StrongHeart.Features.Documentation.Test.csproj", "{955F729D-EAB2-4D95-9A73-50ABE49C9F75}"

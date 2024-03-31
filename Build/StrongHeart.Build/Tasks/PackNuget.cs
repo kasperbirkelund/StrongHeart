@@ -21,7 +21,6 @@ public class PackNuget : FrostingTask<StrongHeartBuildContext>
                 "StrongHeart.Core",
                 "StrongHeart.Migrations",
                 "StrongHeart.TestTools.ComponentAnalysis",
-                "StrongHeart.TestTools.Xunit",
                 "StrongHeart.FeatureTool"
             };
 

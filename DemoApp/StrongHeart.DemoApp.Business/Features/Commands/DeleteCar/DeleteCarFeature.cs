@@ -17,7 +17,7 @@ public class DeleteCarFeature : CommandFeatureBase<DeleteCarRequest, DeleteCarDt
         return Task.FromResult(Result.Success());
     }
 
-    protected override IEnumerable<ValidationMessage> ValidateRequest(DeleteCarRequest request)
+    public override IEnumerable<ValidationMessage> ValidateRequest(DeleteCarRequest request)
     {
         yield break;
     }

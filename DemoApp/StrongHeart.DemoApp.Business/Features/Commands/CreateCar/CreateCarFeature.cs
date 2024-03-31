@@ -42,7 +42,7 @@ public class CreateCarFeature : CommandFeatureBase<CreateCarRequest, CreateCarDt
         //Do something
     }
 
-    protected override IEnumerable<ValidationMessage> ValidateRequest(CreateCarRequest request)
+    public override IEnumerable<ValidationMessage> ValidateRequest(CreateCarRequest request)
     {
         //Just any insane validation
 
