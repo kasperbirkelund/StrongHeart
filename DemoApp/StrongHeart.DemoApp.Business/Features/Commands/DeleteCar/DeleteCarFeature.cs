@@ -9,11 +9,14 @@ using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.DemoApp.Business.Features.Commands.DeleteCar;
 
+public record DeleteCarCompletedAction(int NumberOfCarsDeleted);
+
 public class DeleteCarFeature : CommandFeatureBase<DeleteCarRequest, DeleteCarDto>
 {
     public override Task<Result> Execute(DeleteCarRequest request)
     {
-        //Do work
+        int numberOfCarsDeleted = 1; //Just a dummy value
+        request.CompletedAction(new DeleteCarCompletedAction(numberOfCarsDeleted));
         return Task.FromResult(Result.Success());
     }
 
@@ -28,16 +31,18 @@ public class DeleteCarFeature : CommandFeatureBase<DeleteCarRequest, DeleteCarDt
     }
 }
 
-public class DeleteCarRequest : IRequest<DeleteCarDto>
+public class DeleteCarRequest : IRequest<DeleteCarDto>, ICompletedAction<DeleteCarCompletedAction>
 {
-    public DeleteCarRequest(DeleteCarDto model, ICaller caller)
+    public DeleteCarRequest(DeleteCarDto model, ICaller caller, Action<DeleteCarCompletedAction> completedAction)
     {
         Caller = caller;
+        CompletedAction = completedAction;
         Model = model;
     }
 
     public ICaller Caller { get; }
     public DeleteCarDto Model { get; }
+    public Action<DeleteCarCompletedAction> CompletedAction { get; }
 }
 
 public class DeleteCarDto : IRequestDto

@@ -78,8 +78,12 @@ public class CarsController : ApiBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete([FromServices] ICommandFeature<DeleteCarRequest, DeleteCarDto> feature, [FromRoute] Guid id)
     {
-        DeleteCarRequest request = new(new DeleteCarDto(id), GetCaller());
-        Result result = await feature.Execute(request).ConfigureAwait(false); ;
+        int numberOfCarsDeleted = 0;
+        DeleteCarRequest request = new(new DeleteCarDto(id), GetCaller(), action =>
+        {
+            numberOfCarsDeleted = action.NumberOfCarsDeleted;
+        });
+        Result result = await feature.Execute(request).ConfigureAwait(false);
         return FromResultCommand(result);
     }
     //DOC-END

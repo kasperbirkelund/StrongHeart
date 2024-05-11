@@ -46,7 +46,7 @@ public static class DocumentationGeneratorUtil
 
     private static IEnumerable<IDocumentationDescriber> GetInstances(this IEnumerable<Type> items, IServiceProvider provider)
     {
-        return items.Select(provider.GetRequiredService).Cast<IDocumentationDescriber>(); ;
+        return items.Select(provider.GetRequiredService).Cast<IDocumentationDescriber>();
     }
 
     private static IEnumerable<IDocumentationDescriber> GetCorrectItems(this IEnumerable<IDocumentationDescriber> items, Func<IDocumentationDescriber, bool> predicate)
