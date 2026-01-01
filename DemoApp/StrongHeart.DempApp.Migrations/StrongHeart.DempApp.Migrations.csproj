@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -24,11 +24,11 @@
     <EmbeddedResource Include="Schema\dbo\Views\DemoView.sql" />
   </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="FluentMigrator" Version="5.2.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\StrongHeart.Migrations\StrongHeart.Migrations.csproj" />
+  </ItemGroup>
 </Project>
