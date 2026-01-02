@@ -1,33 +1,38 @@
-﻿using System;
+﻿using FluentMigrator.Builders.Create.Table;
+using FluentMigrator.Builders.Execute;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FluentMigrator.Builders.Create.Table;
-using FluentMigrator.Builders.Execute;
 
 namespace StrongHeart.Migrations;
 
 public static class MigrationExtensions
 {
-    public static ICreateTableColumnOptionOrWithColumnSyntax WithIdColumn(this ICreateTableWithColumnSyntax tableWithColumnSyntax)
+    extension(ICreateTableWithColumnSyntax tableWithColumnSyntax)
+    {
+        public ICreateTableColumnOptionOrWithColumnSyntax WithIdColumn()
     {
         return tableWithColumnSyntax
             .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity();
     }
 
-    public static ICreateTableColumnOptionOrWithColumnSyntax WithExternalIdColumn(this ICreateTableWithColumnSyntax tableWithColumnSyntax)
+    public ICreateTableColumnOptionOrWithColumnSyntax WithExternalIdColumn()
     {
         return tableWithColumnSyntax
             .WithColumn("ExternalId").AsGuid().NotNullable();
     }
 
-    public static ICreateTableColumnOptionOrWithColumnSyntax WithCreatedAtUtc(this ICreateTableWithColumnSyntax tableWithColumnSyntax)
+    public ICreateTableColumnOptionOrWithColumnSyntax WithCreatedAtUtc()
     {
         return tableWithColumnSyntax
             .WithColumn("CreatedAtUtc").AsCustom("DATETIME2(0)").NotNullable();
     }
+    }
 
-    public static void ApplyAllSchemaObjects(this IExecuteExpressionRoot root, Assembly assembly, Func<string, string> scriptSortAlgorithm)
+    extension(IExecuteExpressionRoot root)
+    {
+        public void ApplyAllSchemaObjects(Assembly assembly, Func<string, string> scriptSortAlgorithm)
     {
         static string GetFileName(string arg) => arg.Split().Last();
 
@@ -38,12 +43,12 @@ public static class MigrationExtensions
         }
     }
 
-    public static void ApplyAllSchemaObjects(this IExecuteExpressionRoot root, Assembly assembly)
+    public void ApplyAllSchemaObjects(Assembly assembly)
     {
         root.ApplyAllSchemaObjects(assembly, x => x);
     }
 
-    public static void DropViewsAndFunctionsAndProcedures(this IExecuteExpressionRoot root)
+    public void DropViewsAndFunctionsAndProcedures()
     {
         const string dropAllProc = @"DECLARE @sql VARCHAR(MAX)='';
 
@@ -70,4 +75,5 @@ exec(@sql);";
         root.Sql(dropAllProc);
         root.Sql(dropAllViews);
     }
+}
 }

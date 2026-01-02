@@ -1,15 +1,16 @@
-﻿using System;
-using System.Linq;
-using StrongHeart.Core.Security;
-using StrongHeart.Features.Core;
+﻿using StrongHeart.Features.Core;
 using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.Decorators.ExtensionAlgorithms;
+using System;
+using System.Linq;
 
 namespace StrongHeart.Features;
 
 public static class Extensions
 {
-    public static bool DoesImplementInterface(this Type type, Type @interface)
+    extension(Type type)
+    {
+        public bool DoesImplementInterface(Type @interface)
     {
         if (@interface.IsGenericType)
         {
@@ -22,7 +23,7 @@ public static class Extensions
         return @interface.IsAssignableFrom(type);
     }
 
-    public static bool IsFeatureInterface(this Type type)
+    public bool IsFeatureInterface()
     {
         return type.IsCommandFeatureInterface() || type.IsQueryFeatureInterface();
     }
@@ -30,7 +31,7 @@ public static class Extensions
     /// <summary>
     /// Returns false is the type is a decorator or an abstract class
     /// </summary>
-    public static bool IsCommandFeatureInterface(this Type type)
+    public bool IsCommandFeatureInterface()
     {
         return IsInterface(type, typeof(ICommandFeature<,>));
     }
@@ -38,12 +39,12 @@ public static class Extensions
     /// <summary>
     /// Returns false is the type is a decorator or an abstract class
     /// </summary>
-    public static bool IsQueryFeatureInterface(this Type type)
+    public bool IsQueryFeatureInterface()
     {
         return IsInterface(type, typeof(IQueryFeature<,>));
     }
 
-    public static bool IsEventHandlerInterface(this Type type)
+    public bool IsEventHandlerInterface()
     {
         return type is
         {
@@ -52,14 +53,15 @@ public static class Extensions
         } && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEventHandler<,>));
     }
 
-    public static bool IsFeatureClass(this Type type)
+    public bool IsFeatureClass()
     {
         return IsFeatureClassAlgorithm.IsFeatureClass(type);
     }
 
-    public static bool IsFeatureDecorator(this Type type)
+    public bool IsFeatureDecorator()
     {
         return IsFeatureClassAlgorithm.IsFeatureDecorator(type);
+    }
     }
 
     private static bool IsInterface(Type type, Type interfaceType)

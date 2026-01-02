@@ -27,7 +27,7 @@ public static class Extensions
             return VerificationResult<T>.NoItemsToVerify(throwOnException);
         }
 
-        StringBuilder sb = new ();
+        StringBuilder sb = new();
 
         T[] itemsWithError = typesToVerify
             .Where(x => !rule.IsValid(x, s => sb.AppendLine(s)))
@@ -40,12 +40,14 @@ public static class Extensions
         return VerificationResult<T>.NoErrors(typesToVerify);
     }
 
-    internal static bool IsImmutable(this PropertyInfo property)
+    extension(PropertyInfo property)
+    {
+        internal bool IsImmutable()
     {
         return property.IsInitOnly() || !property.CanWrite;
     }
 
-    private static bool IsInitOnly(this PropertyInfo property)
+    private bool IsInitOnly()
     {
         if (!property.CanWrite)
         {
@@ -60,4 +62,5 @@ public static class Extensions
         }
         return setMethodReturnParameterModifiers.Contains(typeof(System.Runtime.CompilerServices.IsExternalInit));
     }
+}
 }

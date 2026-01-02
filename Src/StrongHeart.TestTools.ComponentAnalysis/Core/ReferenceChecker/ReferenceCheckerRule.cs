@@ -6,16 +6,19 @@ namespace StrongHeart.TestTools.ComponentAnalysis.Core.ReferenceChecker;
 
 public static class AEx
 {
-    public static void MatchAllExistingProjects(this IEnumerable<Component> source, IProjectReader projectReader)
+    extension(IEnumerable<Component> source)
+    {
+        public void MatchAllExistingProjects(IProjectReader projectReader)
     {
         throw new NotImplementedException();
     }
 
-    public static void DoesNotHaveRedundancy(this IEnumerable<Component> source)
+    public void DoesNotHaveRedundancy()
     {
         throw new NotImplementedException();
     }
-        
+    }
+
     public static ITargetComponentSelected DoesNotReference(this Component source, Component target)
     {
         return new TargetComponentSelected(source, target);

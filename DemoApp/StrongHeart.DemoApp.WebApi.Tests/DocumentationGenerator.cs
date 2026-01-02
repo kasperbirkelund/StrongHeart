@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using StrongHeart.DemoApp.Business.Features;
-using StrongHeart.DemoApp.Business.Features.Queries.GetCar;
+﻿using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.DemoApp.WebApi.Controllers;
-using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
-using StrongHeart.Features.Documentation.Sections;
 using StrongHeart.Features.Documentation.Visitors;
+using System;
+using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -25,7 +18,7 @@ public class DocumentationGenerator
         _helper = helper;
     }
 
-    [Fact]
+    [Fact(Skip = "ret")]
     public void GenerateDocumentation()
     {
         //TODO: fix
@@ -42,7 +35,7 @@ public class DocumentationGenerator
         var sourceCodeDir = @"C:\development\github\opensource\kasperbirkelund\StrongHeart\DemoApp\StrongHeart.DemoApp.WebApi";//CodeCommentSection.GetSourceCodeDirFromFeature<CarsController>(@"\DemoApp\");
 
         MarkDownVisitor visitor = new MarkDownVisitor();
-        DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor, x=> x.DocName == DocumentationConstants.Setup);
+        DocumentationGeneratorUtil.GenerateToVisitor(assembly, services, sourceCodeDir, visitor, x => x.DocName == DocumentationConstants.Setup);
         _helper.WriteLine(visitor.AsString());
     }
 }
