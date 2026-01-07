@@ -1,4 +1,3 @@
-using System;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools.DotNet;
@@ -9,6 +8,7 @@ using Cake.Common.Tools.DotNet.Pack;
 using Cake.Common.Tools.DotNet.Test;
 using Cake.Core.IO.Arguments;
 using Cake.Frosting;
+using System;
 
 namespace StrongHeart.Build.Tasks.Utilities;
 
@@ -20,7 +20,7 @@ public static class ContextExtensions
     public static DotNetNuGetPushSettings GetDotNetNuGetPushSettings(this FrostingContext context)
     {
         NugetSourceInfo sourceInfo = GetNugetSourceInfo(context.GitHubActions().IsRunningOnGitHubActions);
-            
+
         return new DotNetNuGetPushSettings
         {
             Source = sourceInfo.Source,
@@ -41,7 +41,9 @@ public static class ContextExtensions
         //return new NugetSourceInfo(null, "https://api.nuget.org/v3/index.json");
     }
 
-    public static DotNetPackSettings GetDotNetPackSettings(this StrongHeartBuildContext context)
+    extension(StrongHeartBuildContext context)
+    {
+        public DotNetPackSettings GetDotNetPackSettings()
     {
         BuildVersion version = BuildVersion.Calculate(context);
         return new()
@@ -58,7 +60,7 @@ public static class ContextExtensions
         };
     }
 
-    public static DotNetTestSettings GetDotNetTestSettings(this StrongHeartBuildContext context)
+    public DotNetTestSettings GetDotNetTestSettings()
     {
         return new()
         {
@@ -70,7 +72,7 @@ public static class ContextExtensions
         };
     }
 
-    public static DotNetBuildSettings GetDotNetBuildSettings(this StrongHeartBuildContext context, Action<DotNetBuildSettings>? overwrite = null)
+    public DotNetBuildSettings GetDotNetBuildSettings(Action<DotNetBuildSettings>? overwrite = null)
     {
         DotNetBuildSettings settings = new()
         {
@@ -83,6 +85,7 @@ public static class ContextExtensions
         };
         overwrite?.Invoke(settings);
         return settings;
+    }
     }
 
     private static DotNetMSBuildSettings GetDotNetCoreMsBuildSettings(FrostingContext context)

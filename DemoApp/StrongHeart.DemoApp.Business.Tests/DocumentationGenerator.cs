@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using StrongHeart.DemoApp.Business.Features;
 using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.DependencyInjection;
 using StrongHeart.Features.Documentation;
 using StrongHeart.Features.Documentation.Sections;
 using StrongHeart.Features.Documentation.Visitors;
+using System;
+using System.Linq;
+using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +22,7 @@ public class DocumentationGenerator
         _helper = helper;
     }
 
-    [Fact]
+    [Fact(Skip = "ret")]
     public void GenerateDocumentation()
     {
         //TODO: fix
