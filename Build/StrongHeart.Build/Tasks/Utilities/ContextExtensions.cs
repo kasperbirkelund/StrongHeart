@@ -32,13 +32,16 @@ public static class ContextExtensions
 
     private static NugetSourceInfo GetNugetSourceInfo(bool isBuildServer)
     {
-        //dotnet nuget push "**/*.nupkg" - s C:\development\NugetFeed
         if (!isBuildServer)
         {
             return new NugetSourceInfo(null, @"C:\development\NugetFeed");
         }
-        throw new NotImplementedException("");
-        //return new NugetSourceInfo(null, "https://api.nuget.org/v3/index.json");
+        string? apiKey = Environment.GetEnvironmentVariable("NUGET_API_KEY");
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            throw new InvalidOperationException("NUGET_API_KEY environment variable must be set when pushing from CI.");
+        }
+        return new NugetSourceInfo(apiKey, "https://api.nuget.org/v3/index.json");
     }
 
     extension(StrongHeartBuildContext context)

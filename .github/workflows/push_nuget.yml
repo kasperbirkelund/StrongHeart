@@ -1,0 +1,27 @@
+name: Push to NuGet.org
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+env:
+  NUGET_SOURCE: https://api.nuget.org/v3/index.json
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Pack and push NuGet packages
+        run: dotnet run --project ./Build/StrongHeart.Build/StrongHeart.Build.csproj --target PushNuget
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
