@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StrongHeart.Features.Core;
+﻿namespace StrongHeart.Features.Core;
 
 public interface ICompletedAction<in T>
 {

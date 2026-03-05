@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace StrongHeart.Features.Decorators.Retry;
+﻿namespace StrongHeart.Features.Decorators.Retry;
 
 public abstract class RetryDecoratorBase : DecoratorBase
 {

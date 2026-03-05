@@ -1,10 +1,10 @@
-﻿using System;
+using StrongHeart.Features.Documentation.Sections;
+using StrongHeart.Features.Documentation.Visitors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using StrongHeart.Features.Documentation.Sections;
-using StrongHeart.Features.Documentation.Visitors;
 
 namespace StrongHeart.Features.Documentation;
 
@@ -23,7 +23,7 @@ public static class Extensions
         return new(source.Select(x => new TableRow<TDest>(selector(x))));
     }
 
-    public static string GetPropertyName(this MemberInfo property)
+    internal static string GetPropertyName(this MemberInfo property)
     {
         DescriptionAttribute? attribute = property.GetCustomAttribute<DescriptionAttribute>();
         return attribute == null ? property.Name : attribute.Description;

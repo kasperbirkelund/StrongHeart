@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators;
+﻿namespace StrongHeart.Features.Decorators;
 
 /// <summary>
 /// Base class for decorator which must share functionality across feature types (commands and queries)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.TimeAlert;
+﻿namespace StrongHeart.Features.Decorators.TimeAlert;
 
 public sealed class TimeAlertCommandDecorator<TRequest, TDto> : TimeAlertDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
     where TRequest : IRequest<TDto>

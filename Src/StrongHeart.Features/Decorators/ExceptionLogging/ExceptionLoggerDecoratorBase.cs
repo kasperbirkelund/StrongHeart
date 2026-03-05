@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-
-namespace StrongHeart.Features.Decorators.ExceptionLogging;
+﻿namespace StrongHeart.Features.Decorators.ExceptionLogging;
 
 public abstract class ExceptionLoggerDecoratorBase : DecoratorBase
 {

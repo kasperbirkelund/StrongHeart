@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
-using StrongHeart.Features.Decorators;
+﻿using StrongHeart.Features.Decorators;
 using StrongHeart.Features.Decorators.Authorization;
 using StrongHeart.Features.Decorators.ExceptionLogging;
 using StrongHeart.Features.Decorators.Filtering;

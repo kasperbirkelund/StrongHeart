@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.RequestValidation;
+﻿namespace StrongHeart.Features.Decorators.RequestValidation;
 
 public sealed class RequestValidationQueryDecorator<TRequest, TResponse> : RequestValidationDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
     where TRequest : IRequest

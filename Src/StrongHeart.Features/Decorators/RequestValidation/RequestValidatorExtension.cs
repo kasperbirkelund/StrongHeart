@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators.RequestValidation;
+﻿namespace StrongHeart.Features.Decorators.RequestValidation;
 
 public class RequestValidatorExtension : IPipelineExtension
 {

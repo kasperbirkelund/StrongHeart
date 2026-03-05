@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace StrongHeart.Features.Decorators.RequestValidation;
+﻿namespace StrongHeart.Features.Decorators.RequestValidation;
 
 public class ValidationConclusion
 {

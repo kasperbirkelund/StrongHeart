@@ -1,6 +1,4 @@
-﻿using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.Filtering;
+﻿namespace StrongHeart.Features.Decorators.Filtering;
 
 public interface IFilterable<TResponse> where TResponse : IResponseDto
 {

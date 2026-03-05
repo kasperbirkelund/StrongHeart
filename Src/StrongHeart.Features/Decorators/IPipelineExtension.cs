@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators;
+﻿namespace StrongHeart.Features.Decorators;
 
 public interface IPipelineExtension
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators.Filtering;
+﻿namespace StrongHeart.Features.Decorators.Filtering;
 
 public class FilterExtension : IPipelineExtension
 {

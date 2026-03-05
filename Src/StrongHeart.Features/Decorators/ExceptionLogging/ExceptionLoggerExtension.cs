@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators.ExceptionLogging;
+﻿namespace StrongHeart.Features.Decorators.ExceptionLogging;
 
 public class ExceptionLoggerExtension: IPipelineExtension
 {

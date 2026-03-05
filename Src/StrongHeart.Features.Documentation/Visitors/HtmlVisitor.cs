@@ -1,10 +1,9 @@
-﻿using System;
+﻿using StrongHeart.Features.Documentation.Sections;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Xml;
-using StrongHeart.Features.Documentation.Sections;
 
 namespace StrongHeart.Features.Documentation.Visitors;
 
@@ -27,7 +26,7 @@ public class HtmlVisitor : ISectionVisitor
     {
         foreach (CodeSnippet snippet in section.Snippets)
         {
-                
+
             _sb.AppendLine($"<p>{Encode(snippet.Title)}</p>");
             _sb.AppendLine($"<code>{Encode(snippet.Code.TrimEnd())}</code>");
         }

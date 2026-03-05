@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StrongHeart.Features.Decorators.ExtensionAlgorithms;
+﻿namespace StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 internal class GetInnerMostFeatureAlgorithm
 {

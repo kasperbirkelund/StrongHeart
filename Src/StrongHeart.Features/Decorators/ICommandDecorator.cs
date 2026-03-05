@@ -1,6 +1,4 @@
-﻿using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators;
+﻿namespace StrongHeart.Features.Decorators;
 
 public interface ICommandDecorator<in TRequest, in TRequestDto>
     where TRequest : IRequest<TRequestDto>

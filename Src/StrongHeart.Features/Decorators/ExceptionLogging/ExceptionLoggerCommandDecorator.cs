@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.ExceptionLogging;
+﻿namespace StrongHeart.Features.Decorators.ExceptionLogging;
 
 public sealed class ExceptionLoggerCommandDecorator<TRequest, TDto> : ExceptionLoggerDecoratorBase, ICommandFeature<TRequest, TDto>, ICommandDecorator<TRequest, TDto>
     where TRequest : IRequest<TDto>

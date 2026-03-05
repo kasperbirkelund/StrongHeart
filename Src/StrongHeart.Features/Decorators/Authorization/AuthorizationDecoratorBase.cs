@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using StrongHeart.Features.Core;
+﻿using System.Security.Claims;
 
 namespace StrongHeart.Features.Decorators.Authorization;
 

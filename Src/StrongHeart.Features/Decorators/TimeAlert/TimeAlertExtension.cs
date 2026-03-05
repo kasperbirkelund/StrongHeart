@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators.TimeAlert;
+﻿namespace StrongHeart.Features.Decorators.TimeAlert;
 
 public class TimeAlertExtension : IPipelineExtension
 {

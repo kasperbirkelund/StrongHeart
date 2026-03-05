@@ -2,6 +2,4 @@
 
 public interface ICommandFeature<in TRequest, in TRequestDto> : IFeature<TRequest, Result>
     where TRequest : IRequest<TRequestDto>
-    where TRequestDto : IRequestDto
-{
-}
+    where TRequestDto : IRequestDto;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace StrongHeart.Features.Core;
+﻿namespace StrongHeart.Features.Core;
 
 public interface IGetListResponse<T> : IResponseDto
 {

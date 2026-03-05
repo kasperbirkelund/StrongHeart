@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using StrongHeart.Features.Core;
-using StrongHeart.Features.Decorators.ExtensionAlgorithms;
+﻿using StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 namespace StrongHeart.Features.Decorators;
 

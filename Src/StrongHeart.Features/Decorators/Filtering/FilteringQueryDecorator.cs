@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.Filtering;
+﻿namespace StrongHeart.Features.Decorators.Filtering;
 
 public sealed class FilteringQueryDecorator<TRequest, TResponse> : IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
     where TRequest : IRequest

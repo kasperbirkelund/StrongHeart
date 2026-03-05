@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.Retry;
+﻿namespace StrongHeart.Features.Decorators.Retry;
 
 public sealed class RetryQueryDecorator<TRequest, TResponse> : RetryDecoratorBase, IQueryFeature<TRequest, TResponse>, IQueryDecorator<TRequest, TResponse>
     where TRequest : IRequest

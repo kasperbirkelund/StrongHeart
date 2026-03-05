@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StrongHeart.Features.Decorators.Retry;
+﻿namespace StrongHeart.Features.Decorators.Retry;
 
 public interface IRetryable
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.TimeAlert;
+﻿namespace StrongHeart.Features.Decorators.TimeAlert;
 
 public class TimeExceededData
 {

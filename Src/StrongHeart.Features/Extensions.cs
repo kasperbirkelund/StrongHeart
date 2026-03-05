@@ -1,8 +1,5 @@
-﻿using StrongHeart.Features.Core;
-using StrongHeart.Features.Core.Events;
+﻿using StrongHeart.Features.Core.Events;
 using StrongHeart.Features.Decorators.ExtensionAlgorithms;
-using System;
-using System.Linq;
 
 namespace StrongHeart.Features;
 

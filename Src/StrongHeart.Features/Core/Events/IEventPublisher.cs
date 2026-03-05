@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace StrongHeart.Features.Core.Events;
+﻿namespace StrongHeart.Features.Core.Events;
 
 public interface IEventPublisher
 {

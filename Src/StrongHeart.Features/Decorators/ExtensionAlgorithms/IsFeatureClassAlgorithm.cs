@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using StrongHeart.Features.Core;
-
-namespace StrongHeart.Features.Decorators.ExtensionAlgorithms;
+﻿namespace StrongHeart.Features.Decorators.ExtensionAlgorithms;
 
 internal class IsFeatureClassAlgorithm
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace StrongHeart.Features.Decorators.Retry;
+﻿namespace StrongHeart.Features.Decorators.Retry;
 
 public class RetryExtension : IPipelineExtension
 {

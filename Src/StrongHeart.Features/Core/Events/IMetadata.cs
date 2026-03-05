@@ -1,5 +1,3 @@
 ﻿namespace StrongHeart.Features.Core.Events;
 
-public interface IMetadata
-{
-}
+public interface IMetadata;
